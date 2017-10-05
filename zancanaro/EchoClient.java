@@ -16,10 +16,6 @@ import java.net.Socket;
 import java.io.*;
 import java.util.Scanner;
 
-/**
- *
- * @author samue
- */
 public class EchoClient 
 {
     public static void main(String[] args) throws IOException
@@ -28,6 +24,7 @@ public class EchoClient
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         PrintStream out = new PrintStream(socket.getOutputStream());
         Scanner input = new Scanner(System.in);
+
         System.out.println("Inserisci la roba da inviare");
         String s = input.nextLine();
         out.println(s);
