@@ -1,2 +1,4 @@
-# Branch consegne esercizi di Manuele Lucchi
-* 5/10/2017: Esercizi su client Java
+# Esercitazioni per la 5IA
+
+- **171005**
+Consegnare il client per DateServer.
