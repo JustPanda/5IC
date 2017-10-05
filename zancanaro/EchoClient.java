@@ -25,10 +25,14 @@ public class EchoClient
         PrintStream out = new PrintStream(socket.getOutputStream());
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Inserisci la roba da inviare");
-        String s = input.nextLine();
-        out.println(s);
-        String res = in.readLine();
-        System.out.println("Ricevuto: " + res);
+        while(true)
+        {
+            System.out.println("inserisci la stringa");
+            String str = input.nextLine();
+            out.println(str);
+            String res = in.readLine();
+            System.out.println("Ricevuto: " + res);
+        }
+      
     }
 }
