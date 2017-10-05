@@ -6,12 +6,15 @@
 package capitalize;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.Scanner;
 
 /**
  *
@@ -75,8 +78,17 @@ public class CapitalizeServer
                         break;
                     }
                     out.println(input.toUpperCase());
-                    //---------------------------------------------------MODIFICA DI MANUELE LUCCHI------------------------------------------------------------------
-                    System.out.println("Il client " + clientNumber+ " ha richiesto l'uppercase della stringa \"" + input + "\" nella data " + new Date().toString());
+                    //---------------------------------------------------MODIFICHE DI MANUELE LUCCHI------------------------------------------------------------------
+                    String output = "Il client " + clientNumber+ " ha richiesto l'uppercase della stringa \"" + input + "\" nella data " + new Date().toString();
+                    System.out.println(output);
+                    File file = new File("log.txt");
+                    if(!file.exists())
+                    {
+                        file.createNewFile();
+                    }
+                    
+                    FileWriter pw = new FileWriter(file);
+                    pw.write(output+"\n");
                     //-----------------------------------------------------------------------------------------------------------------------------------------------
                 }
             } catch (IOException e)
