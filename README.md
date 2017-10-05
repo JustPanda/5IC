@@ -1,2 +1,4 @@
-# Branch consegne esercizi di Manuele Lucchi
-* 5/10/2017: Esercizi su client Java
+# Consegne per la 5IC
+
+Il branch master è utilizzato dal docente, ogni singolo studente ha un suo branch personale.
+- **Risponditore** dead line 15/10/2017.
