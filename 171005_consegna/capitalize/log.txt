@@ -1,0 +1,4 @@
+------Thu Oct 05 23:23:52 CEST 2017------
+Client #0 connected
+Client #0 asked to upper case: Test
+Client #0 asked to upper case: Funziona
