@@ -5,7 +5,7 @@
 
 ## Modifiche apportate
 
-#### Capitalize
+### Capitalize
 Client
 > 1. Aggiunta di vari log
 > 2. Impossibilità di inviare al server stringhe vuote
@@ -14,7 +14,7 @@ Server
 > 1. Aggiunta di vari log nel server
 > 2. Aggiunto salvataggio dei log in un file includendo ad ogni avvio la data corrente
 
-#### Dataserver
+### Dataserver
 Client
 > 1. Creazione di esso
 > 2. Aggiunta di vari log
@@ -22,7 +22,7 @@ Client
 Server
 > 1. Aggiunta di vari log
 
-#### Echo
+### Echo
 Client
 > 1. Creazione di esso
 > 2. Aggiunta di vari log
