@@ -1,4 +1,7 @@
-# Consegne per la 5IC
+# Branch consegne Nicolò Greggio
 
-Il branch master è utilizzato dal docente, ogni singolo studente ha un suo branch personale.
-- **Risponditore** dead line 15/10/2017.
+## Contenuti
+- 171005_consegne
+    - capitalize
+    - date
+    - echo
