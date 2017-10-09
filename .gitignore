@@ -547,3 +547,4 @@ __pycache__/
 # should be stored in the .pubxml.user file.
 
 # End of https://www.gitignore.io/api/java,android,netbeans,java-web,intellij,visualstudio,androidstudio,visualstudiocode
+/Risponditore/nbproject/private/
