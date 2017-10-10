@@ -31,7 +31,7 @@ public class Util
         System.out.println("Inserisci la password");
         String password = (console.readPassword()).toString();
         
-        String encrPassword;
+        String encrPassword ="";
         User user = new User(username, encrPassword);
         
         return user;   
