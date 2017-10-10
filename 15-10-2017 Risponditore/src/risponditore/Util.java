@@ -6,36 +6,50 @@
 package risponditore;
 
 import java.io.Console;
-import java.io.UnsupportedEncodingException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.InvalidParameterSpecException;
-import java.security.spec.KeySpec;
-import javax.crypto.*;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author manue
  */
-public class Util 
+
+
+class User 
 {
-    static User Autenticazione() throws Exception 
+    public User(String Username, String Password)
     {
-        Console console = System.console();
-        System.out.println("Inserisci l'Username");
-        String username = (console.readPassword()).toString();
-        System.out.println("Inserisci la password");
-        String password = (console.readPassword()).toString();
-        
-        String encrPassword ="";
-        User user = new User(username, encrPassword);
-        
-        return user;   
-    }
+        this.Username = Username;
+        this.Password = Password;
+        Messages = new ArrayList<Message>();
+    }   
     
+    public String Username;
+    public String Password;
+    public boolean IsBlocked;
+    public List<Message> Messages;
+}
+
+class Message
+{
+    public Message(String Text, String Date, MessageOwner Owner)
+    {
+        this.Text = Text;
+        this.Date = new Date().toString();
+    }
+    public String Text;
+    public String Date;
+    public MessageOwner Owner;
+}
+
+enum MessageOwner
+{
+    Client, 
+    Server
+}
+
+class Position
+{
     
 }
