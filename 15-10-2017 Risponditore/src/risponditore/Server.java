@@ -89,9 +89,9 @@ public class Server
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:test.db");
             System.out.println("Opened database successfully");
-
+            
             stmt = c.createStatement();
-            String sql = "CREATE TABLE USER "
+            String sql = "CREATE TABLE IF NOT EXISTS USER "
                     + "(ID INT PRIMARY KEY     NOT NULL,"
                     + " USERNAME       TEXT    NOT NULL, "
                     + " PSD            TEXT    NOT NULL, "
@@ -133,6 +133,7 @@ class ClientConnection implements Runnable
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Risponditore risponditore = new Risponditore(writer, reader);
+            risponditore.ID = index +"";
 
             while (!isExit)
             {

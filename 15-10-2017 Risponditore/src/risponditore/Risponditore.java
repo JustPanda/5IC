@@ -25,6 +25,7 @@ class Risponditore
 
     PrintWriter writer;
     BufferedReader reader;
+    String ID;
     User user = null;
     
     Connection c = null;
@@ -38,23 +39,6 @@ class Risponditore
     {
         this.writer = writer;
         this.reader = reader;
-        
-        Connection c = null;
-        Statement stmt = null;
-
-        try
-        {
-            Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:test.db");
-            c.setAutoCommit(false);            
-            System.out.println("Opened database successfully");
-
-            stmt = c.createStatement();
-        } catch (Exception e)
-        {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
         
         Idle();
         //TreeSetup();
@@ -123,37 +107,60 @@ class Risponditore
 
     public void Signup() throws IOException, SQLException
     {
+        Connection c = null;
+        Statement stmt = null;
 
-        ResultSet rs = stmt.executeQuery( "SELECT * FROM USER;" );
-        boolean exist = false;
-        writer.println("Inserisci l'username");
-        String username = reader.readLine();
-        while(rs.next())
+        try
         {
-            String tmp = rs.getString("username");
-            if(tmp==username)
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:test.db");
+            c.setAutoCommit(false);            
+            System.out.println("Opened database successfully");
+
+            stmt = c.createStatement();
+            
+        } catch (Exception e)
+        {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+
+        try (ResultSet rs = stmt.executeQuery( "SELECT * FROM USER;" ))
+        {
+            boolean exist = false;
+            writer.println("Inserisci l'username");
+            String username = reader.readLine();
+            while(rs.next())
             {
-                exist=true;
+                String tmp = rs.getString("username");
+                if(tmp==username)
+                {
+                    exist=true;
+                }
+            }
+            if (!exist)
+            {
+                writer.println("Inserisci la password");
+                String password = reader.readLine();
+                //Inserisci la password e dai lo stato di login
+                String sql = "INSERT INTO USER (ID,USERNAME, PSD, BLK, MONEY) "
+                        + "VALUES("+ this.ID +"," + username + "," + password + ", FALSE, 0";
+                stmt.executeUpdate(sql);
+                c.commit();
+                stmt.close();
+                c.close();
+                this.user = new User(username, password);
+                writer.println("Registrazione e accesso eseguiti con successo");
+            } else
+            {
+                writer.println("L'account esiste già");
+                Login();
             }
         }
-        if (!exist)
-        {
-            writer.println("Inserisci la password");
-            String password = reader.readLine();
-            //Inserisci la password e dai lo stato di login
-            String sql = "INSERT INTO USER (ID,USERNAME, PSD, BLK, MONEY)"
-            this.user = new User(username, password);
-            writer.println("Registrazione e accesso eseguiti con successo");
-        } else
-        {
-            writer.println("L'account esiste già");
-            Login();
-        }
-        rs.close();
 
     }
 
-    public void Login() throws IOException
+    public void Login() throws IOException, SQLException
     {
         boolean exist = true;
         writer.println("Inserisci l'username");
