@@ -13,6 +13,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.security.KeyStore;
 import java.security.cert.CertificateException;
 import java.sql.Connection;
@@ -43,6 +46,7 @@ public class Server
      */
     public static void main(String[] args) throws Throwable, CertificateException
     {
+        /*
         KeyStore ks = KeyStore.getInstance("JKS");
         ks.load(new FileInputStream("keystore.jks"), "keystorePassword".toCharArray());
 
@@ -57,19 +61,22 @@ public class Server
         sc.init(kmf.getKeyManagers(), trustManagers, null);
 
         SSLServerSocketFactory ssf = sc.getServerSocketFactory();
-        SSLServerSocket s = (SSLServerSocket) ssf.createServerSocket(8080);
+        SSLServerSocket s = (SSLServerSocket) ssf.createServerSocket(8080); */
 
+        ServerSocket s = new ServerSocket(8080);
+        
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         int clientIndex = 0;
         while (clientIndex <= 1000)
         {
             clientIndex++;
-            SSLSocket socket = (SSLSocket) s.accept();
+            Socket socket = (Socket) s.accept();
             ClientConnection client = new ClientConnection(socket, clientIndex);
             System.out.println("Connesso al client n°" + clientIndex);
             executor.execute(client);
         }
         executor.shutdown();
+        s.close();
     }
 
     public void SQLSetup()
@@ -107,10 +114,10 @@ public class Server
 class ClientConnection implements Runnable
 {
 
-    SSLSocket socket;
+    Socket socket;
     int index;
 
-    public ClientConnection(SSLSocket socket, int index) throws IOException
+    public ClientConnection(Socket socket, int index) throws IOException
     {
         this.socket = socket;
         this.index = index;
@@ -122,20 +129,25 @@ class ClientConnection implements Runnable
 
         try
         {
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            boolean isExit = false;
+            PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            Risponditore risponditore = new Risponditore(writer, reader);
 
-            writer.write("Inserisci l'username");
-            String username = reader.readLine();
-            writer.write("Inserisci la password");
-            String password = reader.readLine();
-            User user = new User(username, password);
-
-            while (true)
+            while (!isExit)
             {
-
-                //System.out.println(a+"pene");
-                writer.write("Ciaoooo");
+                String input = reader.readLine();
+                if(input.toLowerCase() == "exit")
+                {
+                    System.out.println("Ho ricevuto exit");
+                    isExit=true;
+                }
+                else
+                {
+                    System.out.println("Ho ricevuto " + input);
+                    risponditore.Compare(input);
+                }
+                
             }
 
         } catch (Exception ex)

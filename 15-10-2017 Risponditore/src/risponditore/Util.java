@@ -22,12 +22,16 @@ class User
     {
         this.Username = Username;
         this.Password = Password;
-        Messages = new ArrayList<Message>();
+        this.Money =0;
+        this.IsBlocked = false;
+        this.Messages = new ArrayList<Message>();
     }   
     
     public String Username;
     public String Password;
     public boolean IsBlocked;
+    public int Money;
+    public int Position;
     public List<Message> Messages;
 }
 

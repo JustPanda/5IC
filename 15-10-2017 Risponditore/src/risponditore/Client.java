@@ -10,6 +10,8 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.Date;
 import java.util.Scanner;
 import javax.net.ssl.SSLContext;
@@ -30,37 +32,38 @@ public class Client
      */
     public static String host = "localhost";
     public static int authPort = 8080;
-    
+
     public static void main(String[] args) throws IOException
-    {      
-        boolean isExit =false;
-        SSLSocketFactory sslsocketfactory;
+    {
+        boolean isExit = false;
+        /* SSLSocketFactory sslsocketfactory;
         SSLSocket sslsocket;
         
         sslsocketfactory= (SSLSocketFactory) SSLSocketFactory.getDefault();
         sslsocket= (SSLSocket) sslsocketfactory.createSocket(host, authPort);
-        //sslsocket.setEnabledProtocols(new String[]{"TLSv1.2"});
-             
+        //sslsocket.setEnabledProtocols(new String[]{"TLSv1.2"}); */
 
-        
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sslsocket.getOutputStream()));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(sslsocket.getInputStream()));
-        
+        Socket s = new Socket("localhost", 8080);
+
+        PrintWriter writer = new PrintWriter(s.getOutputStream(), true);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
+
         Scanner scanner = new Scanner(System.in);
-        while(!isExit)
+        while (!isExit)
         {
-            String input = reader.readLine();
-            System.out.println(new Date().toString() + input);
             String output = scanner.nextLine();
-            System.out.println("Inviato");
-            if(output.toLowerCase()=="exit")
+            if (output.toLowerCase() == "exit")
             {
-                isExit=true;
-            }
+                writer.println(output);
+                isExit = true;
+            } 
             else
             {
-                writer.write(output);
+                writer.println(output);
+                String input = reader.readLine();
+                System.out.println(input);
             }
+            
         }
     }
 
