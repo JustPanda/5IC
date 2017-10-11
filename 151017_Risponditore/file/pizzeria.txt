@@ -1,0 +1,5 @@
+introduzione->Salve %s, cosa vuole ordinare?. Puo' scegliere tra questi 3 tipi di cibi->Bibite,Pizza
+bibite->Cosa vuole prendere: ->Coca cola,Acqua,Choose again
+pizza->Cosa vuole prendere: ->Diavola,Prosciutto funghi,Nulla
+Nulla->Cosa vuole ordinare ancora: ->Bibita,Pizza,Fine spesa
+finespesa->L'ordine arrivera' tra un po' di tempo->e

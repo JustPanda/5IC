@@ -10,10 +10,12 @@ class Task implements Runnable
 {
 	private String name;
 	private Socket client;
+	private Pizzeria pizzeria;
 
-	Task(Socket client)
+	Task(Socket client, Pizzeria pizzeria)
 	{
 		this.client=client;
+		this.pizzeria=pizzeria;
 	}
 
 	@Override
@@ -25,12 +27,11 @@ class Task implements Runnable
 			in=new BufferedReader(new InputStreamReader(client.getInputStream()));
 			out=new PrintWriter(client.getOutputStream(), true);
 			name=in.readLine();
-			out.println("Hi "+name);
+			out.println(pizzeria.getAnswers("introduzione", name));
 			String msg;
 			while(!((msg=in.readLine()).equals("EXIT")))
 			{
-				System.out.println(name+": "+msg);
-				out.println(msg);
+				out.println(pizzeria.getAnswers(msg, name));
 			}
 			in.close();
 			out.close();

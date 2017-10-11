@@ -24,13 +24,16 @@ public class Client
 			out=new PrintWriter(server.getOutputStream(), true);
 			System.out.print("Client connected. Insert name: ");
 			out.println(sc.nextLine());
-			System.out.println(in.readLine());
-			System.out.println("Print EXIT to exit");
+			System.out.println(in.readLine().replace("*", "\n"));
 			do{
 				System.out.print(">");
 				msg=sc.nextLine();
 				out.println(msg);
-				System.out.println((input=in.readLine()));
+				input=in.readLine();
+				if(input!=null)
+				{
+					System.out.println(input.replace("*", "\n"));
+				}
 			}while(!msg.equals("EXIT")&&input!=null);
 			in.close();
 			out.close();
