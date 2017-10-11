@@ -55,37 +55,38 @@ class Risponditore
     
     public void Compare(String input) throws Exception
     {
-        if(input.toUpperCase().contains("login"))
+        System.out.println("Il compare ha ricevuto " + input);
+        if(input.toLowerCase().contains("login"))
         {
             Login();
             UserSetup();
         }
-        if(input.toUpperCase().contains("signup"))
+        else if(input.toLowerCase().contains("signup"))
         {
             Signup();
             UserSetup();
         }
-        if(input.toUpperCase().contains("elimina"))
+        else if(input.toLowerCase().contains("elimina"))
         {
             DeleteAccount();
         }
-        if(input.toUpperCase().contains("blocca"))
+        else if(input.toLowerCase().contains("blocca"))
         {
             BlockAccount();
         }
-        if(input.toUpperCase().contains("registro"))
+        else if(input.toLowerCase().contains("registro"))
         {
             GetLog();
         }
-        if(input.toUpperCase().contains("aggiungi"))
+        else if(input.toLowerCase().contains("aggiungi"))
         {
             AddMoney();
         }
-        if(input.toUpperCase().contains("quanti"))
+        else if(input.toLowerCase().contains("quanti"))
         {
             GetMoney();
         }
-        if(input.toUpperCase().contains("sportello"))
+        else if(input.toLowerCase().contains("sportello"))
         {
             NearerStation();
         }
@@ -97,26 +98,28 @@ class Risponditore
 
     public void Idle() throws IOException
     {
-        writer.write("Ciao, sono il Bot Banchiere.\nScrivi Login per entrare o Signup per iscriverti");
+        writer.println("Ciao, sono il Bot Banchiere");
+        //writer.println("Puoi usare i seguenti comandi:\nLogin\" per entrare con il tuo account \n\"Signup\" per iscriverti\n\"Aggiungi soldi\" per aggiungere soldi\n\"Quanti soldi ci sono?\" per sapere quanti soldi hai nel conto\n\"Mostrami il registro delle operazioni\" per vedere i comandi dati fin'ora\n\"Elimina account\" per eliminare l'account\n\nBlocca account\" per bloccare l'account\n\"Dov'è lo sportello più vicino?\" per sapere dov'è lo sportello più vicino a te");
     }
 
     public void Signup() throws IOException
     {
 
         boolean exist = false;
-        writer.write("Inserisci la l'username");
+        writer.println("Inserisci la l'username");
         String username = reader.readLine();
         //Controlla se esiste
         if (!exist)
         {
-            writer.write("Inserisci la password");
+            writer.println("Inserisci la password");
             String password = reader.readLine();
             //Inserisci la password e dai lo stato di login
 
             this.user = new User(username, password);
+            writer.println("Accesso eseguito con successo");
         } else
         {
-            writer.write("L'account esiste già");
+            writer.println("L'account esiste già");
             Login();
         }
 
@@ -125,30 +128,31 @@ class Risponditore
     public void Login() throws IOException
     {
         boolean exist = true;
-        writer.write("Inserisci la l'username");
+        writer.println("Inserisci la l'username");
         String username = reader.readLine();
         //Controlla se esiste
         if (exist)
         {
             boolean correct =true;
-            writer.write("Inserisci la password");
+            writer.println("Inserisci la password");
             String password = reader.readLine();
             //controlla la password
 
             if(correct)
             {
                 this.user = new User(username, password);
+                writer.println("Accesso eseguito con successo");
             }
             else
             {
-                writer.write("Pssword errata, riprova");
+                writer.println("Pssword errata, riprova");
                 Login();
             }
                         
         }
         else
         {
-            writer.write("L'account non esiste");
+            writer.println("L'account non esiste");
             Signup();
         }
     }
@@ -164,11 +168,11 @@ class Risponditore
         //elimina user
         if(deleted)
         {
-            writer.write("Account eliminato");
+            writer.println("Account eliminato");
         }
         else
         {
-            writer.write("Non sono riuscito a eliminare l'account. Errore non specificato");
+            writer.println("Non sono riuscito a eliminare l'account. Errore non specificato");
         }
         
     }
@@ -176,34 +180,34 @@ class Risponditore
     public void BlockAccount() throws IOException
     {
         this.user.IsBlocked = true;
-        writer.write("L'account è stato bloccato");
+        writer.println("L'account è stato bloccato");
     }
 
     public void NearerStation() throws IOException
     {
-        writer.write("Inserisci la posizione");
+        writer.println("Inserisci la posizione");
         String position = reader.readLine();
         //get position
-        writer.write("Lo sportello più vicino a te è a 1km a nord");
+        writer.println("Lo sportello più vicino a te è a 1km a nord");
     }
 
     public void GetMoney() throws IOException
     {
-        writer.write("Attualmente hai " + user.Money + "€");
+        writer.println("Attualmente hai " + user.Money + "€");
     }
 
     public void AddMoney() throws IOException
     {
-        writer.write("Inserisci quanti soldi");
+        writer.println("Inserisci quanti soldi");
         String input = reader.readLine();
         int money= Integer.parseInt(input);
         user.Money+=money;
-        writer.write("Ho aggiunto " + money + "€");
+        writer.println("Ho aggiunto " + money + "€");
     }
 
     public void GetLog() throws IOException
     {
-        writer.write("Log");
+        writer.println("Log");
         //ottieni log
         //invia log
     }

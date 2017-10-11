@@ -137,9 +137,9 @@ class ClientConnection implements Runnable
             while (!isExit)
             {
                 String input = reader.readLine();
-                if(input.toLowerCase() == "exit")
+                if(input.toLowerCase().equals("exit"))
                 {
-                    System.out.println("Ho ricevuto exit");
+                    System.out.println("Ho ricevuto exit||||||||||||||||");
                     isExit=true;
                 }
                 else

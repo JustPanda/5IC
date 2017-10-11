@@ -7,11 +7,13 @@ package risponditore;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.Console;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 import javax.net.ssl.SSLContext;
@@ -36,6 +38,7 @@ public class Client
     public static void main(String[] args) throws IOException
     {
         boolean isExit = false;
+        boolean isPassword =false;
         /* SSLSocketFactory sslsocketfactory;
         SSLSocket sslsocket;
         
@@ -49,9 +52,21 @@ public class Client
         BufferedReader reader = new BufferedReader(new InputStreamReader(s.getInputStream()));
 
         Scanner scanner = new Scanner(System.in);
+        System.out.println(reader.readLine());
+        //System.out.println(reader.readLine());
         while (!isExit)
         {
-            String output = scanner.nextLine();
+            String output;
+            if(isPassword)
+            {
+                Console console = System.console();
+                output = Arrays.toString(console.readPassword());
+                isPassword=false;
+            }
+            else
+            {
+                output = scanner.nextLine();
+            }  
             if (output.toLowerCase() == "exit")
             {
                 writer.println(output);
@@ -61,6 +76,10 @@ public class Client
             {
                 writer.println(output);
                 String input = reader.readLine();
+                if(input.toLowerCase().contains("password"))
+                {
+                    isPassword=true;
+                }
                 System.out.println(input);
             }
             
