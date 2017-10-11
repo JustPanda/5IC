@@ -64,8 +64,8 @@ public class Server
         SSLServerSocket s = (SSLServerSocket) ssf.createServerSocket(8080); */
 
         ServerSocket s = new ServerSocket(8080);
-        
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+        SQLSetup();
         int clientIndex = 0;
         while (clientIndex <= 1000)
         {
@@ -79,7 +79,7 @@ public class Server
         s.close();
     }
 
-    public void SQLSetup()
+    public static void SQLSetup()
     {
         Connection c = null;
         Statement stmt = null;
@@ -91,21 +91,21 @@ public class Server
             System.out.println("Opened database successfully");
 
             stmt = c.createStatement();
-            String sql = "CREATE TABLE COMPANY "
+            String sql = "CREATE TABLE USER "
                     + "(ID INT PRIMARY KEY     NOT NULL,"
-                    + " NAME           TEXT    NOT NULL, "
-                    + " AGE            INT     NOT NULL, "
-                    + " ADDRESS        CHAR(50), "
-                    + " SALARY         REAL)";
+                    + " USERNAME       TEXT    NOT NULL, "
+                    + " PSD            TEXT    NOT NULL, "
+                    + " BLK            BOOL    FALSE"
+                    + " MONEY          INT              )";
             stmt.executeUpdate(sql);
             stmt.close();
             c.close();
-
         } catch (Exception e)
         {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
         }
-        System.out.println("Opened database successfully");
+        System.out.println("Table created successfully");
 
     }
 
@@ -137,17 +137,26 @@ class ClientConnection implements Runnable
             while (!isExit)
             {
                 String input = reader.readLine();
-                if(input.toLowerCase().equals("exit"))
+                if (risponditore.user != null)
+                {
+                    risponditore.user.Messages.add(new Message(input, MessageOwner.Client));
+                }
+
+                if (input.toLowerCase().equals("exit"))
                 {
                     System.out.println("Ho ricevuto exit||||||||||||||||");
-                    isExit=true;
-                }
-                else
+                    writer.println("Uscita...");
+                    if (risponditore.user != null)
+                    {
+                        risponditore.user.Messages.add(new Message("Uscita...", MessageOwner.Server));
+                    }
+                    isExit = true;
+                } else
                 {
                     System.out.println("Ho ricevuto " + input);
                     risponditore.Compare(input);
                 }
-                
+
             }
 
         } catch (Exception ex)

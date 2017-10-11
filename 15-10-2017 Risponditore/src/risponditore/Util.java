@@ -37,7 +37,7 @@ class User
 
 class Message
 {
-    public Message(String Text, String Date, MessageOwner Owner)
+    public Message(String Text, MessageOwner Owner)
     {
         this.Text = Text;
         this.Date = new Date().toString();

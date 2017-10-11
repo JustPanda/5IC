@@ -59,8 +59,8 @@ public class Client
             String output;
             if(isPassword)
             {
-                Console console = System.console();
-                output = Arrays.toString(console.readPassword());
+                //Console console = System.console();
+                output = scanner.nextLine(); //Arrays.toString(console.readPassword());
                 isPassword=false;
             }
             else
@@ -84,6 +84,7 @@ public class Client
             }
             
         }
+        System.exit(2);
     }
 
 }
