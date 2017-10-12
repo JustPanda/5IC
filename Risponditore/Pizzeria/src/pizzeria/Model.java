@@ -1,6 +1,7 @@
 package pizzeria;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 class Nodo
 {
@@ -57,16 +58,16 @@ public class Model
     public void Setup()
     {
         questions.add("Vuole ordinare qualcosa?(Si|No)");
-        questions.add("Cosa desidera ordinare?(Pizza|Bibita)");
+        questions.add("Cosa desidera ordinare?(Organi vitali|Organi secondari)");
         questions.add("Arrivederci");
-        questions.add("Che pizza vuole?(Margherita|Patatosa)");
-        questions.add("Che bibita vuole?(Acqua|Coca-cola)");
+        questions.add("Che Organo vitale vuole?(Cuore|Cervello)");
+        questions.add("Che Organi secondari vuole?(Rene|Polmoni)");
         questions.add("Vuole altro?(Si|No)");
         Id.add("root");
         Id.add("Order");
         Id.add("Exit");
-        Id.add("Pizza");
-        Id.add("Drinks");
+        Id.add("Vitals");
+        Id.add("Secondary");
         Id.add("Other");
     }
     
@@ -152,42 +153,31 @@ public class Model
     {
         return unit.left.info;
     }
+	
+	public String GetQuestion(Nodo unit, int index)
+	{
+		return unit.children.get(index).info;
+	}
     
     public String Intro()
     {
         return this.layers.get(0).nodes.get(0).info;
     }
     
-    public String Decide(String answer)
+    public String Decide(String question, String answer)
     {
-        for(int i=0; i<this.layers.size(); i++)
-        {
-            for(int j=0; j<this.layers.get(i).nodes.size(); j++)
-            {
-                if(this.layers.get(i).nodes.get(j).id.toLowerCase().equals("root") && answer.toLowerCase().equals("si"))
-                {
-                    return this.GetRightQuestion(this.Search(quest.get(this.nodo)));
-                } 
-                if(quest.get(this.nodo).toLowerCase().equals("root") && answer.toLowerCase().equals("no"))
-                {
-                    return this.GetLeftQuestion(this.Search(quest.get(this.nodo)));
-                }
-                if(quest.get(this.nodo).toLowerCase().equals("Exit"))
-                {
-                    return this.GetRightQuestion(this.Search(quest.get(this.nodo)));
-                }
-            }
-        }
+        Nodo temp = this.Search(this.Intro());
+		
         return null;
     }
     
-    public Nodo Search(String id)
+    public Nodo Search(String info)
     {
         for(int i=0; i<this.layers.size(); i++)
         {
             for(int j=0; j<this.layers.get(i).nodes.size(); j++)
             {
-                if(this.layers.get(i).nodes.get(j).id.toLowerCase().equals(id.toLowerCase()))
+                if(this.layers.get(i).nodes.get(j).info.toLowerCase().equals(info.toLowerCase()))
                 {
                     return this.layers.get(i).nodes.get(j);
                 }
@@ -199,10 +189,16 @@ public class Model
     public static void main(String[] args)
     {
         Model m = new Model();
+		Scanner input = new Scanner(System.in);
         m.Setup();
         m.Build();
         m.Assign();
-        Nodo n = m.Search("other");
-        System.out.println(n.info);
+        System.out.println(m.Intro());
+		String answer = input.nextLine();
+		String response = m.Decide(m.Intro(), answer);
+		System.out.println(response);
+		answer = input.nextLine();
+		response = m.Decide("Cosa desidera ordinare?(Organi vitali|Organi secondari)", answer);
+		System.out.println(response);
     }
 }
