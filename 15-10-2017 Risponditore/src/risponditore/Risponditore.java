@@ -17,10 +17,73 @@ public class Risponditore
 
 	int Prezzo = 0;
 	Node Root = null;
+	Node CopyRoot = null;
+	Listino l = new Listino();
 
 	public Risponditore()
 	{
-		Root = new Node("Ciao, benvenuto al NAC", {"",""});
+		Root = new Node("Ciao, benvenuto al NAC, cosa vuoi acquistare tra: " + l.categorie[0] + "|" + l.categorie[1] + "|" + l.categorie[2] + "?", l.categorie);
+
+		for (int i = 0; i <3; i++)
+		{
+			Root.Children.add(new Node("Che " + l.categorie[i] + " vuoi tra?", new String[]
+			{
+				l.prodotti[i][0][0], l.prodotti[i][1][0]
+			}));
+		}
+
+		for (int i = 0; i < Root.Children.size(); i++)
+		{
+			Root.Children.get(0).Children.add(new Node("Quanti ne vuoi?", new String[]
+			{
+				"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
+			}));
+		}
+
+		for (int i = 0; i < Root.Children.size(); i++)
+		{
+			Root.Children.get(0).Children.get(0).Children.add(new Node("Vuoi altro?", new String[]
+			{
+				"si", "no"
+			}));
+		}
+
+		for (int i = 0; i < Root.Children.size(); i++)
+		{
+			Root.Children.get(0).Children.get(0).Children.get(0).Children.add(new Node("Uscita...", new String[]
+			{
+				""
+			}));
+		}
+
+		CopyRoot = Root;
+	}
+
+	public String Exe(String input)
+	{
+		input = input.toLowerCase();
+		for (int i = 0; i < Root.Answers.length; i++)
+		{
+			if (Root.Question.equals("Vuoi altro?") && input.equals("si"))
+			{
+				Root = CopyRoot;
+			}
+			else if (Root.Answers[i].equals(input))
+			{
+				System.out.println("Sono uguali");
+				Root = Root.Children.get(i);
+			}
+		}
+		
+		String output = Root.Question;
+		System.out.println("Output " + output);
+		return output;
+	}
+
+	public Node Traverse(Node root)
+	{
+
+		return root;
 	}
 }
 
@@ -31,6 +94,7 @@ class Node
 	{
 		this.Question = Question;
 		this.Answers = Answers;
+		this.Children = new ArrayList<Node>();
 	}
 	public String Question;
 	public String[] Answers;
@@ -64,49 +128,39 @@ class Bills
 
 class Listino
 {
-	public Listino(String[][] Oggetti, String Categoria)
+	String[] categorie =
 	{
-		this.Oggetti = Oggetti;
-		this.Categoria = Categoria;
-	}
-	public String[][] Oggetti;
-	public String Categoria;
-}
+		"mobili",
+		"tappezzeria",
+		"lampadari"
+	};
 
-class ListinoTotale
-{
-
-	String[][] _mobili =
+	String[][][] prodotti =
 	{
 		{
-			"Divano", "500"
+			{
+				"divano", "500"
+			},
+			{
+				"letto", "1000"
+			}
 		},
 		{
-			"Letto", "1000"
-		}
-	};
-	Listino mobili = new Listino(_mobili, "Mobili");
-
-	String[][] _tappezzeria =
-	{
-		{
-			"Tappeto", "100"
+			{
+				"tappeto", "100"
+			},
+			{
+				"moquette", "300"
+			}
 		},
 		{
-			"Moquette", "300"
+			{
+				"lamapadario", "700"
+			},
+			{
+				"abatjoure", "30"
+			}
 		}
 	};
-	Listino tappezzeria = new Listino(_mobili, "Tappezzeria");
-	
-	String[][] _lampadari =
-	{
-		{
-			"Lamapadario", "700"
-		},
-		{
-			"Abatjoure", "30"
-		}
-	};
-	Listino lampadari = new Listino(_mobili, "Lampadari");
 
 }
