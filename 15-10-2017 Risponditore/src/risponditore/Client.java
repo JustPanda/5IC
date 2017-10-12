@@ -5,22 +5,9 @@
  */
 package risponditore;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.Console;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Scanner;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLServerSocket;
-import javax.net.ssl.SSLServerSocketFactory;
-import javax.net.ssl.SSLSocket;
-import javax.net.ssl.SSLSocketFactory;
+import java.net.*;
+import java.util.*;
+import java.io.*;
 
 /**
  *
@@ -29,22 +16,9 @@ import javax.net.ssl.SSLSocketFactory;
 public class Client
 {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static String host = "localhost";
-    public static int authPort = 8080;
-
     public static void main(String[] args) throws IOException
     {
         boolean isExit = false;
-        boolean isPassword =false;
-        /* SSLSocketFactory sslsocketfactory;
-        SSLSocket sslsocket;
-        
-        sslsocketfactory= (SSLSocketFactory) SSLSocketFactory.getDefault();
-        sslsocket= (SSLSocket) sslsocketfactory.createSocket(host, authPort);
-        //sslsocket.setEnabledProtocols(new String[]{"TLSv1.2"}); */
 
         Socket s = new Socket("localhost", 8080);
 
@@ -57,34 +31,19 @@ public class Client
         while (!isExit)
         {
             String output;
-            if(isPassword)
-            {
-                //Console console = System.console();
-                output = scanner.nextLine(); //Arrays.toString(console.readPassword());
-                isPassword=false;
-            }
-            else
-            {
-                output = scanner.nextLine();
-            }  
+            output = scanner.nextLine();
             if (output.toLowerCase() == "exit")
             {
                 writer.println(output);
                 isExit = true;
-            } 
-            else
+            } else
             {
                 writer.println(output);
                 String input = reader.readLine();
-                if(input.toLowerCase().contains("password"))
-                {
-                    isPassword=true;
-                }
                 System.out.println(input);
             }
-            
+
         }
         System.exit(2);
     }
-
 }
