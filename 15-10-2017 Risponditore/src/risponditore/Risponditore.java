@@ -26,7 +26,7 @@ public class Risponditore
 
         for (int i = 0; i < 3; i++)
         {
-            Root.Children.add(new Node("Che " + l.categorie[i] + " vuoi tra?" + l.prodotti[i][0][0] + "|" + l.prodotti[i][1][0], new String[]
+            Root.Children.add(new Node("Che " + l.categorie[i] + " vuoi tra: " + l.prodotti[i][0][0] + "|" + l.prodotti[i][1][0] + "?", new String[]
             {
                 l.prodotti[i][0][0], l.prodotti[i][1][0]
             }));
@@ -34,12 +34,29 @@ public class Risponditore
 
         for (int i = 0; i < Root.Children.size(); i++)
         {
-            Root.Children.get(0).Children.add(new Node("Quanti ne vuoi?", new String[]
+
+            for (int j = 0; j < Root.Children.get(i).Answers.length; j++)
             {
-                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
-            }));
+                Root.Children.get(i).Children.add(new Node("Vuoi altro?", new String[]
+                {
+                    "si", "no"
+                }));
+
+            /*    Root.Children.get(i).Children.get(j).Children.add(new Node("Vuoi altro?", new String[]
+                {
+                    "si", "no"
+                })); */
+
+           /*     Root.Children.get(i).Children.get(j).Children.get(j).Children.add(new Node("Uscita...", new String[]
+                {
+                    ""
+                })); */
+
+            }
+
         }
 
+        /*
         for (int i = 0; i < Root.Children.size(); i++)
         {
             Root.Children.get(0).Children.get(0).Children.add(new Node("Vuoi altro?", new String[]
@@ -54,29 +71,34 @@ public class Risponditore
             {
                 ""
             }));
-        }
-
+        } */
         CopyRoot = Root;
     }
 
     public String Exe(String input)
     {
         input = input.toLowerCase();
+        if (Root.Question.equals("Vuoi altro?") && input.equals("si"))
+        {
+            Root = CopyRoot;
+        }
+        else if(Root.Question.equals("Vuoi altro?") && input.equals("no"))
+        {
+            return null;
+        }
         for (int i = 0; i < Root.Answers.length; i++)
         {
-            if (Root.Question.equals("Vuoi altro?") && input.equals("si"))
+            if (Root.Answers[i].equals(input))
             {
-                Root = CopyRoot;
-            } else if (Root.Question.equals("Quanti ne vuoi?"))
-            {
-                Root = Root.Children.get(Integer.parseInt(input));
-
-            } else if (Root.Answers[i].equals(input))
-            {
-                System.out.println("Sono uguali");
                 Root = Root.Children.get(i);
             }
         }
+
+        
+       /* if (Root.Question.equals("Quanti ne vuoi?"))
+        {
+            Root = Root.Children.get(Integer.parseInt(input));
+        } */
 
         String output = Root.Question;
         System.out.println("Output " + output);
@@ -96,6 +118,13 @@ class Node
     public String Question;
     public String[] Answers;
     public List<Node> Children;
+    
+    public void ChangeInput(String input)
+    {
+        
+    }
+    
+    public String Input;
 }
 
 class Product
