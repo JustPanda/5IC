@@ -1,4 +1,5 @@
-# Esercitazioni per la 5IA
+# Consegne per la 5IC
 
-- **171005**
-Consegnare il client per DateServer.
+Il branch master è utilizzato dal docente, ogni singolo studente ha un suo branch personale.
+- **Risponditore** dead line 16/10/2017.
+- **ChatTCP** dead line 30/10/2017.
