@@ -31,7 +31,9 @@ class Task implements Runnable
 			String msg;
 			while(!((msg=in.readLine()).equals("EXIT")))
 			{
-				out.println(pizzeria.getAnswers(msg, name));
+				String s=pizzeria.getAnswers(msg, name);
+				out.println(s);
+				out.flush();
 			}
 			in.close();
 			out.close();

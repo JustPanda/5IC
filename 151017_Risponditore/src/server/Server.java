@@ -16,13 +16,12 @@ class Server
 		final int PORT=80, N_THREADS=10;
 		ServerSocket server;
 		ExecutorService executor=Executors.newFixedThreadPool(N_THREADS);
-		Pizzeria pizzeria=new Pizzeria(getArray());
 		System.out.println("Server online");
 		try{
 			server=new ServerSocket(PORT);
 			while(true)
 			{
-				executor.execute(new Task(server.accept(), pizzeria));
+				executor.execute(new Task(server.accept(), new Pizzeria(getArray())));
 			}
 		}catch(IOException e){
 			e.printStackTrace();

@@ -5,30 +5,39 @@ import java.util.HashMap;
 class Pizzeria
 {
 	private HashMap<String, Node> allNode=new HashMap<>();
-	private Node root, actual;
+	private Node actual, before;
 
 	Pizzeria(String[] qa)
 	{
-		Node actual=root;
 		for(int i=0;i<qa.length;i++)
 		{
-			int firstLimits=qa[i].indexOf("->"), lastLimits=qa[i].lastIndexOf("->");
-			String key=qa[i].substring(0, firstLimits), question=qa[i].substring(firstLimits+2, lastLimits);
-			String[] answers=qa[i].substring(lastLimits+2).split(",");
+			int firstLimit=qa[i].indexOf("->"), lastLimit=qa[i].lastIndexOf("->");
+			String key=qa[i].substring(0, firstLimit), question=qa[i].substring(firstLimit+2, lastLimit);
+			String[] answers=qa[i].substring(lastLimit+2).split(",");
 			allNode.put(key, new Node(question, answers));
 		}
 	}
 
-	boolean isAnswer(String key)
+	private void changePosition(String key)
 	{
-		boolean notExist=true;
-		for(int i=0;(notExist=i<actual.answers.length)&&!key.equals(actual.answers[i]);i++);
-		return !notExist;
+		before=actual;
+		actual=allNode.get(key.replace(" ", "").toLowerCase());
+	}
+
+	private String getAnswers(String name)
+	{
+		String answer=actual.print(name);
+		if(actual.isTerminal)
+		{
+			changePosition(actual.answers[0]);
+			answer+=" "+actual.print(name);
+		}
+		return answer;
 	}
 
 	String getAnswers(String key, String name)
 	{
-		actual=allNode.get(key.replace(" ", "").toLowerCase());
-		return actual.print(name);
+		changePosition(key);
+		return getAnswers(name);
 	}
 }
