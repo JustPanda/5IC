@@ -121,36 +121,17 @@ class Node
     
     public void ChangeInput(String input)
     {
-        
+        Listino l = new Listino();
+        String[][][] p = l.prodotti;
+        for(int i=0; i<p.length; i++)
+        {
+            
+        }
     }
     
     public String Input;
 }
 
-class Product
-{
-
-    public Product(int Number, String Name, int Price, String Category)
-    {
-        this.Number = Number;
-        this.Name = Name;
-        this.Price = Price;
-    }
-    int Number;
-    String Name;
-    int Price;
-    String Category;
-}
-
-class Bills
-{
-
-    public Bills()
-    {
-        this.Products = new ArrayList<Product>();
-    }
-    List<Product> Products;
-}
 
 class Listino
 {
