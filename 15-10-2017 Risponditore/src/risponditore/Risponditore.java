@@ -15,152 +15,150 @@ import java.util.List;
 public class Risponditore
 {
 
-	int Prezzo = 0;
-	Node Root = null;
-	Node CopyRoot = null;
-	Listino l = new Listino();
+    int Prezzo = 0;
+    Node Root = null;
+    Node CopyRoot = null;
+    Listino l = new Listino();
 
-	public Risponditore()
-	{
-		Root = new Node("Ciao, benvenuto al NAC, cosa vuoi acquistare tra: " + l.categorie[0] + "|" + l.categorie[1] + "|" + l.categorie[2] + "?", l.categorie);
+    public Risponditore()
+    {
+        Root = new Node("Ciao, benvenuto al NAC, cosa vuoi acquistare tra: " + l.categorie[0] + "|" + l.categorie[1] + "|" + l.categorie[2] + "?", l.categorie);
 
-		for (int i = 0; i <3; i++)
-		{
-			Root.Children.add(new Node("Che " + l.categorie[i] + " vuoi tra?", new String[]
-			{
-				l.prodotti[i][0][0], l.prodotti[i][1][0]
-			}));
-		}
+        for (int i = 0; i < 3; i++)
+        {
+            Root.Children.add(new Node("Che " + l.categorie[i] + " vuoi tra?" + l.prodotti[i][0][0] + "|" + l.prodotti[i][1][0], new String[]
+            {
+                l.prodotti[i][0][0], l.prodotti[i][1][0]
+            }));
+        }
 
-		for (int i = 0; i < Root.Children.size(); i++)
-		{
-			Root.Children.get(0).Children.add(new Node("Quanti ne vuoi?", new String[]
-			{
-				"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
-			}));
-		}
+        for (int i = 0; i < Root.Children.size(); i++)
+        {
+            Root.Children.get(0).Children.add(new Node("Quanti ne vuoi?", new String[]
+            {
+                "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"
+            }));
+        }
 
-		for (int i = 0; i < Root.Children.size(); i++)
-		{
-			Root.Children.get(0).Children.get(0).Children.add(new Node("Vuoi altro?", new String[]
-			{
-				"si", "no"
-			}));
-		}
+        for (int i = 0; i < Root.Children.size(); i++)
+        {
+            Root.Children.get(0).Children.get(0).Children.add(new Node("Vuoi altro?", new String[]
+            {
+                "si", "no"
+            }));
+        }
 
-		for (int i = 0; i < Root.Children.size(); i++)
-		{
-			Root.Children.get(0).Children.get(0).Children.get(0).Children.add(new Node("Uscita...", new String[]
-			{
-				""
-			}));
-		}
+        for (int i = 0; i < Root.Children.size(); i++)
+        {
+            Root.Children.get(0).Children.get(0).Children.get(0).Children.add(new Node("Uscita...", new String[]
+            {
+                ""
+            }));
+        }
 
-		CopyRoot = Root;
-	}
+        CopyRoot = Root;
+    }
 
-	public String Exe(String input)
-	{
-		input = input.toLowerCase();
-		for (int i = 0; i < Root.Answers.length; i++)
-		{
-			if (Root.Question.equals("Vuoi altro?") && input.equals("si"))
-			{
-				Root = CopyRoot;
-			}
-			else if (Root.Answers[i].equals(input))
-			{
-				System.out.println("Sono uguali");
-				Root = Root.Children.get(i);
-			}
-		}
-		
-		String output = Root.Question;
-		System.out.println("Output " + output);
-		return output;
-	}
+    public String Exe(String input)
+    {
+        input = input.toLowerCase();
+        for (int i = 0; i < Root.Answers.length; i++)
+        {
+            if (Root.Question.equals("Vuoi altro?") && input.equals("si"))
+            {
+                Root = CopyRoot;
+            } else if (Root.Question.equals("Quanti ne vuoi?"))
+            {
+                Root = Root.Children.get(Integer.parseInt(input));
 
-	public Node Traverse(Node root)
-	{
+            } else if (Root.Answers[i].equals(input))
+            {
+                System.out.println("Sono uguali");
+                Root = Root.Children.get(i);
+            }
+        }
 
-		return root;
-	}
+        String output = Root.Question;
+        System.out.println("Output " + output);
+        return output;
+    }
 }
 
 class Node
 {
 
-	public Node(String Question, String[] Answers)
-	{
-		this.Question = Question;
-		this.Answers = Answers;
-		this.Children = new ArrayList<Node>();
-	}
-	public String Question;
-	public String[] Answers;
-	public List<Node> Children;
+    public Node(String Question, String[] Answers)
+    {
+        this.Question = Question;
+        this.Answers = Answers;
+        this.Children = new ArrayList<Node>();
+    }
+    public String Question;
+    public String[] Answers;
+    public List<Node> Children;
 }
 
 class Product
 {
 
-	public Product(int Number, String Name, int Price, String Category)
-	{
-		this.Number = Number;
-		this.Name = Name;
-		this.Price = Price;
-	}
-	int Number;
-	String Name;
-	int Price;
-	String Category;
+    public Product(int Number, String Name, int Price, String Category)
+    {
+        this.Number = Number;
+        this.Name = Name;
+        this.Price = Price;
+    }
+    int Number;
+    String Name;
+    int Price;
+    String Category;
 }
 
 class Bills
 {
 
-	public Bills()
-	{
-		this.Products = new ArrayList<Product>();
-	}
-	List<Product> Products;
+    public Bills()
+    {
+        this.Products = new ArrayList<Product>();
+    }
+    List<Product> Products;
 }
 
 class Listino
 {
-	String[] categorie =
-	{
-		"mobili",
-		"tappezzeria",
-		"lampadari"
-	};
 
-	String[][][] prodotti =
-	{
-		{
-			{
-				"divano", "500"
-			},
-			{
-				"letto", "1000"
-			}
-		},
-		{
-			{
-				"tappeto", "100"
-			},
-			{
-				"moquette", "300"
-			}
-		},
-		{
-			{
-				"lamapadario", "700"
-			},
-			{
-				"abatjoure", "30"
-			}
-		}
-	};
+    String[] categorie =
+    {
+        "mobili",
+        "tappezzeria",
+        "lampadari"
+    };
+
+    String[][][] prodotti =
+    {
+        {
+            {
+                "divano", "500"
+            },
+            {
+                "letto", "1000"
+            }
+        },
+        {
+            {
+                "tappeto", "100"
+            },
+            {
+                "moquette", "300"
+            }
+        },
+        {
+            {
+                "lamapadario", "700"
+            },
+            {
+                "abatjoure", "30"
+            }
+        }
+    };
 
 }
