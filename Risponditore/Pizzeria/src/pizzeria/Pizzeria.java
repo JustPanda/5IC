@@ -36,10 +36,14 @@ public class Pizzeria
         int ClientNumber;
         BufferedReader in;
         PrintWriter out;
+        Model m;
+        ArrayList<String> temp;
         public Server(Socket client, int ClientNumber)
         {
             this.ClientNumber = ClientNumber;
             this.client = client;
+            m = new Model();
+            temp = new ArrayList<>();
         }
         
         @Override
@@ -47,12 +51,20 @@ public class Pizzeria
         {
             try
             {
+                int i=0;
                 in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 out = new PrintWriter(client.getOutputStream(), true);
+                m.Setup();
+                m.Build();
+                m.Assign();
+                temp.add(m.Intro());
                 while(true)
                 {
-                    String s = in.readLine();
-                    out.println("Server response: " + s);
+                    out.println(temp.get(i));
+                    String answer = in.readLine();
+                    String question = m.Decide(temp.get(i), answer);
+                    temp.add(question);
+                    i++;
                 }
             }
             catch(Throwable e)

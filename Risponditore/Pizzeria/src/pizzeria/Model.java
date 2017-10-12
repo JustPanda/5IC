@@ -64,10 +64,10 @@ public class Model
         questions.add("Che Organi secondari vuole?(Rene|Polmoni)");
         questions.add("Vuole altro?(Si|No)");
         Id.add("root");
-        Id.add("Order");
-        Id.add("Exit");
-        Id.add("Vitals");
-        Id.add("Secondary");
+        Id.add("Si");
+        Id.add("No");
+        Id.add("Organi vitali");
+        Id.add("Organi secondari");
         Id.add("Other");
     }
     
@@ -166,8 +166,62 @@ public class Model
     
     public String Decide(String question, String answer)
     {
-        Nodo temp = this.Search(this.Intro());
-		
+        Nodo help;
+        if(question.toLowerCase().equals(this.Intro().toLowerCase()) && answer.toLowerCase().equals("si"))
+        {
+            help = this.Search(question);
+            return this.GetRightQuestion(help);
+        }
+        else
+        {
+            if(question.toLowerCase().equals(this.Intro().toLowerCase()) && answer.toLowerCase().equals("no"))
+            {
+                help = this.Search(question);
+                return this.GetLeftQuestion(help);
+            }
+        }
+        
+        if(question.toLowerCase().equals("Cosa desidera ordinare?(Organi vitali|Organi secondari)".toLowerCase()) && answer.toLowerCase().equals("organi vitali"))
+        {
+            help = this.Search(question);
+            return this.GetRightQuestion(help);
+        }
+        else
+        {
+            if(question.toLowerCase().equals("Cosa desidera ordinare?(Organi vitali|Organi secondari)".toLowerCase()) && answer.toLowerCase().equals("organi secondari"))
+            {
+                help = this.Search(question);
+                return this.GetLeftQuestion(help);
+            }
+        }
+        
+        if(question.toLowerCase().equals("Che Organo vitale vuole?(Cuore|Cervello)".toLowerCase()) && answer.toLowerCase().equals("cuore"))
+        {
+            help = this.Search(question);
+            return this.GetRightQuestion(help);
+        }
+        else
+        {
+            if(question.toLowerCase().equals("Che Organo vitale vuole?(Cuore|Cervello)".toLowerCase()) && answer.toLowerCase().equals("cervello"))
+            {
+                help = this.Search(question);
+                return this.GetRightQuestion(help);
+            }
+        }
+        
+        if(question.toLowerCase().equals("Vuole altro?(Si|No)".toLowerCase()) && answer.toLowerCase().equals("si"))
+        {
+            help = this.Search(this.Intro());
+            return this.GetRightQuestion(help);
+        }
+        else
+        {
+            if(question.toLowerCase().equals("Vuole altro?(Si|No)".toLowerCase()) && answer.toLowerCase().equals("no"))
+            {
+                help = this.Search(this.Intro());
+                return this.GetLeftQuestion(help);
+            }
+        }
         return null;
     }
     
@@ -184,21 +238,5 @@ public class Model
             }
         }
         return null;
-    }
-    
-    public static void main(String[] args)
-    {
-        Model m = new Model();
-		Scanner input = new Scanner(System.in);
-        m.Setup();
-        m.Build();
-        m.Assign();
-        System.out.println(m.Intro());
-		String answer = input.nextLine();
-		String response = m.Decide(m.Intro(), answer);
-		System.out.println(response);
-		answer = input.nextLine();
-		response = m.Decide("Cosa desidera ordinare?(Organi vitali|Organi secondari)", answer);
-		System.out.println(response);
     }
 }

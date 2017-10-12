@@ -22,11 +22,9 @@ public class Client
             out = new PrintWriter(socket.getOutputStream(), true);
             while(true)
             {
-                System.out.println("Inserisci richiesta");
+                String res = in.readLine();
                 String s = input.nextLine();
                 out.println(s);
-                String res = in.readLine();
-                System.out.println(res);
             }
         }
         catch(Throwable e)
