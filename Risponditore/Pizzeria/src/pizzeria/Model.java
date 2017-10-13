@@ -209,6 +209,20 @@ public class Model
             }
         }
         
+        if(question.toLowerCase().equals("Che Organi secondari vuole?(Rene|Polmoni)".toLowerCase()) && answer.toLowerCase().equals("rene"))
+        {
+            help = this.Search(question);
+            return this.GetRightQuestion(help);
+        }
+        else
+        {
+            if(question.toLowerCase().equals("Che Organi secondari vuole?(Rene|Polmoni)".toLowerCase()) && answer.toLowerCase().equals("polmoni"))
+            {
+                help = this.Search(question);
+                return this.GetRightQuestion(help);
+            }
+        }
+        
         if(question.toLowerCase().equals("Vuole altro?(Si|No)".toLowerCase()) && answer.toLowerCase().equals("si"))
         {
             help = this.Search(this.Intro());

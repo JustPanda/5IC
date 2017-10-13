@@ -7,6 +7,7 @@ import java.util.*;
 import java.net.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.lang.Object;
 
 public class Pizzeria 
 {
@@ -30,7 +31,7 @@ public class Pizzeria
         }
     }
     
-    static class Server extends Thread
+    static class Server implements Runnable
     {
         Socket client;
         int ClientNumber;
@@ -38,6 +39,8 @@ public class Pizzeria
         PrintWriter out;
         Model m;
         ArrayList<String> temp;
+        String shop = "";
+        String cost = "";
         public Server(Socket client, int ClientNumber)
         {
             this.ClientNumber = ClientNumber;
@@ -58,14 +61,48 @@ public class Pizzeria
                 m.Build();
                 m.Assign();
                 temp.add(m.Intro());
-                while(true)
+                while(!temp.get(i).toLowerCase().equals("Arrivederci".toLowerCase()))
                 {
                     out.println(temp.get(i));
                     String answer = in.readLine();
+                    if(answer.toLowerCase().equals("cuore") || answer.toLowerCase().equals("cervello") || answer.toLowerCase().equals("reni") || answer.toLowerCase().equals("polmoni"))
+                    {
+                        if(answer.toLowerCase().equals("cuore"))
+                        {
+                            this.shop += answer + ",";
+                            this.cost += "3000" + ",";
+                        }
+                        if(answer.toLowerCase().equals("cervello"))
+                        {
+                            this.shop += answer + ",";
+                            this.cost += "5000" + ",";
+                        }
+                        if(answer.toLowerCase().equals("reni"))
+                        {
+                            this.shop += answer + ",";
+                            this.cost += "2000" + ",";
+                        }
+                        if(answer.toLowerCase().equals("polmoni"))
+                        {
+                            this.shop += answer + ",";
+                            this.cost += "1000" + ",";
+                        }
+                    }
+                    System.out.println("lista: " + shop + " costo: " + cost);
                     String question = m.Decide(temp.get(i), answer);
                     temp.add(question);
                     i++;
                 }
+                String[] s2 = cost.split(",");
+                int n = 0;
+                for(int j=0; j<s2.length; j++)
+                {
+                    n+=Integer.parseInt(s2[j]);
+                }
+                out.println("Lei ha ordinato: [" + shop + "] al costo di: " +  n + ". " + temp.get(i));
+                this.client.close();
+                this.in.close();
+                this.out.close();
             }
             catch(Throwable e)
             {
