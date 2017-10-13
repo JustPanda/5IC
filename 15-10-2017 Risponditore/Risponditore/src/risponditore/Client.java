@@ -27,12 +27,12 @@ public class Client
 
         Scanner scanner = new Scanner(System.in);
         System.out.println(reader.readLine());
-        //System.out.println(reader.readLine());
+        System.out.println(reader.readLine());
         while (!isExit)
         {
             String output;
             output = scanner.nextLine();
-            if (output.toLowerCase() == "exit")
+            if ("exit".equals(output.toLowerCase()))
             {
                 writer.println(output);
                 isExit = true;

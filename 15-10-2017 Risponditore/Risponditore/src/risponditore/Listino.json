@@ -1,0 +1,36 @@
+{
+    "Listino": {
+        "Categorie": [
+            "mobili",
+            "tappezzeria",
+            "lampadari"
+        ],
+        "Prodotti": [
+            [
+                [
+                    "divano", "500"
+                ],
+                [
+                    "letto", "1000"
+                ]
+            ],
+            [
+                [
+                    "tappeto", "100"
+                ],
+                [
+                    "moquette", "300"
+                ]
+            ],
+            [
+                [
+                    "lamapadario", "700"
+                ],
+                [
+                    "abatjoure", "30"
+                ]
+            ]
+        ]
+    }
+
+}

@@ -58,8 +58,9 @@ class ClientConnection implements Runnable
             PrintWriter writer = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             Risponditore risponditore = new Risponditore();
+            writer.println("Ciao, benvenuto al Negozio Virtuale di Arredamento della Casa!");
             writer.println(risponditore.Root.Question);
-            Node temp = risponditore.Root;
+            //Node temp = risponditore.Root;
           /*  while(temp.Children.get(0)!=null)
             {
                 String answers ="\n";
@@ -76,12 +77,12 @@ class ClientConnection implements Runnable
                 String input = reader.readLine();
                 if (input.toLowerCase().equals("exit"))
                 {
-                    System.out.println("Ho ricevuto exit||||||||||||||||");
+                    System.out.println("Ho ricevuto exit");
                     writer.println("Uscita...");
                     isExit = true;
                 } else
                 {
-                    System.out.println("Ho ricevuto " + input);
+                    System.out.println("Ho ricevuto \"" + input+ "\"");
                     String output = risponditore.Exe(input);
                     if(output==null)
                     {
