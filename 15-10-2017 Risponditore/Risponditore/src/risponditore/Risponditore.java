@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author manue
  */
-public class Risponditore extends Listino
+public class Risponditore
 {
 
     int Prezzo = 0;
@@ -95,7 +95,7 @@ public class Risponditore extends Listino
         }
     }
     
-    public Listino OpenJson() throws IOException
+  /*  public Listino OpenJson() throws IOException
     {
 		/*try(InputStream reader = new FileInputStream("Listino.json"))
 		{
@@ -106,9 +106,9 @@ public class Risponditore extends Listino
 		}
         
 		
-		*/
+		
 		return null;
-    }
+    } */
 }
 
 class Node
