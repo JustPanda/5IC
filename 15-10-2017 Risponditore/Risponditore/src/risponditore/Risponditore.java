@@ -5,13 +5,9 @@
  */
 package risponditore;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 /**
  *
@@ -32,13 +28,13 @@ public class Risponditore extends Listino
 
     public Risponditore()
     {
-        Root = new Node("Il tuo carrello della spesa è al momento: [" + Oggetti + "] a " + Prezzo + "€. Cosa vuoi acquistare tra: " + l.categorie[0] + "|" + l.categorie[1] + "|" + l.categorie[2] + "?", l.categorie);
+        Root = new Node("Il tuo carrello della spesa è al momento: [" + Oggetti + "] a " + Prezzo + "€. Cosa vuoi acquistare tra: " + l.Categorie[0] + "|" + l.Categorie[1] + "|" + l.Categorie[2] + "?", l.Categorie);
 
         for (int i = 0; i < 3; i++)
         {
-            Root.Children.add(new Node("Che " + l.categorie[i] + " vuoi tra: " + l.prodotti[i][0][0] + "|" + l.prodotti[i][1][0] + "?", new String[]
+            Root.Children.add(new Node("Che " + l.Categorie[i] + " vuoi tra: " + l.Prodotti[i][0][0] + "|" + l.Prodotti[i][1][0] + "?", new String[]
             {
-                l.prodotti[i][0][0], l.prodotti[i][1][0]
+                l.Prodotti[i][0][0], l.Prodotti[i][1][0]
             }));
         }
 
@@ -84,7 +80,7 @@ public class Risponditore extends Listino
     public void AddPrice(String input)
     {
         Listino l = new Listino();
-        String[][][] p = l.prodotti;
+        String[][][] p = l.Prodotti;
         for(int i=0; i<p.length; i++)
         {
             for(int j=0; j<p[i].length; j++)
@@ -93,20 +89,25 @@ public class Risponditore extends Listino
                 {
                     Prezzo+=Integer.parseInt(p[i][j][1]);
                     Oggetti+=p[i][j][0] + "|";
-                    CopyRoot.Question = "La tua spesa è al momento: [" + Oggetti + "] a " + Prezzo + "€.  Cosa vuoi acquistare tra: " + l.categorie[0] + "|" + l.categorie[1] + "|" + l.categorie[2] + "?";
+                    CopyRoot.Question = "La tua spesa è al momento: [" + Oggetti + "] a " + Prezzo + "€.  Cosa vuoi acquistare tra: " + l.Categorie[0] + "|" + l.Categorie[1] + "|" + l.Categorie[2] + "?";
                 }
             }
         }
     }
     
-    public void OpenJson() throws IOException
+    public Listino OpenJson() throws IOException
     {
-        Scanner f = new Scanner(new File("Listino.json"));
-        URL url = new URL("Listino.json");
-        try(InputStream is = url.openStream())
-        {
-            //JsonReader rdr = Json.createReader(is);
-        }
+		/*try(InputStream reader = new FileInputStream("Listino.json"))
+		{
+			Gson gson = new GsonBuilder().create();
+			Listino l = gson.fromJson(reader, Listino.class);
+					
+					return null;
+		}
+        
+		
+		*/
+		return null;
     }
 }
 
@@ -129,14 +130,14 @@ class Node
 class Listino
 {
 
-    public String[] categorie =
+    public String[] Categorie =
     {
         "mobili",
         "tappezzeria",
         "lampadari"
     };
 
-    public String[][][] prodotti =
+    public String[][][] Prodotti =
     {
         {
             {
