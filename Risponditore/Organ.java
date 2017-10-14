@@ -9,7 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.lang.Object;
 
-public class Pizzeria 
+public class Organ 
 {
     public static void main(String[] args) throws Throwable
     {
