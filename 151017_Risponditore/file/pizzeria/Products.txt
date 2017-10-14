@@ -1,0 +1,4 @@
+Diavola,6.50
+Prosciutto funghi,7.00
+Acqua,1.00
+Coca cola,2.00

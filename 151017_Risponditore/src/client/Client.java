@@ -1,17 +1,15 @@
 package client;
 
-import sun.awt.image.ImageWatched;
+import server.Type;
 
+import java.util.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.Scanner;
 
-public class Client
+public class Client implements Type
 {
 	public static void main(String[] args)
 	{
@@ -22,34 +20,56 @@ public class Client
 		BufferedReader in;
 		PrintWriter out;
 		try{
+			boolean notExit=true;
 			String input;
-			ArrayList<String> msg;
 			server=new Socket(IP, PORT);
 			in=new BufferedReader(new InputStreamReader(server.getInputStream()));
 			out=new PrintWriter(server.getOutputStream(), true);
 			System.out.print("Client connected. Insert name: ");
 			out.println(sc.nextLine());
 			do{
-				boolean first=true;
-				msg=new ArrayList<>(elaborate(in.readLine()));
-				System.out.println(msg.get(0));
-				msg.remove(0);
-				do{
-					if(!first){
-						System.out.println("No option available");
-					}else{
-						first=false;
-					}
-					System.out.print(">");
-					input=sc.nextLine();
-				}while(!msg.contains(input));
-				out.println(input);
-//				input=in.readLine();
-//				if(input!=null)
-//				{
-//					System.out.println(input.replace("*", "\n"));
-//				}
-			}while(!msg.equals("EXIT")&&input!=null);
+				String type=in.readLine();
+				switch(type)
+				{
+					case CHOOSE_TYPE: {
+						boolean first=true, notSend;
+						int position;
+						String question=in.readLine();
+						String answers=in.readLine();
+						List<String> msg=new ArrayList<>(Arrays.asList(answers.split(",")));
+						System.out.println(merge(question, msg));
+						do{
+							if(!first){
+								System.out.println("No option available");
+							}else{
+								first=false;
+							}
+							System.out.print(">");
+							input=sc.nextLine();
+							try{
+								position=Integer.parseInt(input);
+								notSend=position!=0&&position<=msg.size();
+							}catch(NumberFormatException e){
+								notSend=msg.contains(input);
+							}
+						}while(!notSend);
+						out.println(input);
+					} break;
+					case INSERT_TYPE:
+						System.out.println(in.readLine());
+						break;
+					case ITEM_TYPE:
+						System.out.println(in.readLine());
+						out.println("");
+						break;
+					case SHOW_TYPE:
+						System.out.println(in.readLine().replace("|", "\n"));
+						out.println("");
+					case EXIT_TYPE:
+						notExit=false;
+						break;
+				}
+			}while(notExit);
 			in.close();
 			out.close();
 		}catch(IOException e){
@@ -57,20 +77,12 @@ public class Client
 		}
 	}
 
-	static LinkedList<String> elaborate(String toElaborate)
+	private static String merge(String question, List<String> answers)
 	{
-		int limit=toElaborate.indexOf("->");
-		System.out.println(toElaborate);
-		LinkedList<String> toReturn=new LinkedList<>();
-		toReturn.add(toElaborate.substring(0, limit));
+		for(int i=0;i<answers.size();i++)
 		{
-			String[] tmp=toElaborate.substring(limit+2).split(",");
-			for (int i=0;i<tmp.length;i++)
-			{
-				toReturn.set(0, toReturn.get(0)+"\n"+(i+1)+". "+tmp[i]);
-				toReturn.add(tmp[i]);
-			}
+			question+="\n"+(i+1)+". "+answers.get(i).trim();
 		}
-		return toReturn;
+		return question;
 	}
 }

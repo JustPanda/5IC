@@ -1,0 +1,53 @@
+introduzione:Choose
+    Salve %s, cosa vuole ordinare?. Puo' scegliere tra questi 3 tipi di cibi:
+        Bibita
+        Pizza
+        Non mi serve nulla
+
+Bibita:Choose
+    Cosa vuole prendere:
+        Coca cola,
+        Acqua,
+        Nulla
+
+Pizza:Choose
+    Cosa vuole prendere:
+        Diavola,
+        Prosciutto funghi,
+        Annulla
+
+Annulla:Choose
+    Cosa vuole ordinare ancora:
+        Bibita
+        Pizza
+        Mostra spesa totale
+        Rimuovi elemento
+        Fine spesa
+
+Acqua:Item
+    Aggiunti %.2f$ alla spesa totale
+        Annulla
+
+Coca cola:Item
+    Aggiunti %.2f$ alla spesa totale|1.20
+        Annulla
+
+Diavola:Item
+    Aggiunti %.2f$ alla spesa totale|6.50
+        Annulla
+
+Prosciutto funghi:Item
+    Aggiunti %.2f$ alla spesa totale|7.50
+        Annulla
+
+Rimuovi elemento:Insert
+    Inserisci i cibi ordinati che si vogliono eliminare separati da uno spazio:
+        Annulla
+
+Mostra spesa totale:Show
+    La sua spesa totale e' di %.2f$ con: %s
+        Annulla
+
+Fine spesa:Exit
+    Arrivederci %s
+
