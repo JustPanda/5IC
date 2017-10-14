@@ -21,7 +21,7 @@ class Service implements Runnable, Type
 	Service(Socket client, Scanner questionSc, Scanner productsSc)
 	{
 		this.client=client;
-		productsSc.useDelimiter(",|\n");
+		productsSc=productsSc.useDelimiter(",|\\n");
 		while(productsSc.hasNextLine())
 		{
 			products.put(productsSc.next(), Double.parseDouble(productsSc.next()));
