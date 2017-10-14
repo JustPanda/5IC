@@ -94,12 +94,21 @@ public class Pizzeria
                     i++;
                 }
                 String[] s2 = cost.split(",");
-                int n = 0;
-                for(int j=0; j<s2.length; j++)
-                {
-                    n+=Integer.parseInt(s2[j]);
-                }
-                out.println("Lei ha ordinato: [" + shop + "] al costo di: " +  n + ". " + temp.get(i));
+				if(shop != "")
+				{
+					int n = 0;
+					for(int j=0; j<s2.length; j++)
+					{
+						n+=Integer.parseInt(s2[j]);
+					}
+					out.println("Lei ha ordinato: [" + shop + "] al costo di: " +  n + ". " + temp.get(i));
+				}
+                else
+				{
+					out.println(temp.get(i));
+				}
+				this.client.shutdownInput();
+				this.client.shutdownOutput();
                 this.client.close();
                 this.in.close();
                 this.out.close();
@@ -111,3 +120,5 @@ public class Pizzeria
         }
     }
 }
+
+

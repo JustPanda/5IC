@@ -12,19 +12,18 @@ public class Client
     PrintWriter out;
     Scanner input;
     
-    public void Connect()
+    public static void main(String[] args) throws Throwable
     {
         try
         {
-            input = new Scanner(System.in);
+            Scanner input = new Scanner(System.in);
             Socket socket = new Socket("127.0.0.1", 9090);
-            in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            out = new PrintWriter(socket.getOutputStream(), true);
-            boolean check = true;
-            while(check)
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            while(true)
             {
                 String res = in.readLine();
-                if(res.toLowerCase() != "Arrivederci".toLowerCase())
+                if(res.toLowerCase() != "Arrivederci".toLowerCase() || res.toLowerCase().split(" ")[0] != "Lei".toLowerCase())
                 {
                     System.out.println(res);
                     String s = input.nextLine();
@@ -33,23 +32,20 @@ public class Client
                 else
                 {
                     System.out.println(res);
-                    check = false;
-                    socket.close();
-                    return ;
+                    break;
                 }
             }
-            in.close();
-            out.close();
+			socket.shutdownInput();
+			socket.shutdownOutput();
+			socket.close();
+			in.close();
+			out.close();
+			input.close();
+			System.exit(0);
         }
         catch(Throwable e)
         {
             e.printStackTrace();
         }
-    }
-    
-    public static void main(String[] args)
-    {
-        Client client = new Client();
-        client.Connect();
     }
 }
