@@ -45,7 +45,7 @@ public class Client
         }
         catch(Throwable e)
         {
-            e.printStackTrace();
+            System.exit(0);
         }
     }
 }
