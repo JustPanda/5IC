@@ -1,0 +1,1 @@
+Questa è la versione dell'esercizio del risponditore senza grafica, ho deciso di allegare anche questa versione nel caso in cui si vogliano vedere in funzione alberi e stati finiti, la costruzione e l'uso dell'albero si trova nella classe Pizzeria (del file omonimo) risulta anche questa versione funzionante e completa dei requisiti.

@@ -1,0 +1,1 @@
+Questa è la versione dell'esercizio del risponditore con la grafica, non ha però alberi o automi al suo interno, la grafica l'ho costruita mediante la tecnologia di javaFx, comunque il progetto risulta funzionante nel suo fine. 
