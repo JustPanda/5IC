@@ -1,0 +1,52 @@
+﻿<XtraSerializer version="17.1.6.0">
+  <Items>
+    <Item1 ItemKind="DiagramRoot" PageSize="781.333333333333,1210" SelectedStencils="BasicShapes, BasicFlowchartShapes">
+      <Children>
+        <Item1 Position="264,24" Size="226.666666666667,170" FontSize="18" Angle="-0" Shape="BasicShapes.Ellipse" Content="Ciao e benvenuto al Negozio Virtuale di Arredamento Casa" ItemKind="DiagramShape" />
+        <Item2 Position="217.333333333333,274" Size="320,240" FontSize="18" Angle="-0" Shape="BasicShapes.Ellipse" Content="La tua spesa è al momento [$Spesa] a [$Prezzo]€. Cosa vuoi acquistare tra mobili|tappezzeria|moquette?" ItemKind="DiagramShape" />
+        <Item3 Position="327.333333333333,754" Size="100,75" FontSize="18" Angle="0" Shape="BasicShapes.Ellipse" Content="Vuoi altro?" ItemKind="DiagramShape" />
+        <Item4 Position="104,594" Size="146.666666666667,110" FontSize="18" Angle="0" Shape="BasicShapes.Ellipse" Content="Che mobili vuoi?" ItemKind="DiagramShape" />
+        <Item5 Position="514,594" Size="146.666666666667,110" FontSize="18" Angle="0" Shape="BasicShapes.Ellipse" Content="Che lampadari vuoi?" ItemKind="DiagramShape" />
+        <Item6 Position="304,594" Size="146.666666666667,110" FontSize="18" Angle="0" Shape="BasicShapes.Ellipse" Content="Che tappezzeria vuoi?" ItemKind="DiagramShape" />
+        <Item7 Position="264,874" Size="226.666666666667,170" FontSize="18" Angle="0" Shape="BasicShapes.Ellipse" Content="Ti verranno spediti $Oggetti al prezzo di $Prezzo € " ItemKind="DiagramShape" />
+        <Item8 Position="327.333333333333,1094" Size="100,75" FontSize="18" Angle="0" Shape="BasicShapes.Ellipse" Content="Fine" ItemKind="DiagramShape" />
+        <Item9 BeginItemPointIndex="3" EndItemPointIndex="3" Points="54.0000000000001,791.5 54.0000000000001,394" ItemKind="DiagramConnector" BeginItem="2" EndItem="1" BeginPoint="343.333333333333,817.5" EndPoint="233.333333333333,420" />
+        <Item10 Position="24,524" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="SI" ItemKind="DiagramShape" />
+        <Item11 BeginItemPointIndex="2" EndItemPointIndex="0" Points="(Empty)" ItemKind="DiagramConnector" BeginItem="6" EndItem="7" BeginPoint="393.333333333333,1070" EndPoint="393.333333333333,1120" />
+        <Item12 BeginItemPointIndex="2" EndItemPointIndex="0" Points="(Empty)" ItemKind="DiagramConnector" BeginItem="2" EndItem="6" BeginPoint="393.333333333333,855" EndPoint="393.333333333333,900" />
+        <Item13 BeginItemPointIndex="2" EndItemPointIndex="0" Points="377.333333333333,534 587.333333333333,534" ItemKind="DiagramConnector" BeginItem="1" EndItem="4" BeginPoint="393.333333333333,540" EndPoint="603.333333333333,620" />
+        <Item14 BeginItemPointIndex="2" EndItemPointIndex="0" Points="(Empty)" ItemKind="DiagramConnector" BeginItem="1" EndItem="5" BeginPoint="393.333333333333,540" EndPoint="393.333333333333,620" />
+        <Item15 BeginItemPointIndex="2" EndItemPointIndex="0" Points="377.333333333333,534 177.333333333333,534" ItemKind="DiagramConnector" BeginItem="1" EndItem="3" BeginPoint="393.333333333333,540" EndPoint="193.333333333333,620" />
+        <Item16 BeginItemPointIndex="2" EndItemPointIndex="0" Points="(Empty)" ItemKind="DiagramConnector" BeginItem="0" EndItem="1" BeginPoint="393.333333333333,220" EndPoint="393.333333333333,300" />
+        <Item17 BeginItemPointIndex="2" EndItemPointIndex="-1" Points="177.333333333333,811.5" ItemKind="DiagramConnector" BeginItem="3" BeginPoint="193.333333333333,730" EndPoint="334,811.5" />
+        <Item18 BeginItemPointIndex="2" EndItemPointIndex="0" Points="(Empty)" ItemKind="DiagramConnector" BeginItem="5" EndItem="2" BeginPoint="393.333333333333,730" EndPoint="393.333333333333,780" />
+        <Item19 BeginItemPointIndex="2" EndItemPointIndex="0" Points="(Empty)" ItemKind="DiagramConnector" BeginPoint="364,704" EndPoint="364,754" />
+        <Item20 BeginItemPointIndex="2" EndItemPointIndex="1" Points="587.333333333333,725.875 467.333333333333,725.875 467.333333333333,791.5" ItemKind="DiagramConnector" BeginItem="4" EndItem="2" BeginPoint="603.333333333333,730" EndPoint="443.333333333333,817.5" />
+        <Item21 BeginItemPointIndex="2" EndItemPointIndex="1" Points="587.333333333333,801.5" ItemKind="DiagramConnector" BeginItem="4" BeginPoint="603.333333333333,730" EndPoint="424,801.5" />
+        <Item22 BeginItemPointIndex="2" EndItemPointIndex="-1" Points="194,761.5" ItemKind="DiagramConnector" BeginPoint="194,674" EndPoint="344,761.5" />
+        <Item23 BeginItemPointIndex="1" EndItemPointIndex="1" Points="744,394 744,1131.5" ItemKind="DiagramConnector" BeginItem="1" EndItem="7" BeginPoint="553.333333333333,420" EndPoint="443.333333333333,1157.5" />
+        <Item24 BeginItemPointIndex="1" EndItemPointIndex="1" Points="677.666666666667,649 677.666666666667,1044 489.916666666667,1044 489.916666666667,1131.5" ItemKind="DiagramConnector" BeginItem="4" EndItem="7" BeginPoint="676.666666666667,675" EndPoint="443.333333333333,1157.5" />
+        <Item25 BeginItemPointIndex="3" EndItemPointIndex="2" Points="87,649 87,1186 377.333333333333,1186" ItemKind="DiagramConnector" BeginItem="3" EndItem="7" BeginPoint="120,675" EndPoint="393.333333333333,1195" />
+        <Item26 BeginItemPointIndex="3" EndItemPointIndex="3" Points="287,649 287,857 247,857 247,1131.5" ItemKind="DiagramConnector" BeginItem="5" EndItem="7" BeginPoint="320,675" EndPoint="343.333333333333,1157.5" />
+        <Item27 BeginItemPointIndex="2" EndItemPointIndex="1" Points="377.333333333333,836 434,836 434,857 506.5,857 506.5,1024 459,1024 459,1131.5" ItemKind="DiagramConnector" BeginItem="2" EndItem="7" BeginPoint="393.333333333333,855" EndPoint="443.333333333333,1157.5" />
+        <Item28 BeginItemPointIndex="-1" EndItemPointIndex="-1" Points="(Empty)" ItemKind="DiagramConnector" BeginItem="6" EndItem="6" BeginPoint="280,985" EndPoint="280,985" />
+        <Item29 Position="217.333333333333,524" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="SI" ItemKind="DiagramShape" />
+        <Item30 Position="350.666666666667,544" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="SI" ItemKind="DiagramShape" />
+        <Item31 Position="484,524" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="SI" ItemKind="DiagramShape" />
+        <Item32 Position="654,771.5" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Exit" ItemKind="DiagramShape" />
+        <Item33 Position="454,704" Size="83.3333333333335,40" FontSize="12" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Lampadario" ItemKind="DiagramShape" />
+        <Item34 Position="497.333333333333,771.5" Size="70,40" FontSize="12" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Abatjoure" ItemKind="DiagramShape" />
+        <Item35 Position="374,704" Size="70,40" FontSize="12" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Moquette" ItemKind="DiagramShape" />
+        <Item36 Position="314,704" Size="53.3333333333333,40" FontSize="12" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Tappeto" ItemKind="DiagramShape" />
+        <Item37 Position="254,674" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Exit" ItemKind="DiagramShape" />
+        <Item38 Position="124,714" Size="53.3333333333333,40" FontSize="14" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Divano" ItemKind="DiagramShape" />
+        <Item39 Position="197.333333333333,744" Size="53.3333333333333,40" FontSize="16" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Letto" ItemKind="DiagramShape" />
+        <Item40 Position="54,884" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Exit" ItemKind="DiagramShape" />
+        <Item41 Position="484,884" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Exit" ItemKind="DiagramShape" />
+        <Item42 Position="314,834" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="No" ItemKind="DiagramShape" />
+        <Item43 Position="217.333333333333,1024" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Exit" ItemKind="DiagramShape" />
+        <Item44 Position="704,504" Size="53.3333333333333,40" FontSize="20" Angle="0" Shape="BasicFlowchartShapes.Document" Content="Exit" ItemKind="DiagramShape" />
+      </Children>
+    </Item1>
+  </Items>
+</XtraSerializer>

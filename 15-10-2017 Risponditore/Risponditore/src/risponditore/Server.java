@@ -12,8 +12,10 @@ import java.io.*;
 
 /**
  *
- * @author manue
+ * @author Manuele Lucchi
  */
+
+//Classe Server che fa partire una Pool di Executor, uno per ogni Client che si connette.
 public class Server
 {
 
@@ -36,6 +38,7 @@ public class Server
     }
 }
 
+//Classe ClientConnection che implementa Runnable. Viene usata come oggetto per gli Executor. Continua a ricevere ed inviare
 class ClientConnection implements Runnable
 {
 
@@ -60,17 +63,7 @@ class ClientConnection implements Runnable
             Risponditore risponditore = new Risponditore();
             writer.println("Ciao, benvenuto al Negozio Virtuale di Arredamento della Casa!");
             writer.println(risponditore.Root.Question);
-            //Node temp = risponditore.Root;
-          /*  while(temp.Children.get(0)!=null)
-            {
-                String answers ="\n";
-                for(int i=0; i<temp.Answers.length; i++)
-                {
-                    answers+=temp.Answers[i] + "\n";
-                }
-                System.out.println(temp.Question + answers);
-                temp = temp.Children.get(0);
-            } */
+            
             while (!isExit)
             {
 

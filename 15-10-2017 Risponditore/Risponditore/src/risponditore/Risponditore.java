@@ -11,8 +11,10 @@ import java.util.List;
 
 /**
  *
- * @author manue
+ * @author Manuele Lucchi
  */
+
+//Classe Risponditore che rappresenta l'automa a stati finiti
 public class Risponditore
 {
 
@@ -26,9 +28,10 @@ public class Risponditore
     String[][][] prod = null;
     Listino l = new Listino();
 
+    //Costruttore del Risponditore con creazione statica dell'albero
     public Risponditore()
     {
-        Root = new Node("Il tuo carrello della spesa è al momento: [" + Oggetti + "] a " + Prezzo + "€. Cosa vuoi acquistare tra: " + l.Categorie[0] + "|" + l.Categorie[1] + "|" + l.Categorie[2] + "?", l.Categorie);
+        Root = new Node("La tua spesa è al momento: [" + Oggetti + "] a " + Prezzo + "€. Cosa vuoi acquistare tra: " + l.Categorie[0] + "|" + l.Categorie[1] + "|" + l.Categorie[2] + "?", l.Categorie);
 
         for (int i = 0; i < 3; i++)
         {
@@ -52,6 +55,7 @@ public class Risponditore
         CopyRoot = Root;
     }
 
+    //Metodo per la navigazione dell'albero
     public String Exe(String input)
     {
         input = input.toLowerCase();
@@ -77,6 +81,7 @@ public class Risponditore
         return output;
     }
     
+    //Metodo per la conta del prezzo totale
     public void AddPrice(String input)
     {
         Listino l = new Listino();
@@ -94,26 +99,13 @@ public class Risponditore
             }
         }
     }
-    
-  /*  public Listino OpenJson() throws IOException
-    {
-		/*try(InputStream reader = new FileInputStream("Listino.json"))
-		{
-			Gson gson = new GsonBuilder().create();
-			Listino l = gson.fromJson(reader, Listino.class);
-					
-					return null;
-		}
-        
-		
-		
-		return null;
-    } */
+
 }
 
+//Classe Nodo per i nodi dell'albero
 class Node
 {
-
+    //Costruttore della classe nodo
     public Node(String Question, String[] Answers)
     {
         this.Question = Question;
@@ -127,6 +119,7 @@ class Node
 }
 
 
+//Classe Listino che contiene prodotti e categorie. L'idea iniziale era di usare un Json ma Java non collabora
 class Listino
 {
 
