@@ -5,18 +5,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 class Service implements Runnable, Type
 {
 	private String name;
 	private HashMap<String, Node> allNode = new HashMap<>();
-	private HashMap<String, Double> products=new HashMap<>();
+	private HashMap<String, Product> products=new HashMap<>();
 	private Socket client;
 	private Node before, actual;
 	private Receipt receipt=new Receipt();
+	private Operations operations=new Operations();
 
 	Service(Socket client, Scanner questionSc, Scanner productsSc)
 	{
@@ -24,12 +25,20 @@ class Service implements Runnable, Type
 		productsSc=productsSc.useDelimiter(",|\\n");
 		while(productsSc.hasNextLine())
 		{
-			products.put(productsSc.next(), Double.parseDouble(productsSc.next()));
+			String name=productsSc.next();
+			products.put(name, new Product(name, Double.parseDouble(productsSc.next())));
 		}
-		products.forEach((k, v) -> System.out.println(k+" "+v));
 		while(questionSc.hasNextLine())
 		{
-			System.out.println(questionSc.nextLine());
+			String question, answer;
+			String[] first=questionSc.nextLine().split(":");
+			LinkedList<String> answers=new LinkedList<>();
+			question=questionSc.nextLine().trim();
+			while(questionSc.hasNextLine()&&!(answer=questionSc.nextLine()).isEmpty())
+			{
+				answers.add(answer.trim());
+			}
+			allNode.put(first[0], new Node(first[0], first[1], question, answers.toArray(new String[answers.size()])));
 		}
 	}
 
@@ -39,34 +48,53 @@ class Service implements Runnable, Type
 		BufferedReader in;
 		PrintWriter out;
 		try{
+			String msg="start", keyProduct=null;
 			in=new BufferedReader(new InputStreamReader(client.getInputStream()));
 			out=new PrintWriter(client.getOutputStream(), true);
 			name=in.readLine();
-			String msg="introduzione";
 			do{
+				if(actual!=null) {
+					actual.exec(products.get(keyProduct), receipt);
+				}
 				changePosition(msg);
 				out.println(actual.type);
-				actual.exec(receipt);
 				switch(actual.type)
 				{
 					case CHOOSE_TYPE:
+						String[] prices=new String[actual.answers.length];
+						for(int i=0;i<prices.length;i++)
+						{
+							Product product=products.get(actual.answers[i]);
+							if(product!=null)
+							{
+								prices[i]=String.valueOf(product.getPrice());
+							}
+						}
 						out.println(String.format(actual.question, name));
-						out.println(Arrays.toString(actual.answers).replace("[", "").replace("]", "").replace(", ", ","));
-					break;
+						out.println(listToString(actual.answers));
+						out.println(listToString(prices));
+						break;
+					case ITEM_TYPE:
+						out.println(String.format(actual.question, products.get(actual.key).getPrice()));
+						keyProduct=actual.key;
+						break;
 					case INSERT_TYPE:
 						out.println(actual.question);
+						while(products.get((keyProduct=in.readLine()))==null)
+						{
+							out.println(false);
+						}
+						out.println(true);
+						break;
+					case SHOW_TYPE:
+						out.println(String.format(actual.question, receipt.getPrice()));
+						out.println(receipt.printElements());
 						break;
 					case EXIT_TYPE:
 						out.println(actual.question);
 						break;
-					case SHOW_TYPE:
-						out.println(actual.print(receipt));
-						break;
-					case ITEM_TYPE:
-						out.println(String.format(actual.question, actual.product.getPrice()));
-						break;
 				}
-			}while(!((msg=in.readLine()).equals("EXIT")));
+			}while((msg=in.readLine())!=null);
 			in.close();
 			out.close();
 		}catch(IOException e){
@@ -79,7 +107,7 @@ class Service implements Runnable, Type
 		String key;
 		if(msg.equals(""))
 		{
-			key=actual.answersKey[0];
+			key=actual.answers[0];
 		}else{
 			if(actual==null)
 			{
@@ -89,11 +117,17 @@ class Service implements Runnable, Type
 					key=actual.answers[Integer.parseInt(msg)-1];
 				}catch(NumberFormatException e){
 					key=msg;
-//					key=actual.answers[Arrays.asList(actual.answers).indexOf(msg)];
 				}
 			}
 		}
 		before=actual;
 		actual=allNode.get(key);
+	}
+
+	private String listToString(String[] elements)
+	{
+		StringBuilder stringElements=new StringBuilder("");
+		for(String element: elements) stringElements.append(element+",");
+		return stringElements.toString();
 	}
 }

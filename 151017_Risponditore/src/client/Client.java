@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Client implements Type
 {
@@ -25,7 +26,7 @@ public class Client implements Type
 			server=new Socket(IP, PORT);
 			in=new BufferedReader(new InputStreamReader(server.getInputStream()));
 			out=new PrintWriter(server.getOutputStream(), true);
-			System.out.print("Client connected. Insert name: ");
+			System.out.print("Buongiorno, prego inserisca il suo nome: ");
 			out.println(sc.nextLine());
 			do{
 				String type=in.readLine();
@@ -34,10 +35,21 @@ public class Client implements Type
 					case CHOOSE_TYPE: {
 						boolean first=true, notSend;
 						int position;
-						String question=in.readLine();
-						String answers=in.readLine();
-						List<String> msg=new ArrayList<>(Arrays.asList(answers.split(",")));
-						System.out.println(merge(question, msg));
+						final StringBuilder question=new StringBuilder(in.readLine());
+						List<String> answers=new ArrayList<>(Arrays.asList(in.readLine().split(",")));
+						List<String> prices=new ArrayList<>(Arrays.asList(in.readLine().split(",")));
+						{
+							final AtomicInteger index=new AtomicInteger(0);
+							answers.forEach((s) -> {
+								String priceTmp=prices.get(index.get());
+								question.append("\n"+(index.addAndGet(1))+". "+s);
+								if(!priceTmp.equals("null"))
+								{
+									question.append(" - "+priceTmp+"$");
+								}
+							});
+						}
+						System.out.println(question.toString());
 						do{
 							if(!first){
 								System.out.println("No option available");
@@ -48,23 +60,32 @@ public class Client implements Type
 							input=sc.nextLine();
 							try{
 								position=Integer.parseInt(input);
-								notSend=position!=0&&position<=msg.size();
+								notSend=position!=0&&position<=answers.size();
 							}catch(NumberFormatException e){
-								notSend=msg.contains(input);
+								notSend=answers.contains(input);
 							}
 						}while(!notSend);
 						out.println(input);
 					} break;
 					case INSERT_TYPE:
-						System.out.println(in.readLine());
+						System.out.print(in.readLine());
+						do{
+							out.println(sc.nextLine());
+						}while(!Boolean.valueOf(in.readLine()));
+						System.out.println("Element removed");
+						out.println("");
 						break;
 					case ITEM_TYPE:
 						System.out.println(in.readLine());
 						out.println("");
 						break;
-					case SHOW_TYPE:
-						System.out.println(in.readLine().replace("|", "\n"));
-						out.println("");
+					case SHOW_TYPE: {
+							final StringBuilder question=new StringBuilder(in.readLine());
+							List<String> msg=new ArrayList<>(Arrays.asList(in.readLine().split(",")));
+							msg.forEach((s) -> {question.append("\n"+s);});
+							System.out.println(question.toString());
+							out.println("");
+						} break;
 					case EXIT_TYPE:
 						notExit=false;
 						break;
@@ -75,14 +96,5 @@ public class Client implements Type
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-	}
-
-	private static String merge(String question, List<String> answers)
-	{
-		for(int i=0;i<answers.size();i++)
-		{
-			question+="\n"+(i+1)+". "+answers.get(i).trim();
-		}
-		return question;
 	}
 }
