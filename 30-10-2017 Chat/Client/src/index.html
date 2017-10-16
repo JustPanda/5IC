@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello World!</title>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.0/css/ui-dark.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.0/js/base.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/winjs/4.4.0/js/ui.js"></script> 
+    </head>
+    <body>
+        <div id="content"></div>
+    </body>
+
+    <!-- inject:js -->
+    <!-- endinject -->
+
+    <script>
+        System.config({
+            map: {
+                'react': '../node_modules/react/dist/react.js',
+                'react-dom': '../node_modules/react-dom/dist/react-dom.js'
+            },
+            packages: {
+                js: {
+                    defaultExtension: 'js'
+                }
+            }
+        });
+        System.import('js/index.js').then(null, console.error.bind(console));
+    </script>
+</html>
