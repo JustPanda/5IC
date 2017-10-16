@@ -16,6 +16,7 @@ class Server
 		Scanner questionSc, productsSc;
 		ServerSocket server;
 		ExecutorService executor=Executors.newFixedThreadPool(N_THREADS);
+		Operations operations=new Operations("Orders.txt");
 		System.out.println("Server online");
 		try{
 			server=new ServerSocket(PORT);
@@ -23,7 +24,7 @@ class Server
 			productsSc=new Scanner(new File("file/"+service+"/Products.txt"));
 			while(true)
 			{
-				executor.execute(new Service(server.accept(), questionSc, productsSc));
+				executor.execute(new Service(server.accept(), questionSc, productsSc, operations));
 			}
 		}catch(IOException e){
 			e.printStackTrace();

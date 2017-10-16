@@ -88,11 +88,12 @@ public class Client implements Type
 						} break;
 					case EXIT_TYPE:
 						notExit=false;
+						System.out.println(in.readLine());
 						break;
 				}
 			}while(notExit);
-			in.close();
 			out.close();
+			in.close();
 		}catch(IOException e){
 			e.printStackTrace();
 		}

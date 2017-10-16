@@ -8,7 +8,7 @@ Bibita:Choose
     Cosa vuole prendere:
         Coca cola
         Acqua
-        Nulla
+        Annulla
 
 Pizza:Choose
     Cosa vuole prendere:

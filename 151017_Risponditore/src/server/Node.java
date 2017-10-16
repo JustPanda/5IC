@@ -4,8 +4,8 @@ import java.util.function.BiFunction;
 
 class Node implements Type
 {
-	String key, type, question;
-	String[] answers;
+	private String key, type, question;
+	private String[] answers;
 
 	Node(String key, String type, String question, String[] answers)
 	{
@@ -15,9 +15,36 @@ class Node implements Type
 		this.answers=answers;
 	}
 
-	boolean exec(Product product, Receipt receipt)
+	String getType()
 	{
-		BiFunction<Product, Receipt, Boolean> function=Operations.exec.get(type);
-		return function!=null?function.apply(product, receipt):true;
+		return this.type;
 	}
+
+	String getKey()
+	{
+		return this.key;
+	}
+
+	String getQuestion()
+	{
+		return this.question;
+	}
+
+	String[] getAnswers()
+	{
+		return this.answers;
+	}
+
+	void exec(Operations operations, Product product, Receipt receipt)
+	{
+		BiFunction<Product, Receipt, Void> function=operations.getExec(type);
+		if(function!=null)
+			function.apply(product, receipt);
+	}
+
+	String printToClient(Object[] objects, Operations operations)
+	{
+		return operations.getPrintToClient(type).apply(objects);
+	}
+
 }

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Scanner;
@@ -17,11 +19,12 @@ class Service implements Runnable, Type
 	private Socket client;
 	private Node before, actual;
 	private Receipt receipt=new Receipt();
-	private Operations operations=new Operations();
+	private Operations operations;
 
-	Service(Socket client, Scanner questionSc, Scanner productsSc)
+	Service(Socket client, Scanner questionSc, Scanner productsSc, Operations operations)
 	{
 		this.client=client;
+		this.operations=operations;
 		productsSc=productsSc.useDelimiter(",|\\n");
 		while(productsSc.hasNextLine())
 		{
@@ -49,52 +52,25 @@ class Service implements Runnable, Type
 		PrintWriter out;
 		try{
 			String msg="start", keyProduct=null;
+			String[] mapsData;
 			in=new BufferedReader(new InputStreamReader(client.getInputStream()));
 			out=new PrintWriter(client.getOutputStream(), true);
 			name=in.readLine();
 			do{
-				if(actual!=null) {
-					actual.exec(products.get(keyProduct), receipt);
+				if(actual!=null)
+				{
+					actual.exec(operations, products.get(keyProduct), receipt);
 				}
 				changePosition(msg);
-				out.println(actual.type);
-				switch(actual.type)
-				{
-					case CHOOSE_TYPE:
-						String[] prices=new String[actual.answers.length];
-						for(int i=0;i<prices.length;i++)
-						{
-							Product product=products.get(actual.answers[i]);
-							if(product!=null)
-							{
-								prices[i]=String.valueOf(product.getPrice());
-							}
-						}
-						out.println(String.format(actual.question, name));
-						out.println(listToString(actual.answers));
-						out.println(listToString(prices));
-						break;
-					case ITEM_TYPE:
-						out.println(String.format(actual.question, products.get(actual.key).getPrice()));
-						keyProduct=actual.key;
-						break;
-					case INSERT_TYPE:
-						out.println(actual.question);
-						while(products.get((keyProduct=in.readLine()))==null)
-						{
-							out.println(false);
-						}
-						out.println(true);
-						break;
-					case SHOW_TYPE:
-						out.println(String.format(actual.question, receipt.getPrice()));
-						out.println(receipt.printElements());
-						break;
-					case EXIT_TYPE:
-						out.println(actual.question);
-						break;
-				}
-			}while((msg=in.readLine())!=null);
+				out.println(actual.getType());
+				keyProduct=actual.printToClient(new Object[]{in, out, actual, products, receipt, name}, operations);
+				msg=(keyProduct.equals(EXIT_TYPE)?null:in.readLine());
+			}while(msg!=null);
+			if(receipt.getPrice()!=0)
+			{
+				operations.writeOrder(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+"\n\n"+name+" ha ordinato: \n"+receipt.printElements("\n")+"Al prezzo di: "+receipt.getPrice()+"$\n");
+				operations.getDistanceAndTime(in.readLine());
+			}
 			in.close();
 			out.close();
 		}catch(IOException e){
@@ -107,14 +83,14 @@ class Service implements Runnable, Type
 		String key;
 		if(msg.equals(""))
 		{
-			key=actual.answers[0];
+			key=actual.getAnswers()[0];
 		}else{
 			if(actual==null)
 			{
 				key=msg;
 			}else{
 				try{
-					key=actual.answers[Integer.parseInt(msg)-1];
+					key=actual.getAnswers()[Integer.parseInt(msg)-1];
 				}catch(NumberFormatException e){
 					key=msg;
 				}
@@ -122,12 +98,5 @@ class Service implements Runnable, Type
 		}
 		before=actual;
 		actual=allNode.get(key);
-	}
-
-	private String listToString(String[] elements)
-	{
-		StringBuilder stringElements=new StringBuilder("");
-		for(String element: elements) stringElements.append(element+",");
-		return stringElements.toString();
 	}
 }

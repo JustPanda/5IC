@@ -1,10 +1,11 @@
 package server;
 
 import java.util.HashMap;
+import java.util.TreeMap;
 
 class Receipt
 {
-	private HashMap<String, Integer> elements=new HashMap<>();
+	private TreeMap<String, Integer> elements=new TreeMap<>();
 	private double price=0;
 
 	double getPrice()
@@ -21,7 +22,6 @@ class Receipt
 		}
 		elements.put(name, ++number);
 		price+=product.getPrice();
-		System.out.println(price);
 	}
 
 	boolean removeProduct(Product product)
@@ -39,14 +39,13 @@ class Receipt
 			}
 			price-=product.getPrice();
 		}
-		System.out.println(price);
 		return toReturn;
 	}
 
-	String printElements()
+	String printElements(String separator)
 	{
 		final StringBuilder ALL_ELEMENTS=new StringBuilder("");
-		elements.forEach((k, v) -> {ALL_ELEMENTS.append(k+" - "+v+",");});
+		elements.forEach((k, v) -> {ALL_ELEMENTS.append(k+" - "+v+separator);});
 		return ALL_ELEMENTS.toString();
 	}
 }
