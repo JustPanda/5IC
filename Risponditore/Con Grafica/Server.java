@@ -10,12 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafxapplication1.Pizzeria;
-
 
 public class Server {
     private static final int NTHREDS = 10;
@@ -23,6 +19,7 @@ public class Server {
     public static void main(String[] args) throws InterruptedException, IOException {
         System.out.println("La pizzeria è aperta..");
         int clientNumber = 0;
+
         ServerSocket listener = new ServerSocket(9898);
 
         ExecutorService executor = Executors.newFixedThreadPool(NTHREDS);
@@ -34,12 +31,17 @@ public class Server {
     }
 }
 
+
+
+
 class MyThread implements Runnable {
 
     private Socket socket;
     private int clientNumber;
     private String[][] cibo = new String[10][10];
     private String[][] bevande = new String[10][10];
+    List<String> pizze;
+    List<String> bibite;
 
     public MyThread(Socket socket, int clientNumber) {
         this.socket = socket;
@@ -51,99 +53,77 @@ class MyThread implements Runnable {
     {
         try 
         {
-            List<String> pizze;
-            List<String> bibite;
-            Pizzeria<String> albero = new Pizzeria<>();
             
+            Pizzeria<String> albero = new Pizzeria<>();
+
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-             System.out.println("si è connesso "+clientNumber);
-            //AHAHHAHAHHHHHHHHHHHHHHHHHHHHHHHHHH
+
+            System.out.println("si è connesso "+clientNumber);
+
             cibo[clientNumber][0] = in.readLine();
-            
-            System.out.println(cibo[clientNumber][0]);
-            
-            
-            cibo[clientNumber][0] =  in.readLine();
+
+            System.out.println(cibo[clientNumber][0]+" è il nome del fra");
+
             bevande[clientNumber][0] = cibo[clientNumber][0];
+            String q = in.readLine();
+            if(q.equals("chiediPizze"))
+            {
+                
+                String [][] listino = albero.getListinoPizze();
+                for(int i = 0; i<listino.length; i++)
+                {
+                    System.out.println(listino[i][0]);
+                    out.println(listino[i][0]);
+                }
+                out.println("STOP");
+
+                pizze = new ArrayList<String>();
+                pizze.add(0, cibo[clientNumber][0]);
+ 
+                pizze = albero.getPizze( out, cibo[clientNumber][0], in, 0);
+                System.out.println(pizze);
+            }
+
+            if(in.readLine().equals("chiediBibite"))
+            {
+                //////////////
+                
+                for(int i = 1; i<pizze.size(); i++)
+                {
+                    out.println(pizze.get(i));
+                }
+                out.println(" per un totale di: "+pizze.get(0)+"€");
+                out.println("STOP");
+                
+                ///////////////
+                String [][][] listinoBibite = albero.getlistinoBibite();
+                for(int  i = 0; i<listinoBibite.length; i++)
+                {
+                    out.println(listinoBibite[i][0][0]);
+                }                
+                out.println("STOP");
+                
+                bibite = albero.getBibite(out, bevande[clientNumber][0], in, 0);
+                bibite.add(0, bevande[clientNumber][0]);
+                System.out.println(bibite);
+            }
             
-            pizze = albero.getPizze( out, cibo[clientNumber][0], in, 0);    
-            pizze.add(0, cibo[clientNumber][0]);
-            System.out.println(pizze);
+            if(in.readLine().equals("chiediTutto"))
+            {
+                for(int i = 2; i<bibite.size(); i++)
+                {
+                    out.println(bibite.get(i));
+                }
+                out.println(" per un totale di: "+bibite.get(1)+"€");
+                out.println("STOP");
+                
+            }
             
-            bibite = albero.getBibite(out, bevande[clientNumber][0], in, 0);
-            bibite.add(0, bevande[clientNumber][0]);
-            System.out.println(bibite);         
         } catch (IOException ex)
         {
             Logger.getLogger(MyThread.class.getName()).log(Level.SEVERE, null, ex);
-        } 
-        
-
+        }
     }
 }
-
-/*
-public class Server
-{
-	public static void main(String[] args) throws Exception 
-	{
-		System.out.println("La pizzeria è aperta..");
-        int clientNumber = 0;
-        ServerSocket listener = new ServerSocket(9898);
-		String [][] pizze = {{"oleo","euro"},{"oleo","euro"}};
-		
-		try 
-		{
-            while (true) 
-			{
-                // crea il thread e lo lancia
-                new MyThread(pizze, listener.accept(), clientNumber++).start();
-            }
-        } finally 
-		{
-            listener.close();
-        }
-	}
-}
-
-
-class MyThread extends Thread 
-{
-	private Socket socket;
-	private int clientNumber;
-	private String[][] mem;
-	private String[][] pizze;
-
-	public MyThread(String[][] pizze, Socket socket, int clientNumber) 
-	{
-		this.pizze = pizze;
-		this.socket = socket;
-		this.clientNumber = clientNumber-1;
-	}
-
-	public void run()
-	{
-		try 
-		{
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-
-			out.println("il cliente: " + clientNumber + " è entrato " + socket+". Dimmi il tuo nome: ");
-			mem[clientNumber][0] = in.readLine();
-			
-			System.out.println("Ecco le pizze e il loro costo: ");
-			for(int i = 0; i<pizze.length; i++)
-			{
-				System.out.println(pizze[i][0].toUpperCase()+" : "+ pizze[i][1].toUpperCase()+"€");
-			}
-		}
-		catch(Exception e)
-		{
-			System.out.println("uhhh something went wrong :(");
-		};
-	}
-}
-
- */

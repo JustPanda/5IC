@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package javafxapplication1;
 
 import java.io.BufferedReader;
@@ -10,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -21,7 +17,7 @@ import javafx.stage.Stage;
  * @author marck
  */
 public class Client extends Application {
-     Socket s ;
+    Socket s ;
     PrintWriter out;
     BufferedReader input;
     
@@ -33,10 +29,10 @@ public class Client extends Application {
         input = new BufferedReader(new InputStreamReader(s.getInputStream()));
     }
     
+    
     @Override
-    public void start(Stage stage) throws Exception {
-        	
-       //stage.setTitle("Hello World");    
+    public void start(Stage stage) throws Exception {	
+        stage.setTitle("Pizzeria da Zanca");    
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));       
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -48,6 +44,11 @@ public class Client extends Application {
         System.out.println("dovrebbe inviare "+s);
         out.println(s);
         System.out.println("inviato "+s);
+    }
+    
+    public void arrivano() throws IOException
+    {
+        System.out.println( input.readLine());     
     }
 
     /**

@@ -4,32 +4,81 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.FXMLDocumentController">
+<AnchorPane id="AnchorPane" prefHeight="487.0" prefWidth="589.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication1.FXMLDocumentController">
     <children>
         <Label fx:id="label" layoutX="126" layoutY="120" minHeight="16" minWidth="69" />
-      <AnchorPane layoutY="9.0" maxHeight="-1.0" maxWidth="-1.0" prefHeight="500.0" prefWidth="573.0">
+      <AnchorPane focusTraversable="true" maxHeight="-1.0" maxWidth="-1.0" prefHeight="487.0" prefWidth="589.0" style="-fx-background-color: indigo;">
          <children>
-            <Button fx:id="confermaNome" layoutX="381.0" layoutY="36.0" mnemonicParsing="false" onAction="#confermaNomeClick" text="Conferma" />
-            <TextField fx:id="nome" layoutX="219.0" layoutY="36.0" text="scrivi il tuo nome" />
-            <ListView layoutX="64.0" layoutY="104.0" prefHeight="124.0" prefWidth="129.0" />
-            <ListView layoutX="267.0" layoutY="104.0" prefHeight="124.0" prefWidth="129.0" />
-            <ListView layoutX="425.0" layoutY="104.0" prefHeight="124.0" prefWidth="129.0" />
-            <Button id="prova" layoutX="64.0" layoutY="269.0" mnemonicParsing="false" text="add" />
-            <Button layoutX="282.0" layoutY="269.0" mnemonicParsing="false" text="add" />
-            <Button layoutX="449.0" layoutY="269.0" mnemonicParsing="false" text="add" />
-            <Button layoutX="141.0" layoutY="269.0" mnemonicParsing="false" text="next" />
-            <Button layoutX="349.0" layoutY="269.0" mnemonicParsing="false" text="next" />
-            <Button layoutX="505.0" layoutY="269.0" mnemonicParsing="false" text="next" />
-            <TextField layoutX="64.0" layoutY="232.0" prefHeight="25.0" prefWidth="129.0" />
-            <TextField layoutX="266.0" layoutY="232.0" prefHeight="25.0" prefWidth="129.0" />
-            <TextField layoutX="425.0" layoutY="232.0" prefHeight="25.0" prefWidth="129.0" />
-            <Label layoutX="115.0" layoutY="85.0" text="pizze" />
-            <Label layoutX="316.0" layoutY="85.0" text="bibite" />
-            <Label layoutX="442.0" layoutY="85.0" text="dimensione bibite" />
+            <Button fx:id="confermaNome" layoutX="372.0" layoutY="50.0" mnemonicParsing="false" onAction="#confermaNomeClick" style="-fx-background-color: white;" text="Conferma">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Button>
+            <TextField fx:id="nome" layoutX="204.0" layoutY="50.0" promptText="scrivi il tuo nome">
+         
+     
+            </TextField>
+            <ListView fx:id="listPizze" layoutX="64.0" layoutY="104.0" onMouseClicked="#cliccatoPizze" prefHeight="124.0" prefWidth="129.0" />
+            <ListView fx:id="listBibite" layoutX="267.0" layoutY="104.0" onMouseClicked="#cliccatoBibite" prefHeight="124.0" prefWidth="129.0" />
+            <ListView fx:id="listDimensioni" layoutX="425.0" layoutY="104.0" onMouseClicked="#cliccatoDimensione" prefHeight="124.0" prefWidth="129.0" />
+            <Button fx:id="addPizza" layoutX="64.0" layoutY="269.0" mnemonicParsing="false" onAction="#aggiungiPizza" prefHeight="26.0" prefWidth="70.0" style="-fx-background-color: white;" text="Aggiungi">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Button>
+            <Button fx:id="vaiBibite" layoutX="139.0" layoutY="269.0" mnemonicParsing="false" onAction="#vaiABibite" prefHeight="26.0" prefWidth="54.0" style="-fx-background-color: white;" text="Basta">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Button>
+            <Button fx:id="vaiDimensioni" layoutX="301.0" layoutY="269.0" mnemonicParsing="false" onAction="#vaiADimensioni" style="-fx-background-color: white;" text="Aggiungi">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Button>
+            <Button fx:id="tornaBibite" layoutX="459.0" layoutY="269.0" mnemonicParsing="false" onAction="#aggiungiDimensioni" style="-fx-background-color: white;" text="Aggiungi">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Button>
+            <TextField fx:id="entryPizze" layoutX="64.0" layoutY="232.0" prefHeight="25.0" prefWidth="129.0">
+              
+    
+            </TextField>
+            <TextField fx:id="entryBibite" layoutX="266.0" layoutY="232.0" prefHeight="25.0" prefWidth="129.0">
+              
+              </TextField>
+            <TextField fx:id="entryDimensioni" layoutX="425.0" layoutY="232.0" prefHeight="25.0" prefWidth="129.0">
+         
+              </TextField>
+            <Label layoutX="114.0" layoutY="85.0" text="pizze" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Label>
+            <Label layoutX="316.0" layoutY="85.0" text="bibite" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Label>
+            <Label layoutX="442.0" layoutY="85.0" text="dimensione bibite" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Label>
+            <Label fx:id="scontrino" layoutX="72.0" layoutY="312.0" prefHeight="108.0" prefWidth="478.0" textFill="WHITE" textOverrun="CLIP" wrapText="true">
+               <font>
+                  <Font name="Comic Sans MS" size="13.0" />
+               </font></Label>
+            <Button fx:id="Conferma" layoutX="274.0" layoutY="431.0" mnemonicParsing="false" onAction="#confermaOnClick" style="-fx-background-color: white;" text="conferma">
+               <font>
+                  <Font name="Comic Sans MS" size="13.0" />
+               </font></Button>
+            <Label layoutX="298.0" layoutY="25.0" text="Nome:" textFill="WHITE">
+               <font>
+                  <Font name="Comic Sans MS" size="14.0" />
+               </font>
+            </Label>
          </children>
+         <effect>
+            <ColorAdjust brightness="-0.17" contrast="0.17" hue="0.42" saturation="-0.07" />
+         </effect>
       </AnchorPane>
-      <Button layoutX="263.0" layoutY="319.0" mnemonicParsing="false" text="Button" />
     </children>
 </AnchorPane>

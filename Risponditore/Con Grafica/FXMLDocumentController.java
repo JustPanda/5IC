@@ -11,8 +11,12 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,6 +44,8 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+//import java.awt.event.MouseEvent;
 
 import javafx.util.StringConverter;
 
@@ -50,11 +56,10 @@ import javafx.util.StringConverter;
 public class FXMLDocumentController implements Initializable {
 
     Client client;
-    
-    public FXMLDocumentController() throws IOException
-    {
-        client = new Client();
-    }
+    String bibita;
+    String dimensione;
+    ObservableList<String> listinoPizze;
+    ObservableList<String> listinoBibite;
     
     @FXML
     private Label label;
@@ -64,62 +69,259 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private TextField nome;
+    
+    @FXML
+    private ListView listPizze;
+    
+    @FXML
+    private Button addPizza;
+    
+    @FXML
+    private TextField entryPizze;
+    
+    @FXML
+    private Button vaiBibite;
+    
+    @FXML
+    private ListView listBibite;
+    
+    @FXML
+    private Button addBibita;
+    
+    @FXML
+    private TextField entryBibite;
+    
+    @FXML
+    private Button vaiDimensioni;
+    
+    @FXML
+    private ListView listDimensioni;
+    
+    @FXML
+    private TextField entryDimensioni;
+    
+    @FXML
+    private Button tornaBibite;
+    
+    @FXML
+    private Button Conferma;
+    
+    @FXML
+    private Label scontrino;
+            
+    
+    
+    public FXMLDocumentController() throws IOException
+    {
+        client = new Client();
+ 
+    }
  
     @FXML
-    private void confermaNomeClick(ActionEvent event) throws IOException {
-        
+    public void confermaNomeClick(ActionEvent event) throws IOException {
+      
         String testo = nome.getText();
-        System.out.println("ad invia mando "+testo);
         client.invia(testo);
         System.out.println("ho inviato "+testo);
+        
+        confermaNome.setDisable(true);
+        nome.setDisable(true);
+        
+        client.invia("chiediPizze");
+        listinoPizze = FXCollections.observableArrayList();
+        String ad = "";
+        do
+        {
+            ad = client.input.readLine();
+            if(!ad.equals("STOP"))
+            {
+                listinoPizze.add(ad);          
+            }
+        }
+        while(!ad.equals("STOP"));
+        listPizze.setItems(listinoPizze);
+           
+        listPizze.setDisable(false);
+        entryPizze.setDisable(false);
+        addPizza.setDisable(false);
+        vaiBibite.setDisable(false);
     }
+    
+    @FXML
+    public void aggiungiPizza(ActionEvent event) throws IOException
+    {       
+        client.out.println(entryPizze.getText());
+    }
+    
+
+    @FXML
+    public void aggiungiDimensioni(ActionEvent event) throws IOException
+    {
+        dimensione = entryDimensioni.getText();
+        client.out.println(dimensione);
+        System.out.println("gli mando "+ dimensione);
+        listBibite.setDisable(false);
+        entryBibite.setDisable(false);
+        vaiDimensioni.setDisable(false);
+        
+        listDimensioni.setDisable(true);
+        entryDimensioni.setDisable(true);
+       
+        tornaBibite.setDisable(true);
+         Conferma.setDisable(false);
+    }
+    
+     @FXML
+    public void vaiABibite(ActionEvent event) throws IOException
+    {
+        
+        client.out.println("STOP");
+        
+        client.out.println("chiediBibite");
+        //////////////////
+        
+        scontrino.setText(scontrino.getText()+"Una ");
+
+        String le = "";
+        while(!le.equals("STOP"))
+        {
+            le = client.input.readLine();
+            if(!le.equals("STOP"))
+            scontrino.setText(scontrino.getText()+le+", ");
+        }
+        
+        
+        //////////////////
+        
+        listinoBibite = FXCollections.observableArrayList();
+        String ad = "";
+        do
+        {
+            ad = client.input.readLine();
+            if(!ad.equals("STOP"))
+            {
+                listinoBibite.add(ad);          
+            }
+        }
+        while(!ad.equals("STOP"));
+        System.out.println("Gli arriva il listino");
+        listBibite.setItems(listinoBibite);
+        
+        listPizze.setDisable(true);
+        entryPizze.setDisable(true);
+        addPizza.setDisable(true);
+        vaiBibite.setDisable(true);
+        
+        listBibite.setDisable(false);
+        entryBibite.setDisable(false);
+        vaiDimensioni.setDisable(false);
+        
+    }
+    
+     @FXML
+    public void vaiADimensioni(ActionEvent event) throws IOException
+    {
+        bibita = entryBibite.getText();
+        System.out.println("invia "+bibita);
+        
+        client.out.println(bibita);
+        listBibite.setDisable(true);
+        entryBibite.setDisable(true);
+        vaiDimensioni.setDisable(true);
+        
+        listDimensioni.setDisable(false);
+        entryDimensioni.setDisable(false);     
+        tornaBibite.setDisable(false);
+        
+        Conferma.setDisable(true);
+        
+        ObservableList<String> l = FXCollections.observableArrayList(); 
+        l.add("Piccola");
+        l.add("Media");
+        l.add("Grande");
+        
+        listDimensioni.setItems(l);
+    }
+    
+    @FXML
+    public void confermaOnClick(ActionEvent event) throws IOException
+    {
+        listBibite.setDisable(true);
+        entryBibite.setDisable(true);
+        vaiDimensioni.setDisable(true);
+        Conferma.setDisable(true);
+        
+        client.out.println("STOP");
+        client.out.println("chiediTutto");
+        
+        scontrino.setText(scontrino.getText()+"\n\r");
+
+        String le = "";
+        int z = 0;
+        scontrino.setText(scontrino.getText()+"Una ");
+
+                 
+        while(!le.equals("STOP"))
+        {
+            le = client.input.readLine();
+            if(!le.equals("STOP"))
+            {
+                if(z == 0)
+                {
+                    scontrino.setText(scontrino.getText()+le+" ");
+                    z =1;
+                }
+                else
+                {
+                    scontrino.setText(scontrino.getText()+le+", ");
+                    z=0;
+                }
+            }     
+        }
+
+        listDimensioni.setDisable(true);
+        entryDimensioni.setDisable(true);
+        tornaBibite.setDisable(true);
+    }
+    
+    @FXML public void cliccatoBibite(MouseEvent arg0) 
+    {
+        entryBibite.setText(listBibite.getSelectionModel().getSelectedItem().toString());
+    }
+    
+    @FXML public void cliccatoPizze(MouseEvent arg0) 
+    {
+        entryPizze.setText(listPizze.getSelectionModel().getSelectedItem().toString());
+    }
+    
+    @FXML public void cliccatoDimensione(MouseEvent arg0) 
+    {
+        entryDimensioni.setText(listDimensioni.getSelectionModel().getSelectedItem().toString());
+    }
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        listPizze.setDisable(true);
+        entryPizze.setDisable(true);
+        addPizza.setDisable(true);
+        vaiBibite.setDisable(true);
         
-    }    
     
-     /* public static void main(String[] args) throws IOException {
-        Scanner in = new Scanner(System.in);
-        String serverAddress = "localhost"; // server string
-        Socket s = new Socket(serverAddress, 9898);
-        BufferedReader input
-                = new BufferedReader(new InputStreamReader(s.getInputStream()));
-        //
-        PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-        //
-
-        String str = "ciao cliente, digita il tuo nome";
-        System.out.println(str);
-        do 
-        {
-            System.out.println(input.readLine());
-
-            chiediPizze(in, out, input);
-            chiediBibite(in, out, input);
-        } while (str != null);
-
-    }
-
-    public static void chiediPizze(Scanner in, PrintWriter out, BufferedReader input) throws IOException {
-        String pizz = "cdcd";
-        while (!pizz.equals("STOP")) {
-            pizz = in.nextLine();
-            out.println(pizz);
-            System.out.println(input.readLine());
-        }
-    }
-
-    public static void chiediBibite(Scanner in, PrintWriter out, BufferedReader input) throws IOException {
-        String bibite = "cdcd";
-        while (!bibite.equals("STOP")) {
-            bibite = in.nextLine();
-            out.println(bibite);
-            System.out.println(input.readLine());
-            out.println(in.nextLine());
-            System.out.println(input.readLine());
-        }
-    }*/
+        
+        listBibite.setDisable(true);
+        entryBibite.setDisable(true);
+        vaiDimensioni.setDisable(true);
+        
+        listDimensioni.setDisable(true);
+        entryDimensioni.setDisable(true);
+      
+        tornaBibite.setDisable(true);
+        
+       
+        
+          
+    }    
 }
 
     
