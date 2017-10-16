@@ -1,0 +1,86 @@
+digraph automa {
+	rankdir=LR;
+	size="8,5"
+
+	node [shape=doublecircle] "Cosa\nvuole\nprenotare?"; "FINE"
+	node [shape=circle];
+	"Cosa\nvuole\nprenotare?"->"Cosa\nvuole\nprenotare?"[label="invalid input"];
+
+	"Cosa\nvuole\nprenotare?"->"Quante\n pizze\n vuole?"[label="pizzeria"];
+
+	"Quante\n pizze\n vuole?"->"Quante\n pizze\n vuole?"[label="invalid input"];
+
+	"Quante\n pizze\n vuole?"->"Che pizza\nvuole?"[label="1..*"];
+
+	"Quante\n pizze\n vuole?"->"Vuole\ndelle\nbibite?"[label="0"]
+
+	"Che pizza\nvuole?"->"Vuole\ndelle\nbibite?"[label="\"Pizza valida fra\nle disponibili\""];
+
+	"Che pizza\nvuole?"->"Che pizza\nvuole?"[label="invalid input"]
+
+	"Vuole\ndelle\nbibite?"->"Vuole\ndelle\nbibite?"[label="invalid input"];
+
+	"Vuole\ndelle\nbibite?"->"Quante\nbibite\nvuole?"[label="s"];
+
+	"Vuole\ndelle\nbibite?"->"Per che\nora vuole\nritirarle?"[label="n"];
+
+	"Quante\nbibite\nvuole?"->"Quante\nbibite\nvuole?"[label="invalid input"];
+
+	"Quante\nbibite\nvuole?"->"Che bibita\nvuole?"[label="1.*"];
+
+	"Quante\nbibite\nvuole?"->"Per che\nora vuole\nritirarle?"[label="0"];
+
+	"Che bibita\nvuole?"->"Per che\nora vuole\nritirarle?"[label="\"Bibita valida\ntra le disponibili\""]
+
+	"Per che\nora vuole\nritirarle?"->"Per che\nora vuole\nritirarle?"[label="invalid input"];
+
+	"Per che\nora vuole\nritirarle?"->"Conferma\nl\'ordine?"[label="\"orario\nvalido\""];
+
+	"Conferma\nl\'ordine?"->"FINE"[label="s/n"];
+
+	"Cosa\nvuole\nprenotare?"->"Data di\n arrivo?\n(hotel)"[label="hotel"];
+
+	"Data di\n arrivo?\n(hotel)"->"Data di\n arrivo?\n(hotel)"[label="invalid input"];
+
+	"Data di\n arrivo?\n(hotel)"->"Data di\npartenza?"[label="\"Data valida\""];
+
+	"Data di\npartenza?"->"Data di\npartenza?"[label="invalid input"];
+
+	"Data di\npartenza?"->"Tipo di\nsoggiorno"[label="\"Data valida\""];
+
+	"Tipo di\nsoggiorno"->"Tipo di\nsoggiorno"[label="invalid input"];
+
+	"Tipo di\nsoggiorno"->"Conferma\nl\'ordine?"[label="Tipo di soggiorno valido"];
+
+	"Cosa\nvuole\nprenotare?"->"Data di\narrivo\n(appartamento)"[label="appartamento"];
+
+	"Data di\narrivo\n(appartamento)"->"Data di\narrivo\n(appartamento)"[label="invalid input"];
+
+	"Data di\narrivo\n(appartamento)"->"Settimane\ndi\npermanenza?"[label="Data valida"];
+
+	"Settimane\ndi\npermanenza?"->"Settimane\ndi\npermanenza?"[label="invalid input"];
+
+	"Settimane\ndi\npermanenza?"->"Tipo di\nsoggiorno"[label="0..*"];
+
+	"Cosa\nvuole\nprenotare?"->"Per quante\npersone\nvuole\nprenotare?"[label="ristorante"];
+
+	"Per quante\npersone\nvuole\nprenotare?"->"Per quante\npersone\nvuole\nprenotare?"[label="invalid input"];
+
+	"Per quante\npersone\nvuole\nprenotare?"->"Antipasti"[label="1..*"];
+
+	"Antipasti"->"Antipasti"[label="invalid input"];
+
+	"Antipasti"->"Primi"[label="antipasto\nvalido"];
+
+	"Primi"->"Primi"[label="invalid input"];
+
+	"Primi"->"Secondi"[label="Primo\nvalido"];
+
+	"Secondi"->"Secondi"[label="invalid input"];
+
+	"Secondi"->"Desserts"[label="Secondo\nvalido"];
+
+	"Desserts"->"Desserts"[label="invalid input"];
+
+	"Desserts"->"Vuole\ndelle\nbibite?"
+}
