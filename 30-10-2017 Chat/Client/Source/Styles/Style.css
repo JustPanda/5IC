@@ -1,0 +1,9 @@
+/*@font-face{
+    font-family: "Bahnschrift";
+    src: "../Fonts/Bahnschrift.ttf";
+}*/
+
+html{
+    font-family: "Segoe UI Light","Segoe WPC","Segoe UI", Helvetica, Arial, "Arial Unicode MS", Sans-Serif;
+    font-weight: lighter;
+}

@@ -1,40 +1,22 @@
 {
-  "name": "electron-typescript-react-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application with React",
-  "main": "dist/main.js",
-  "scripts": {
-    "start": "electron dist/main.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/claudioc/electron-typescript-react-quick-start.git"
-  },
-  "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "react",
-    "systemjs"
-  ],
-  "author": "Claudio Cicali",
+  "name": "chat",
+  "version": "0.1.0",
+  "main": "./Source/Appjs",
   "license": "MIT",
-  "devDependencies": {
-    "del": "^2.2.0",
-    "electron-prebuilt": "^1.0.1",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.0",
-    "gulp-inject": "^4.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-typescript": "^2.13.4",
-    "run-sequence": "^1.1.5",
-    "typescript": "^1.8.10"
+  "repository": "",
+  "scripts": {
+    "start": "electron -r babel-register ./Source/App.js"
   },
   "dependencies": {
-    "react": "^15.0.2",
-    "react-dom": "^15.0.2",
-    "systemjs": "^0.19.27"
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-register": "^6.3.13",
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "react-winjs": "^2.5.0",
+    "winjs": "^4.4.3"
+  },
+  "devDependencies": {
+    "electron": "^1.4.3"
   }
 }
