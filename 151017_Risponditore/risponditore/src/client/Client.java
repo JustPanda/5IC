@@ -14,7 +14,7 @@ public class Client implements Type
 {
 	public static void main(String[] args)
 	{
-		final int PORT=80;
+		final int PORT=6844;
 		final String IP="127.0.0.1";
 		Scanner sc=new Scanner(System.in);
 		Socket server;
@@ -22,7 +22,7 @@ public class Client implements Type
 		PrintWriter out;
 		try{
 			boolean notExit=true;
-			String input;
+			String input, exitWords=null;
 			server=new Socket(IP, PORT);
 			in=new BufferedReader(new InputStreamReader(server.getInputStream()));
 			out=new PrintWriter(server.getOutputStream(), true);
@@ -52,7 +52,7 @@ public class Client implements Type
 						System.out.println(question.toString());
 						do{
 							if(!first){
-								System.out.println("No option available");
+								System.out.println("L'opzione inserita non è valida");
 							}else{
 								first=false;
 							}
@@ -72,26 +72,42 @@ public class Client implements Type
 						do{
 							out.println(sc.nextLine());
 						}while(!Boolean.valueOf(in.readLine()));
-						System.out.println("Element removed");
+						System.out.println("Elemento rimosso\n");
 						out.println("");
 						break;
 					case ITEM_TYPE:
-						System.out.println(in.readLine());
+						System.out.println(in.readLine()+"\n");
 						out.println("");
 						break;
 					case SHOW_TYPE: {
 							final StringBuilder question=new StringBuilder(in.readLine());
 							List<String> msg=new ArrayList<>(Arrays.asList(in.readLine().split(",")));
 							msg.forEach((s) -> {question.append("\n"+s);});
-							System.out.println(question.toString());
+							System.out.println(question.toString()+"\n");
 							out.println("");
 						} break;
 					case EXIT_TYPE:
 						notExit=false;
-						System.out.println(in.readLine());
+						exitWords=in.readLine();
 						break;
 				}
 			}while(notExit);
+			if(Boolean.valueOf(in.readLine()))
+			{
+				boolean first=false;
+				System.out.print(in.readLine());
+				do{
+					if(first)
+					{
+						System.out.print(in.readLine());
+					}else{
+						first=true;
+					}
+					out.println(sc.nextLine());
+				}while(Boolean.valueOf(in.readLine()));
+				System.out.println(in.readLine());
+			}
+			System.out.println(exitWords);
 			out.close();
 			in.close();
 		}catch(IOException e){

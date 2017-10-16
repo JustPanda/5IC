@@ -2,7 +2,7 @@ package server;
 
 import java.util.function.BiFunction;
 
-class Node implements Type
+class Node
 {
 	private String key, type, question;
 	private String[] answers;

@@ -37,16 +37,16 @@ class Operations implements Type
 			PrintWriter out=(PrintWriter) object[1];
 			Node actual=(Node) object[2];
 			HashMap<String, Product> products=(HashMap<String, Product>) object[3];
-			String[] prices=new String[actual.getAnswers().length];
+			String[] prices=new String[actual.getAnswers().length], texts=((String[] )object[5]);
 			for(int i=0;i<prices.length;i++)
 			{
 				Product product=products.get(actual.getAnswers()[i]);
 				if(product!=null)
 				{
-					prices[i]=String.valueOf(product.getPrice());
+					prices[i]=String.format( "%.2f", product.getPrice());
 				}
 			}
-			out.println(String.format(actual.getQuestion(), object[5]));
+			out.println(String.format(actual.getQuestion(), texts[0], texts[1]));
 			out.println(arrayToString(actual.getAnswers()));
 			out.println(arrayToString(prices));
 			return actual.getType();
@@ -56,7 +56,7 @@ class Operations implements Type
 			Node actual=(Node) object[2];
 			HashMap<String, Product> products=(HashMap<String, Product>) object[3];
 			out.println(String.format(actual.getQuestion(), products.get(actual.getKey()).getPrice()));
-			return actual.getType();
+			return actual.getKey();
 		});
 		this.printToClient.put(INSERT_TYPE, (object) -> {
 			String keyProduct=null;
@@ -87,7 +87,7 @@ class Operations implements Type
 		this.printToClient.put(EXIT_TYPE, (object) -> {
 			PrintWriter out=(PrintWriter) object[1];
 			Node actual=(Node) object[2];
-			out.println(String.format(actual.getQuestion(), object[5]));
+			out.println(String.format(actual.getQuestion(), ((String[] )object[5])[0]));
 			return actual.getType();
 		});
 	}
@@ -115,12 +115,12 @@ class Operations implements Type
 		return printToClient.get(type);
 	}
 
-	String[] getDistanceAndTime(String origin, String destitation)
+	String getDistanceAndTime(String origin, String destitation)
 	{
-		String[] toReturn=null;
+		String apiKey="AIzaSyDAV7Mtlrm06HhBlFmMHS5BSU-nGU1Bgl8";
+		String toReturn=null;
 		try{
-
-			URL url=new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+origin+"&destinations="+destitation+"&key=AIzaSyDAV7Mtlrm06HhBlFmMHS5BSU-nGU1Bgl8");
+			URL url=new URL("https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+origin+"&destinations="+destitation+"&key="+apiKey);
 			HttpURLConnection con= (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("GET");
 			con.connect();
@@ -130,7 +130,6 @@ class Operations implements Type
 				BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 				StringBuilder sb = new StringBuilder();
 				String line = br.readLine();
-				toReturn=new String[2];
 				while (line != null) {
 					sb.append(line);
 					line = br.readLine();
@@ -142,9 +141,11 @@ class Operations implements Type
 				JSONObject object_rows = (JSONObject) array_rows.get(0);
 				JSONArray array_elements = (JSONArray) object_rows.get("elements");
 				JSONObject object_elements = (JSONObject) array_elements.get(0);
-				JSONObject object_duration = (JSONObject) object_elements.get("duration");
-				JSONObject object_distance = (JSONObject) object_elements.get("distance");
-				System.out.println(object_duration.get("value") + "," + object_distance.get("value"));
+				if(object_elements.get("status").equals("OK"))
+				{
+					JSONObject object_duration = (JSONObject) object_elements.get("duration");
+					toReturn=object_duration.get("text").toString();
+				}
 			}
 		}catch(IOException e){
 			e.printStackTrace();

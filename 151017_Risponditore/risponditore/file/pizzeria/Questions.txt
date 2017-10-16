@@ -1,5 +1,6 @@
+Via Palazzo, mestre
 start:Choose
-    Salve %s, cosa vuole ordinare?. Puo' scegliere tra questi 3 tipi di cibi:
+    Salve %s e benvenuto nella pizzeria "Il pizza vendolo" in %s. Cosa desidera ordinare?
         Bibita
         Pizza
         Fine spesa

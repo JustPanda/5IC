@@ -1,6 +1,5 @@
 package server;
 
-import java.util.HashMap;
 import java.util.TreeMap;
 
 class Receipt
