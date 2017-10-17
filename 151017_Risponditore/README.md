@@ -17,7 +17,7 @@ Questo progetto ha il compito di prendere le ordinazioni di una pizzeria d'aspor
    * Questions.txt
    > Contiene tutte le domande, le risposte e su quali nodi posizionarsi in base alla risposta. La prima riga è adibita per l'indirizzo postale, mentre le altre sono tutti i nodi. Il primo nodo che si fa prtire è quello con chiave "start".
    Ogni nodo ha questa sintatti:
-           key:Type
+           > key:Type
                 Questions
                     [Answers]...
     Key: è il nome del nodo e questo deve corrispondere ad una possibile risposta in un altro nodo, tranne per il nodo "start". Ogni key è univoca.
