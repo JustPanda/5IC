@@ -14,7 +14,7 @@ Ha il compito di connettersi al server, attraverso i socket, e permette all'uten
 ##### Server.java
 Ha il compito di accettare le richieste dei client e di far partire dei thread appositi per ognuno di essi, dandogli le informazioni di partenza. Queste informazioni di partenza vengono prese da due file: Questions.txt e Products.txt
 
-&nbsp;&nbsp;&nbsp;&nbsp;* Questions.txt
+&nbsp;&nbsp;&nbsp;&nbsp;Questions.txt<br />
 &nbsp;&nbsp;&nbsp;&nbsp;Contiene tutte le domande, le risposte e su quali nodi posizionarsi in base alla risposta. La prima riga è adibita per l'indirizzo postale, mentre le altre sono tutti i nodi. Il primo nodo che si fa prtire è quello con chiave "start". <br />
 &nbsp;&nbsp;&nbsp;&nbsp;Ogni nodo ha questa sintatti: <br />
 &nbsp;&nbsp;&nbsp;&nbsp;key:Type
