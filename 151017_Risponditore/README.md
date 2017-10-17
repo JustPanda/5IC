@@ -15,20 +15,20 @@ Ha il compito di connettersi al server, attraverso i socket, e permette all'uten
 Ha il compito di accettare le richieste dei client e di far partire dei thread appositi per ognuno di essi, dandogli le informazioni di partenza. Queste informazioni di partenza vengono prese da due file: Questions.txt e Products.txt
 
 &nbsp;&nbsp;&nbsp;&nbsp;Questions.txt<br />
-&nbsp;&nbsp;&nbsp;&nbsp;Contiene tutte le domande, le risposte e su quali nodi posizionarsi in base alla risposta. La prima riga è adibita per l'indirizzo postale, mentre le altre sono tutti i nodi. Il primo nodo che si fa prtire è quello con chiave "start". <br />
+&nbsp;&nbsp;&nbsp;&nbsp;Contiene tutte le domande, le risposte e su quali nodi posizionarsi in base alla risposta. La prima riga è &nbsp;&nbsp;&nbsp;&nbsp;adibita per l'indirizzo postale, mentre le altre sono tutti i nodi. Il primo nodo che si fa prtire è quello con chiave "start". <br />
 &nbsp;&nbsp;&nbsp;&nbsp;Ogni nodo ha questa sintatti: <br />
-&nbsp;&nbsp;&nbsp;&nbsp;key:Type
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Questions
+&nbsp;&nbsp;&nbsp;&nbsp;key:Type <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Questions <br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Answers]... <br />
-&nbsp;&nbsp;&nbsp;&nbsp;Key: è il nome del nodo e questo deve corrispondere ad una possibile risposta in un altro nodo, tranne per il nodo "start". Ogni key è univoca. <br />
+&nbsp;&nbsp;&nbsp;&nbsp;Key: è il nome del nodo e questo deve corrispondere ad una possibile risposta in un altro nodo, tranne per il &nbsp;&nbsp;&nbsp;&nbsp;nodo "start". Ogni key è univoca. <br />
 &nbsp;&nbsp;&nbsp;&nbsp;Type: Il tipo del nodo che fa capire al server cosa fare con esso. I tipi sono: <br />
-&nbsp;&nbsp;&nbsp;&nbsp;1. Choose. Fa capire al server che si tratta di una scelta, perciò la stringa verrà formatta in un modo opportuno e il client farà dei controlli sulle risposte che può dare il cliente. <br />
-&nbsp;&nbsp;&nbsp;&nbsp;2. Item. Fa capire al server che si tratta di un elemento da comprare e perciò lo aggiunge allo scontrino e salta subito nel nodo successivo indicatogli. <br />
-&nbsp;&nbsp;&nbsp;&nbsp;3. Insert. Fa capire al server che il client vuole inserire un elemento da rimuovere dallo scontrino. In seguito salta subito sul nodo successivo indicatogli. <br />
-&nbsp;&nbsp;&nbsp;&nbsp;4. Show. Fa caipre al server che si vuole mostrare la spesa completa e perciò la invia al client. In seguito salta subito sul nodo successivo indicatogli. <br />
-&nbsp;&nbsp;&nbsp;&nbsp;5. Exit. Fa capire al server che la transazione è conclusa e fa passare il server ed il client al momento degli scambi degli indirizzi. <br />
+&nbsp;&nbsp;&nbsp;&nbsp;1. Choose. Fa capire al server che si tratta di una scelta, perciò la stringa verrà formatta in un modo &nbsp;&nbsp;&nbsp;&nbsp;opportuno e il client farà dei controlli sulle risposte che può dare il cliente. <br />
+&nbsp;&nbsp;&nbsp;&nbsp;2. Item. Fa capire al server che si tratta di un elemento da comprare e perciò lo aggiunge allo scontrino e &nbsp;&nbsp;&nbsp;&nbsp;salta subito nel nodo successivo indicatogli. <br />
+&nbsp;&nbsp;&nbsp;&nbsp;3. Insert. Fa capire al server che il client vuole inserire un elemento da rimuovere dallo scontrino. In seguito &nbsp;&nbsp;&nbsp;&nbsp;salta subito sul nodo successivo indicatogli. <br />
+&nbsp;&nbsp;&nbsp;&nbsp;4. Show. Fa caipre al server che si vuole mostrare la spesa completa e perciò la invia al client. In seguito &nbsp;&nbsp;&nbsp;&nbsp;salta subito sul nodo successivo indicatogli. <br />
+&nbsp;&nbsp;&nbsp;&nbsp;5. Exit. Fa capire al server che la transazione è conclusa e fa passare il server ed il client al momento degli &nbsp;&nbsp;&nbsp;&nbsp;scambi degli indirizzi. <br />
 &nbsp;&nbsp;&nbsp;&nbsp;Questions: domanda che il server pone al cliente. <br />
-&nbsp;&nbsp;&nbsp;&nbsp;Answers: possibili risposte che il cliente potrebbe dare alla domanda. Ognuno di esse corrispondono ad un'altra chiave di un altro nodo.
+&nbsp;&nbsp;&nbsp;&nbsp;Answers: possibili risposte che il cliente potrebbe dare alla domanda. Ognuno di esse corrispondono ad un'altra &nbsp;&nbsp;&nbsp;&nbsp;chiave di un altro nodo.
 
   * Products.txt
   > Contiene i prodotti da vendere nel seguente formato: <br />
