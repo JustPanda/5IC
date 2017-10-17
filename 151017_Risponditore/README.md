@@ -3,11 +3,11 @@ Questo progetto ha il compito di prendere le ordinazioni di una pizzeria d'aspor
 
 ### Spiegazione del progetto
 #### Client
-* Client.java
-> Ha il compito di connettersi al server, attraverso i socket, e permette all'utente di comunicare con esso. La prima informazione che scambia con lui è il nome, poi parte la transazione, in cui l'utente sceglie cosa ordinare, e in seguito dovrà inserire il proprio indirizzo di casa, così da potersi far arrivare la pizza a casa
+* Client.java <br />
+Ha il compito di connettersi al server, attraverso i socket, e permette all'utente di comunicare con esso. La prima informazione che scambia con lui è il nome, poi parte la transazione, in cui l'utente sceglie cosa ordinare, e in seguito dovrà inserire il proprio indirizzo di casa, così da potersi far arrivare la pizza a casa
 #### Server
 * Server.java <br />
-Ha il compito di accettare le richieste dei client e di far partire dei thread appositi per ognuno di essi, dandogli le informazioni di partenza. Queste informazioni di partenza vengono prese da due file: Questions.txt e Products.txt
+Ha il compito di accettare le richieste dei client e di far partire dei thread appositi per ognuno di essi, dandogli le informazioni di partenza. Queste informazioni di partenza vengono prese da due file: Questions.txt e Products.txt.
   * Questions.txt
    Contiene tutte le domande, le risposte e su quali nodi posizionarsi in base alla risposta. La prima riga è adibita per l'indirizzo postale, mentre le altre sono tutti i nodi. Il primo nodo che si fa prtire è quello con chiave "start". <br /> Ogni nodo ha questa sintatti: <br />
    key:Type <br />
@@ -27,20 +27,20 @@ Ha il compito di accettare le richieste dei client e di far partire dei thread a
   Contiene i prodotti da vendere nel seguente formato: <br />
   &nbsp; &nbsp; &nbsp; &nbsp;[Product,Price\n]...
 
-* Service.java
-> Contiene tutti i metodi che gestiscono il servizio della pizzeria e sta in ascolto per messaggi inviati dal client. Ad ogni messaggio lui esegue un'operazione cambiando nodo e richiamando una funzione da una mappa di esse contenuta nell'oggetto di classe Operations condiviso tra tutti i thread
+* Service.java <br />
+Contiene tutti i metodi che gestiscono il servizio della pizzeria e sta in ascolto per messaggi inviati dal client. Ad ogni messaggio lui esegue un'operazione cambiando nodo e richiamando una funzione da una mappa di esse contenuta nell'oggetto di classe Operations condiviso tra tutti i thread.
 
-* Operations.java
-Contiene oggetti e metodi che riguardano le operazioni che il server deve fare. Contiene le due mappe di funzioni (exec per le operazioni sullo scontrino e printToClient per le operazioni che bisogna fare quando si comunica con il client), il metodo per scrivere gli ordini ricevuti (con data e ora relativa) e il metodo che sfrutta e api di maps per calcolare il tempo impiegato per la ricevuta della consegna dell'ordine
+* Operations.java <br />
+Contiene oggetti e metodi che riguardano le operazioni che il server deve fare. Contiene le due mappe di funzioni (exec per le operazioni sullo scontrino e printToClient per le operazioni che bisogna fare quando si comunica con il client), il metodo per scrivere gli ordini ricevuti (con data e ora relativa) e il metodo che sfrutta e api di maps per calcolare il tempo impiegato per la ricevuta della consegna dell'ordine.
 
-* Receipt.java
-Contiene i prodotti comprati dall'utente con relativo prezzo complessivo
+* Receipt.java <br />
+Contiene i prodotti comprati dall'utente con relativo prezzo complessivo.
 
-* Product.java
-Classe creata per comodità che consiste nel prodotto da vendere. Ha l'attributo "name" che corrisponde al nome del prodotto, mentre l'attributo "price" consiste nel suo prezzo
+* Product.java <br />
+Classe creata per comodità che consiste nel prodotto da vendere. Ha l'attributo "name" che corrisponde al nome del prodotto, mentre l'attributo "price" consiste nel suo prezzo.
 
-* Type.java
-Contiene tutti i nomi dei tipi dei nodi per comodità
+* Type.java <br />
+Contiene tutti i nomi dei tipi dei nodi per comodità.
 
 ### Tecnologie usate
 ##### Le tecnologie sono:
