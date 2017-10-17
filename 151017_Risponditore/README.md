@@ -1,6 +1,6 @@
 # Risponditore
 
-Questo progetto ha il compito di prendere le ordinazioni di una pizzeria d'asporto chiamata "Il pizza vendolo", situata in "Via Palazzo" a mestre. Tutti i clienti che si connettono dovrannno rispondere attraverso delle domande prestabilite che fanno parte della transazione.
+Questo progetto ha il compito di prendere le ordinazioni di una pizzeria d'asporto chiamata "Il pizza vendolo", situata in "Via Palazzo" a mestre. Tutti i clienti che si connettono dovrannno rispondere attraverso delle domande prestabilite che fanno parte della transazione. Finita si dovrà inserire l'indirizzo dove far arrivare l'ordinazione.
 
 ### Spiegazione del progetto
 
@@ -35,13 +35,22 @@ Questo progetto ha il compito di prendere le ordinazioni di una pizzeria d'aspor
             [Product,Price\n]...
 
 * Service.java
+> Contiene tutti i metodi che gestiscono il servizio della pizzeria e sta in ascolto per messaggi inviati dal client. Ad ogni messaggio lui esegue un'operazione cambiando nodo e richiamando una funzione da una mappa di esse contenuta nell'oggetto di classe Operations condiviso tra tutti i thread
 
 * Operations.java
+> Contiene oggetti e metodi che riguardano le operazioni che il server deve fare. Contiene le due mappe di funzioni (exec per le operazioni sullo scontrino e printToClient per le operazioni che bisogna fare quando si comunica con il client), il metodo per scrivere gli ordini ricevuti (con data e ora relativa) e il metodo che sfrutta e api di maps per calcolare il tempo impiegato per la ricevuta della consegna dell'ordine
 
 * Receipt.java
+> Contiene i prodotti comprati dall'utente con relativo prezzo complessivo
 
 * Product.java
+> Classe creata per comodità che consiste nel prodotto da vendere. Ha l'attributo "name" che corrisponde al nome del prodotto, mentre l'attributo "price" consiste nel suo prezzo
 
 * Type.java
+> Contiene tutti i nomi dei tipi dei nodi per comodità
 
 ### Tecnologie usate
+> Le tecnologie sono:
+* Ide intellij idea per lo sviluppo del software
+* Star uml per la creazione dei diagrammi di classe
+* Latex per la creazione dell'automa a stati finiti
