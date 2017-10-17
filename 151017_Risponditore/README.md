@@ -30,9 +30,9 @@ Questo progetto ha il compito di prendere le ordinazioni di una pizzeria d'aspor
     Questions: domanda che il server pone al cliente.
     Answers: possibili risposte che il cliente potrebbe dare alla domanda. Ognuno di esse corrispondono ad un'altra chiave di un altro nodo.
 
-    * Products.txt
-    > Contiene i prodotti da vendere nel seguente formato:
-            [Product,Price\n]...
+  * Products.txt
+  > Contiene i prodotti da vendere nel seguente formato:
+          [Product,Price\n]...
 
 * Service.java
 
