@@ -1,0 +1,23 @@
+.MessageOther{
+    background: blue;
+};
+
+.MessageUser{
+    background: aqua;
+    width: 100px;
+    height: 50px;
+ /*   display: flex;
+    flex-direction: column;
+    justify-content: center; */
+};
+
+.Date{
+    align-self: right;
+    vertical-align: bottom;
+};
+
+.Text{
+    align-self: center;
+    top: 50%;
+    transform: translateY(-100%);
+};

@@ -1,8 +1,7 @@
 'use babel';
 import React from 'react';
 import WinJS from 'react-winjs';
-import TopAppBar from "./TopAppBar"
-import BottomAppBar from "./BottomAppBar"
+import SplitView from "./SplitView";
 
 export default class Main extends React.Component
 {
@@ -10,8 +9,7 @@ export default class Main extends React.Component
   {
     return (
       <div>
-        <TopAppBar></TopAppBar>
-        <BottomAppBar></BottomAppBar>
+        <SplitView></SplitView>
       </div>        
     ) ;
   }

@@ -49,7 +49,7 @@ export default class BottomAppBar extends React.Component
         );
 
         return (
-            <div style={{alignSelf: 'bottom'}}>
+            <div>
                 <WinJS.ToolBar ref="toolBar">
                     <WinJS.ToolBar.ContentCommand
                         key="content"
