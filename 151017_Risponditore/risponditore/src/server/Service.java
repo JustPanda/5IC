@@ -54,7 +54,7 @@ class Service implements Runnable, Type
 			if(buySomething)
 			{
 				boolean first=true;
-				String mapsData;
+				String mapsData, address;
 				operations.writeOrder(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+"\n\n"+name+" ha ordinato: \n"+receipt.printElements("\n")+"Al prezzo di: "+String.format("%.2f", receipt.getPrice())+"$\n");
 				out.println("Prego, scriva il suo indirizzo di casa: ");
 				do{
@@ -64,10 +64,12 @@ class Service implements Runnable, Type
 						out.println(true);
 						out.println("Errore con il calcolo del tempo, prego reinserisca di nuovo i dati: ");
 					}
-					mapsData=operations.getDistanceAndTime(position.replace(" ", "+").toLowerCase(), in.readLine().replace(" ", "+").toLowerCase());
+					address=in.readLine();
+					mapsData=operations.getDistanceAndTime(position.replace(" ", "+").toLowerCase(), address.replace(" ", "+").toLowerCase());
 				}while(mapsData==null);
 				out.println(false);
 				out.println("Il tempo di arrivo del suo ordine e' di circa: "+mapsData);
+				operations.writeOrder(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())+"\n\n"+name+" ha ordinato: \n"+receipt.printElements("\n")+"Al prezzo di: "+String.format("%.2f", receipt.getPrice())+"$\nIndirizzo: "+address+"\n");
 			}
 			in.close();
 			out.close();
