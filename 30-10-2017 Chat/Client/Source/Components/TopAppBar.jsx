@@ -8,9 +8,9 @@ export default class TopAppBar extends React.Component
     {
         this.setState( { toolBarIsSmall: !this.state.toolBarIsSmall } );
     }
-    handleUpdateResult( result )
+    handleUpdateResult( res )
     {
-        this.setState( { result: result } );
+        this.setState( { result: res } );
     }
     handleToggleMe( eventObject )
     {
@@ -55,7 +55,7 @@ export default class TopAppBar extends React.Component
                         key="content"
                         icon="settings"
                         label="Impostazioni">
-                        <div className="win-textblock win-interactive">PENNNNEEEEEEEEEEEEEEEEE</div>
+                        <div className="win win-textblock win-interactive userName">Manuele Lucchi</div>
                     </WinJS.ToolBar.ContentCommand>
                     <WinJS.ToolBar.FlyoutCommand
                         key="flyout"

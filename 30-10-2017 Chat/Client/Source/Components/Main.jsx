@@ -8,8 +8,8 @@ export default class Main extends React.Component
   render()
   {
     return (
-      <div>
-        <SplitView></SplitView>
+      <div style={{height:'100%'}}>
+        <SplitView style={{height:'100%'}}></SplitView>
       </div>        
     ) ;
   }

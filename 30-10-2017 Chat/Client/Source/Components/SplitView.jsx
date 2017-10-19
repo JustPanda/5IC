@@ -26,9 +26,9 @@ export default class SplitView extends React.Component
   render ()
   {
     return (
-      <div>
+      <div style={ { height: "100%" } }>
         <WinJS.SplitView id={ "splitView" }
-          style={ { height: "300px" } }
+          style={ { height: "100%" } }
           paneComponent={ <SplitViewPane /> }
           contentComponent={ <SplitViewContent /> }
           paneOpened={ false }

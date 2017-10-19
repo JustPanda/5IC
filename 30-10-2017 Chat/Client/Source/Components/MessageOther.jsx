@@ -15,10 +15,10 @@ export default class MessageOther extends React.Component
   render ()
   {
     return (
-      <div>
-        <div>{}</div>
-        <div>{}</div>
+      <div className="messageOther">
+       <div className="messageText">Messaggiooooooooooooooooooooooooooooo</div>
+       <div className="messageDate">30/20/2017</div>
       </div>
-    ) /*<div>Hello from React with ES6 :)</div>; */
+    ) 
   }
 }

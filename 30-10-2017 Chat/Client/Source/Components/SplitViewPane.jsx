@@ -11,7 +11,7 @@ export default class SplitViewPane extends React.Component
     }
     handleTogglePane()
     {
-
+        this.state.paneOpened=true;
     }
     handleChangeContent(a, name)
     {
@@ -23,7 +23,7 @@ export default class SplitViewPane extends React.Component
             <div>
                 <WinJS.SplitViewPaneToggle
                     aria-controls={ "splitView" }
-                    paneOpened={ false}
+                    paneOpened={true}
                     onInvoked={ this.handleTogglePane } >
                 </WinJS.SplitViewPaneToggle>
                 <WinJS.SplitView.Command

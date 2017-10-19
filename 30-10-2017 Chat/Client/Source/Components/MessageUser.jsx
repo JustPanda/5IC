@@ -15,9 +15,9 @@ export default class MessageUser extends React.Component
   render()
   {
     return (
-      <div className="MessageUser">
-       <div className="Text">Messaggiooooooooooooooooooooooooooooo</div>
-       <div className="Date">30/20/2017</div>
+      <div className="messageUser">
+       <div className="messageText">Messaggiooooooooooooooooooooooooooooo</div>
+       <div className="messageDate">30/20/2017</div>
       </div>
     )
   }

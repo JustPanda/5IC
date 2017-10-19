@@ -1,23 +1,36 @@
-.MessageOther{
-    background: blue;
-};
-
-.MessageUser{
-    background: aqua;
-    width: 100px;
-    height: 50px;
- /*   display: flex;
+.messageOther {
+    background: rgb(0, 89, 255);
+    padding: 40px;
+    height: 50px; 
+    display: flex;
+    float: left;
     flex-direction: column;
-    justify-content: center; */
-};
+    justify-content: center;
+    margin: 50px;
+    width: auto;
+}
 
-.Date{
+.messageUser {
+    background: rgb(0, 174, 255);
+    height: 50px; 
+    padding: 40px;
+    display: flex;
+    float: right;
+    flex-direction: column;
+    justify-content: center;
+    margin: 50px;
+    width: auto;
+}
+
+.messageDate {
     align-self: right;
     vertical-align: bottom;
-};
+    padding: 20px;
+}
 
-.Text{
+.messageText {
     align-self: center;
-    top: 50%;
-    transform: translateY(-100%);
-};
+    /*  top: 50%; */
+    padding: 20px;
+    /* transform: translateY(-100%); */
+}
