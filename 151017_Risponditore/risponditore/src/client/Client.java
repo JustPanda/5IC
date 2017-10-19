@@ -72,18 +72,18 @@ public class Client implements Type
 						do{
 							out.println(sc.nextLine());
 						}while(!Boolean.valueOf(in.readLine()));
-						System.out.println("Elemento rimosso\n");
+						System.out.println("Elemento rimosso");
 						out.println("");
 						break;
 					case ITEM_TYPE:
-						System.out.println(in.readLine()+"\n");
+						System.out.println(in.readLine());
 						out.println("");
 						break;
 					case SHOW_TYPE: {
 							final StringBuilder question=new StringBuilder(in.readLine());
 							List<String> msg=new ArrayList<>(Arrays.asList(in.readLine().split(",")));
 							msg.forEach((s) -> {question.append("\n"+s);});
-							System.out.println(question.toString()+"\n");
+							System.out.println(question.toString());
 							out.println("");
 						} break;
 					case EXIT_TYPE:
