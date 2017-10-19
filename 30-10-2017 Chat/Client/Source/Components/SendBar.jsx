@@ -11,10 +11,10 @@ export default class SendBar extends React.Component
     {
         return (
             <div className="sendBar ms-Grid">
-                <div className="ms-Grid-row">
-                    <button className=" ms-Grid-col ms-sm3 ms-md2 ms-lg2">Attach</button>
-                    <input type="text" className="ms-Grid-col ms-sm6 ms-md8 ms-lg8" />
-                    <button className=" ms-Grid-col ms-sm3 ms-md2 ms-lg2">Send</button>
+                <div className="ms-Grid-row" style={ { width: '100%' } }>
+                    <button className="win-button ms-Grid-col ms-sm3 ms-md2 ms-lg2">Attach</button>
+                    <input type="text" className="win-textbox ms-Grid-col ms-sm6 ms-md8 ms-lg8" />
+                    <button className="win-button ms-Grid-col ms-sm3 ms-md2 ms-lg2">Send</button>
                 </div>
             </div>
         );

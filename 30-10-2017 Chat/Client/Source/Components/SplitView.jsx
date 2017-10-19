@@ -1,6 +1,7 @@
 'use babel';
 import React from 'react';
 import WinJS from 'react-winjs';
+import WJS from 'winjs'
 import SplitViewPane from "./SplitViewPane";
 import SplitViewContent from "./SplitViewContent";
 
@@ -21,7 +22,7 @@ export default class SplitView extends React.Component
   }
   handleAfterClose ()
   {
-
+    
   }
   render ()
   {
@@ -31,8 +32,10 @@ export default class SplitView extends React.Component
           style={ { height: "100%" } }
           paneComponent={ <SplitViewPane /> }
           contentComponent={ <SplitViewContent /> }
-          paneOpened={ false }
-          onAfterClose={ this.handleAfterClose } >
+          openedDisplayMode ={WJS.UI.SplitView.OpenedDisplayMode.inline}
+          onAfterClose={ this.handleAfterClose } 
+          paneOpened={true}
+          >
         </WinJS.SplitView>
       </div>
     );
