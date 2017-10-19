@@ -7,13 +7,15 @@ import MessageUser from "./MessageUser"
 
 export default class SendBar extends React.Component
 {
-    render ()
+    render()
     {
         return (
-            <div className="sendBar">
-                <button className="sendButton win-button win-button ">Attach</button>
-                <input type="text" className="sendInput win-textbox"/>
-                <button className="sendButton win-button win-button ">Send</button>
+            <div className="sendBar ms-Grid">
+                <div className="ms-Grid-row">
+                    <button className=" ms-Grid-col ms-sm3 ms-md2 ms-lg2">Attach</button>
+                    <input type="text" className="ms-Grid-col ms-sm6 ms-md8 ms-lg8" />
+                    <button className=" ms-Grid-col ms-sm3 ms-md2 ms-lg2">Send</button>
+                </div>
             </div>
         );
     }

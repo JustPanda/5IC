@@ -1,5 +1,5 @@
 .messageOther {
-    background: rgb(0, 89, 255);
+    background: #0078d7;
     padding: 40px;
     height: 50px; 
     display: flex;
@@ -11,7 +11,7 @@
 }
 
 .messageUser {
-    background: rgb(0, 174, 255);
+    background: #005a9e;
     height: 50px; 
     padding: 40px;
     display: flex;
