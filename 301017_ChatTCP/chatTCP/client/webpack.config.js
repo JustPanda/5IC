@@ -8,7 +8,8 @@ var config = {
     entry: APP_DIR + '/index.jsx',
     output: {
         path: BUILD_DIR,
-        filename: 'bundle.js'
+        filename: 'bundle.js',
+        publicPath: BUILD_DIR
     },
     module:{
         loaders:[
@@ -21,6 +22,10 @@ var config = {
                 test: /\.css$/,
                 // include: APP_DIR+'/css',
                 loader: "style-loader!css-loader"
+            },
+            {
+                test: /\.(png|jpg)$/,
+                loader: 'file-loader?name=/img/[name].[ext]'
             }
         ]
     }
