@@ -15,3 +15,4 @@ app.on('ready', () => {
     mainWindow = null;
   });
 });
+

@@ -2,9 +2,9 @@
     background: #0078d7;
     padding: 40px;
     height: 50px; 
-    display: flex;
+   /* display: flex; */
     float: left;
-    flex-direction: column;
+  /*  flex-direction: column; */
     justify-content: center;
     margin: 50px;
     width: auto;
@@ -14,10 +14,10 @@
     background: #005a9e;
     height: 50px; 
     padding: 40px;
-    display: flex;
+ /*   display: flex; */
     float: right;
-    flex-direction: column;
-    justify-content: center;
+  /*  flex-direction: column; */
+    justify-content: center; 
     margin: 50px;
     width: auto;
 }
@@ -25,12 +25,14 @@
 .messageDate {
     align-self: right;
     vertical-align: bottom;
+    color: white;
     padding: 20px;
 }
 
 .messageText {
     align-self: center;
-    /*  top: 50%; */
+    color: white;
+      top: 50%; 
     padding: 20px;
-    /* transform: translateY(-100%); */
+     transform: translateY(-100%); 
 }

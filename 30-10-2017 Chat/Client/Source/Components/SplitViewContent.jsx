@@ -4,6 +4,7 @@ import WinJS from 'react-winjs';
 
 import TopAppBar from "./TopAppBar"
 import Chat from "./Chat"
+import SendBar from "./SendBar"
 
 export default class SplitViewContent extends React.Component
 {
@@ -12,7 +13,8 @@ export default class SplitViewContent extends React.Component
         return (
             <div>
                 <TopAppBar style={ { alignSelf: 'top' } }></TopAppBar>
-                <Chat></Chat>
+                <Chat  className="scrollBar" ></Chat>
+                <SendBar ></SendBar>
             </div>
         );
     }

@@ -13,6 +13,12 @@ import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
+import javax.websocket.OnClose;
+import javax.websocket.OnError;
+import javax.websocket.OnMessage;
+import javax.websocket.OnOpen;
+import javax.websocket.Session;
+import javax.websocket.server.ServerEndpoint;
 
 /**
  *
@@ -26,8 +32,8 @@ public class Server
      */
     public static void main(String[] args) throws IOException
     {
-        ServerSocket s = new ServerSocket(8080);
-        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+        //ServerSocket s = new ServerSocket(8080);
+       /* ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         int clientIndex = 0;
         while (clientIndex <= 1000)
         {
@@ -38,9 +44,40 @@ public class Server
             executor.execute(client);
         }
         executor.shutdown();
-        s.close();
+        s.close(); */
+       
+       
     }
 
+}
+
+@ServerEndpoint(value = "/test")
+class WebSocketServer
+{
+    @OnOpen
+    public void onOpen(Session session) {
+        // Metodo eseguito all'apertura della connessione
+    }
+ 
+    @OnMessage
+    public String onMessage(String message, Session session) {
+        // Metodo eseguito alla ricezione di un messaggio
+        // La stringa 'message' rappresenta il messaggio
+ 
+        // Il valore di ritorno di questo metodo sara' automaticamente
+        // inviato come risposta al client. Ad esempio:
+        return "Server received [" + message + "]";
+    }
+ 
+    @OnClose
+    public void onClose(Session session) {
+       // Metodo eseguito alla chiusura della connessione
+    }
+ 
+    @OnError
+    public void onError(Throwable exception, Session session) {
+        // Metodo eseguito in caso di errore
+    }
 }
 
 class ClientConnection implements Runnable
