@@ -50,6 +50,7 @@ class App extends React.Component
     render()
     {
         const { classes, theme } = this.props;
+        console.log(this.state.open);
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
@@ -113,7 +114,7 @@ const styles=(theme) => ({
     content: {
         width: '100%',
         height: 'calc(100% - 56px)',
-        backgroundImage: 'url(app/images/background.jpg)',
+        backgroundImage: 'url(app/images/Background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         padding: theme.spacing.unit * 3,

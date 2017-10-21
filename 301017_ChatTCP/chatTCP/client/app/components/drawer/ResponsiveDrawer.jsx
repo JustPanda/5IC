@@ -31,7 +31,6 @@ class ResponsiveDrawer extends React.Component
         const drawer = (
             <div>
                 <div className={classes.drawerHeader} />
-                {/* <Divider /> */}
                 <ListChat listChat={this.props.listChat} />
             </div>
         );
