@@ -1,17 +1,10 @@
-const {app, BrowserWindow} = require('electron'),
+const {app, BrowserWindow, ipcMain} = require('electron'),
     path=require('path'),
     url=require('url');
 
-let window;
+let loginWindow, registrationWindow, chatWindow;
 
-app.on('ready',createWindow);
-
-app.on('activate',
-    function()
-    {
-        if(window==null) createWindow();
-    }
-);
+app.on('ready', createWindow);
 
 app.on('window-all-closed',
     function()
@@ -25,19 +18,68 @@ app.on('window-all-closed',
 
 function createWindow()
 {
-    window=new BrowserWindow({
-        width: 800,
-        height: 600
+    loginWindow=new BrowserWindow({
+        width: 600,
+        height: 400
     });
-    window.loadURL(url.format({
-        pathname: path.join(__dirname, 'index.html'),
+    loginWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'login/index.html'),
         protocols: 'files',
         slashes: true
     }));
-    window.on('close',
+    loginWindow.on('close',
         function()
         {
-            window=null;
+            loginWindow=null;
         }
     );
+    registrationWindow=new BrowserWindow({
+        width: 600,
+        height: 400,
+        show: false
+    });
+    registrationWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'registration/index.html'),
+        protocols: 'files',
+        slashes: true
+    }));
+    registrationWindow.on('close',
+        function()
+        {
+            registrationWindow=null;
+        }
+    );
+    chatWindow=new BrowserWindow({
+        width: 800,
+        height: 600,
+        show: false
+    });
+    chatWindow.loadURL(url.format({
+        pathname: path.join(__dirname, 'chat/index.html'),
+        protocols: 'files',
+        slashes: true
+    }));
+    chatWindow.on('close',
+        function()
+        {
+            chatWindow=null;
+        }
+    )
 }
+
+
+ipcMain.on('registration',
+    function()
+    {
+        registrationWindow.show();
+        loginWindow.hide();
+    }
+);
+
+ipcMain.on('login',
+    function()
+    {
+        loginWindow.show();
+        registrationWindow.hide();
+    }
+);

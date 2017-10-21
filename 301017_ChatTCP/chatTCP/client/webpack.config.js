@@ -5,11 +5,14 @@ const APP_DIR=path.resolve(__dirname, 'app');
 const BUILD_DIR=path.resolve(__dirname, 'public');
 
 var config = {
-    entry: APP_DIR + '/index.jsx',
+    entry: {
+        chat: APP_DIR+"/chat/index.jsx",
+        login: APP_DIR+"/login/index.jsx",
+        registration: APP_DIR+"/registration/index.jsx"
+    },
     output: {
         path: BUILD_DIR,
-        filename: 'bundle.js',
-        publicPath: BUILD_DIR
+        filename: "[name].entry.js"
     },
     module:{
         loaders:[
@@ -20,7 +23,6 @@ var config = {
             },
             {
                 test: /\.css$/,
-                // include: APP_DIR+'/css',
                 loader: "style-loader!css-loader"
             },
             {
@@ -28,7 +30,8 @@ var config = {
                 loader: 'file-loader?name=/img/[name].[ext]'
             }
         ]
-    }
+    },
+    target: 'electron-renderer'
 };
 
 module.exports=config;
