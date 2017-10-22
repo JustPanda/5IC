@@ -4,6 +4,12 @@ import WinJS from 'react-winjs';
 
 export default class SplitViewPane extends React.Component
 {
+    getInitialState()
+    {
+        return {
+            paneOpened: true,
+        }
+    }
     handleTogglePane()
     {
         this.setState( { paneOpened: !this.state.paneOpened } );
@@ -11,12 +17,6 @@ export default class SplitViewPane extends React.Component
     handleChangeContent( a, name )
     {
 
-    }
-    getInitialState()
-    {
-        return {
-            paneOpened: true,
-        }
     }
     render()
     {

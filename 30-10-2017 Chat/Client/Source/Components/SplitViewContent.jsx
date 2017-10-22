@@ -11,10 +11,10 @@ export default class SplitViewContent extends React.Component
     render ()
     {
         return (
-            <div>
-                <TopAppBar style={ { alignSelf: 'top' } }></TopAppBar>
-                <Chat  className="scrollBar" ></Chat>
-                <SendBar ></SendBar>
+            <div style={{height:"100%"}}>
+                <TopAppBar></TopAppBar>
+                <Chat></Chat>
+                <SendBar></SendBar>
             </div>
         );
     }

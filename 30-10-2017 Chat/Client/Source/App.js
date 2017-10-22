@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import Client from './Client';
 
 let mainWindow = null;
 
@@ -16,3 +17,5 @@ app.on('ready', () => {
   });
 });
 
+var client = new Client();
+client.StartClient();

@@ -15,7 +15,7 @@ export default class Chat extends React.Component
     getInitialState()
     {
         return {
-            messages: [            ]
+            messages: []
         }
     }
     addMessage()
@@ -36,15 +36,15 @@ export default class Chat extends React.Component
             </div>
             );
 
-            this.setState({messages:mes});
+        this.setState( { messages: mes } );
     }
     render()
     {
-        this.addMessage();
+       // this.addMessage();
         return (
-            <section id="ChatSection" style={ { width: '100%' } }>
-            {this.state.messages}
-                {/*    <div className="row" style={ { width: '100%' } } >
+            <section id="ChatSection" className="scrollBar" style={ { width: '100%', height:'85%' } }>
+                {/*this.state.messages*/ }
+                <div className="row" style={ { width: '100%' } } >
                     <MessageOther className="col-md-4" text="TESTO PROVA2" date="20/10/2222"></MessageOther>
                     <div className="col-md-8" style={ { background: 'green' } }></div>
                 </div>
@@ -52,7 +52,7 @@ export default class Chat extends React.Component
                 <div className="row" style={ { width: '100%' } } >
                     <div className="col-md-8" style={ { background: 'green' } }></div>
                     <MessageUser className="col-md-4" text="TESTO PROVA" date="20/10/2222" ></MessageUser>
-        </div> */}
+                </div>
 
             </section>
         );

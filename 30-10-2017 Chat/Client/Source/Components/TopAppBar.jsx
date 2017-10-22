@@ -35,34 +35,10 @@ export default class TopAppBar extends React.Component
     }
     render()
     {
-        var subMenu = (
-            <WinJS.Menu>
-                <WinJS.Menu.Button
-                    key="chooseMeA"
-                    label="Or Choose Me"
-                    onClick={ this.handleUpdateResult.bind( null, "Or Choose Me" ) } />
-                <WinJS.Menu.Button
-                    key="chooseMeB"
-                    label="No, Choose Me!"
-                    onClick={ this.handleUpdateResult.bind( null, "No, Choose Me!" ) } />
-            </WinJS.Menu>
-        );
-
         return (
-            <div>
-                <WinJS.ToolBar ref="toolBar">
-                    <WinJS.ToolBar.ContentCommand
-                        key="content"
-                        icon="settings"
-                        label="Impostazioni">
-                        <div className="win win-textblock win-interactive userName">Manuele Lucchi</div>
-                    </WinJS.ToolBar.ContentCommand>
-                    <WinJS.ToolBar.FlyoutCommand
-                        key="flyout"
-                        icon="settings"
-                        label="Settings"
-                        flyoutComponent={ subMenu } />
-                </WinJS.ToolBar>
+            <div className="row" style={{height:'10%'}}>
+                <img className="col-md-4" src="http://www.starcoppe.it/images/grafica-immagine-b.jpg" style={{height:'50px'}}/>
+                <div className="col-md-8" style={{height:'50px'}}>UTENTE CAVALLO</div>
             </div>
         );
     }

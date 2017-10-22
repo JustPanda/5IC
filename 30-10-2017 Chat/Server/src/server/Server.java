@@ -5,20 +5,18 @@
  */
 package server;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
+
 
 /**
  *
@@ -32,7 +30,18 @@ public class Server
      */
     public static void main(String[] args) throws IOException
     {
-        //ServerSocket s = new ServerSocket(8080);
+        ServerSocket s = new ServerSocket(8080);
+        
+        Socket socket = (Socket) s.accept();
+        System.out.println("Connesso");
+        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        while(true)
+        {
+            out.println("GESUUUUUUU");
+            System.out.println(in.readLine()); 
+        }
+        
        /* ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         int clientIndex = 0;
         while (clientIndex <= 1000)
@@ -49,35 +58,6 @@ public class Server
        
     }
 
-}
-
-@ServerEndpoint(value = "/test")
-class WebSocketServer
-{
-    @OnOpen
-    public void onOpen(Session session) {
-        // Metodo eseguito all'apertura della connessione
-    }
- 
-    @OnMessage
-    public String onMessage(String message, Session session) {
-        // Metodo eseguito alla ricezione di un messaggio
-        // La stringa 'message' rappresenta il messaggio
- 
-        // Il valore di ritorno di questo metodo sara' automaticamente
-        // inviato come risposta al client. Ad esempio:
-        return "Server received [" + message + "]";
-    }
- 
-    @OnClose
-    public void onClose(Session session) {
-       // Metodo eseguito alla chiusura della connessione
-    }
- 
-    @OnError
-    public void onError(Throwable exception, Session session) {
-        // Metodo eseguito in caso di errore
-    }
 }
 
 class ClientConnection implements Runnable

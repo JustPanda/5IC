@@ -1,13 +1,22 @@
+const net = require( 'net' );
 
-class Client 
+export default class Client 
 {
     StartClient()
     {
-        var socket = new WebSocket( 'ws://localhost:8080/server/test' );
-
-        echo_service.onmessage = function ( event )
+        var client = net.connect( { port: 8080 }, function ()
         {
-            alert( event.data );
-        }
+            console.log( "connected to server" );
+        } );
+        client.on( 'data', function ( data )
+        {
+            console.log( data.toString() );
+            client.write( "bb\n" );
+        } );
+
+        client.on( "end", function ()
+        {
+            console.log( "disconnected from server" );
+        } )
     }
 }
