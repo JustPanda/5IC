@@ -34,7 +34,6 @@ export default class SplitView extends React.Component
           contentComponent={ <SplitViewContent /> }
           openedDisplayMode ={WJS.UI.SplitView.OpenedDisplayMode.inline}
           onAfterClose={ this.handleAfterClose } 
-          paneOpened={true}
           >
         </WinJS.SplitView>
       </div>

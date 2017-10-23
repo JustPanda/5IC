@@ -4,12 +4,18 @@ import WinJS from 'react-winjs';
 
 export default class SplitViewPane extends React.Component
 {
-    getInitialState()
+    constructor()
+    {
+        super();
+        this.handleTogglePane=this.handleTogglePane.bind(this);
+        this.state= {paneOpened:true};
+    }
+    /*getInitialState()
     {
         return {
             paneOpened: true,
         }
-    }
+    } */
     handleTogglePane()
     {
         this.setState( { paneOpened: !this.state.paneOpened } );
@@ -25,7 +31,7 @@ export default class SplitViewPane extends React.Component
                 <div>
                     <WinJS.SplitViewPaneToggle
                         aria-controls={ "splitView" }
-                        paneOpened={ true }
+                        paneOpened={ this.state.paneOpened }
                         onInvoked={ this.handleTogglePane } >
                     </WinJS.SplitViewPaneToggle>
                 </div>
