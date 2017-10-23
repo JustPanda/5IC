@@ -2,6 +2,7 @@
 import React from 'react';
 import WinJS from 'react-winjs';
 import SplitView from "./SplitView";
+import Login from "./Login"
 
 export default class Main extends React.Component
 {
@@ -9,7 +10,8 @@ export default class Main extends React.Component
   {
     return (
       <div style={{height:'100%'}}>
-        <SplitView style={{height:'100%'}}></SplitView>
+      { /* <SplitView></SplitView> */}
+      <Login></Login>
       </div>        
     ) ;
   }
