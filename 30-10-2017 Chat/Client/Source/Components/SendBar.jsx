@@ -7,17 +7,21 @@ import MessageUser from "./MessageUser"
 
 export default class SendBar extends React.Component
 {
+    constructor()
+    {
+        super();
+        this.ButtonSendOnClick = this.ButtonSendOnClick.bind(this);
+    }
     ButtonSendOnClick()
     {
         var Text = document.getElementById( "TextBoxSend" ).value;
         var Date;
-        var Message =
-            (
-                <div className="row" style={ { width: '100%' } }>
+        this.props.method(/*<MessageUser text={Text}></MessageUser>*/ <div>{Text}</div>);
+        var Message ;
+              /*  <div className="row" style={ { width: '100%' } }>
                     <div className="col-md-8"></div>
                     <MessageUser className="col-md-4" text={ Text } date={ "10/20/200" }></MessageUser>
-                </div>
-            );
+                </div> */
 
         document.getElementById( "ChatSection" ).append( toString( Message ) );
 

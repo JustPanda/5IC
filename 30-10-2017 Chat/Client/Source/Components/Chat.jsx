@@ -12,12 +12,6 @@ export default class Chat extends React.Component
     {
         super();
     }
-    getInitialState()
-    {
-        return {
-            messages: []
-        }
-    }
     addMessage()
     {
         var mes = this.state.messages;

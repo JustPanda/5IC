@@ -6,13 +6,12 @@ import Login from "./Login"
 
 export default class Main extends React.Component
 {
-  render()
+  render ()
   {
     return (
-      <div style={{height:'100%'}}>
-      { /* <SplitView></SplitView> */}
-      <Login></Login>
-      </div>        
-    ) ;
+      <div style={ { height: '100%' } }>
+        { <SplitView></SplitView> }
+      </div>
+    );
   }
 }
