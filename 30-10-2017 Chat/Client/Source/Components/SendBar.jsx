@@ -4,30 +4,46 @@ import WinJS from 'react-winjs';
 
 import TopAppBar from "./TopAppBar"
 import MessageUser from "./MessageUser"
+import MessageOther from "./MessageOther";
 
 export default class SendBar extends React.Component
 {
     constructor()
     {
         super();
-        this.ButtonSendOnClick = this.ButtonSendOnClick.bind(this);
+        this.ButtonSendOnClick = this.ButtonSendOnClick.bind( this );
+        this.state = { a: true };
     }
-    ButtonSendOnClick()
+    ButtonSendOnClick ()
     {
         var Text = document.getElementById( "TextBoxSend" ).value;
         var Date;
-        this.props.method(/*<MessageUser text={Text}></MessageUser>*/ <div>{Text}</div>);
-        var Message ;
-              /*  <div className="row" style={ { width: '100%' } }>
+        var Message;
+        if ( this.state.a == true )
+        {
+            Message = (
+                <div className="row" style={ { width: '100%' } }>
                     <div className="col-md-8"></div>
                     <MessageUser className="col-md-4" text={ Text } date={ "10/20/200" }></MessageUser>
-                </div> */
+                </div>
+            );
+        }
+        else
+        {
+            Message = (
+                <div className="row" style={ { width: '100%' } }>
+                    <MessageOther className="col-md-4" text={ Text } date={ "10/20/200" }></MessageOther>
+                    <div className="col-md-8"></div>
+                </div>
+            );
+        }
 
-        document.getElementById( "ChatSection" ).append( toString( Message ) );
+        this.setState({a: !this.state.a})
+        this.props.method( Message );
 
     }
 
-    render()
+    render ()
     {
         return (
             <div className="row sendBar" style={ { width: '100%', height: '5%' } }>
