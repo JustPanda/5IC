@@ -20,17 +20,10 @@ class App extends React.Component
         super(props);
         this.state={
             open: false,
+            titleBar: 'Global chat'
         };
         this.listChat={
-            'Users': [
-                {
-                    'name': 'Filippo'
-                },
-                {
-                    'name': 'wdaws'
-                },
-            ],
-            'Groups': [
+            'users': [
                 {
                     'name': 'Filippo'
                 },
@@ -40,6 +33,7 @@ class App extends React.Component
             ]
         };
         this.handleDrawerToggle=this.handleDrawerToggle.bind(this);
+        this.changeChat=this.changeChat.bind(this);
     }
 
     handleDrawerToggle()
@@ -47,30 +41,34 @@ class App extends React.Component
         this.setState({ open: !this.state.open });
     }
 
+    changeChat(objChat)
+    {
+        this.setState({titleBar: objChat.name});
+    }
+
     render()
     {
         const { classes, theme } = this.props;
-        console.log(this.state.open);
         return (
             <div className={classes.root}>
                 <div className={classes.appFrame}>
                     <AppBar className={classes.appBar}>
-                    <Toolbar>
-                        <IconButton
-                        color="contrast"
-                        aria-label="open drawer"
-                        onClick={this.handleDrawerToggle}
-                        className={classes.navIconHide}>
-                            <MenuIcon />
-                        </IconButton>
-                            <Typography type="title" color="inherit" noWrap>
-                                Chat TCP
+                        <Toolbar>
+                            <IconButton
+                                className={classes.navIconHide}
+                                aria-label="open drawer"
+                                onClick={this.handleDrawerToggle}>
+                                <MenuIcon />
+                            </IconButton>
+                            <Typography type="title" noWrap>
+                                {this.state.titleBar}
                             </Typography>
                         </Toolbar>
                     </AppBar>
                     <ResponsiveDrawer open={this.state.open}
                          handleDrawerToggle={this.handleDrawerToggle}
-                         listChat={this.listChat} />
+                         listChat={this.listChat}
+                         changeChat={this.changeChat} />
                     <main className={classes.content}>
                         <Chat />
                     </main>
@@ -101,6 +99,7 @@ const styles=(theme) => ({
     appBar: {
         position: 'absolute',
         marginLeft: drawerWidth,
+        backgroundColor: "white",
         [theme.breakpoints.up('md')]: {
             width: `calc(100% - ${drawerWidth}px)`,
         },
@@ -114,7 +113,7 @@ const styles=(theme) => ({
     content: {
         width: '100%',
         height: 'calc(100% - 56px)',
-        backgroundImage: 'url(app/images/Background.jpg)',
+        backgroundImage: 'url(app/chat/images/Background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         marginTop: 56,

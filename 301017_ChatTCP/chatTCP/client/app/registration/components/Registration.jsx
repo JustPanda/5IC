@@ -14,7 +14,7 @@ class Registration extends React.Component
 
     handleBack()
     {
-        ipcRenderer.send('login');
+        ipcRenderer.send('goToLogin');
     }
 
     render()

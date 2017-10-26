@@ -16,6 +16,7 @@ class BottomSection extends React.Component
             actualText: ''
         };
         this.handleChange=this.handleChange.bind(this);
+        this.updateMessages=this.updateMessages.bind(this);
     }
 
     handleChange(event)
@@ -23,25 +24,46 @@ class BottomSection extends React.Component
         this.setState({actualText: event.target.value});
     }
 
+    updateMessages()
+    {
+        if(this.state.actualText.trim())
+        {
+            let text=this.state.actualText.split("\n").map((item, index) => {return (<span key={index}>{item}<br /></span>)});
+            let d=new Date();
+            let min=d.getMinutes();
+            if (min < 10) {
+                min = "0" + min;
+            }
+            this.props.updateMessages({
+                orientation: 'right',
+                text: text,
+                date: d.getHours()+":"+min
+            });
+            this.setState({actualText: ''});
+        }
+    }
+
     render()
     {
         const {classes}=this.props;
         return (
             <div className={classes.bottomSectionCnt}>
-                <TextField
-                    id="multiline-static"
-                    className={classes.textField}
-                    label="Type a message"
-                    multiline
-                    fullWidth={true}
-                    value={this.state.actualText}
-                    onChange={this.handleChange}
-                    margin="normal" />
-                <Tooltip id="tooltip-icon" className={classes.send} title="Send" placement="top-end">
-                    <Button fab color="primary" aria-label="Send">
-                        <SendIcon />
-                    </Button>
-                </Tooltip>
+                <div className={classes.bottomSection}>
+                    <TextField
+                        id="multiline-static"
+                        className={classes.textField}
+                        label="Message"
+                        multiline
+                        fullWidth={true}
+                        value={this.state.actualText}
+                        onChange={this.handleChange}
+                        margin="normal" />
+                        <Tooltip id="tooltip-icon" className={classes.send} title="Send" placement="top-end">
+                            <Button fab color="primary" aria-label="Send" onClick={this.updateMessages}>
+                                <SendIcon />
+                            </Button>
+                        </Tooltip>
+                </div>
             </div>
         );
     }
@@ -51,21 +73,27 @@ BottomSection.propTypes={
     classes: PropTypes.object.isRequired
 };
 
-const styles={
+const styles=(theme) => ({
     bottomSectionCnt: {
-        position: 'absolute',
-        width: '100%',
+        position: 'relative',
         display: 'flex',
+        width: '100%',
         bottom: '0px',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    bottomSection: {
+        position: 'relative',
+        display: 'flex',
+        width: '98%',
         flexDirection: 'row',
-        // left: 0
     },
     textField: {
-        position: 'relative'
+        position: 'relative',
     },
     send: {
         position: 'relative'
     }
-};
+});
 
 export default withStyles(styles)(BottomSection);

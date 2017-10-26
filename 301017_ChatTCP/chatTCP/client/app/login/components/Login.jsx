@@ -4,24 +4,43 @@ import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import {ipcRenderer} from 'electron';
+import net from 'net';
 
 class Login extends React.Component
 {
     constructor(props)
     {
         super(props);
+        const PORT=8080, IP='127.0.0.1';
         this.state={
             username: '',
-            password: ''
+            password: '',
+            pass: false
         };
+        // this.client=new net.connect(PORT, IP);
         this.handleUsername=this.handleUsername.bind(this);
+        this.handlePassword=this.handlePassword.bind(this);
         this.handleRegistration=this.handleRegistration.bind(this);
         this.handleLogin=this.handleLogin.bind(this);
-    }
-
-    handleRegistration()
-    {
-        ipcRenderer.send('registration');
+        // this.client.on('connect', () => {this.client.send("login")});
+        // this.client.on('data',
+        //     function(data)
+        //     {
+        //
+        //     }
+        // );
+        // this.client.on('end',
+        //     function()
+        //     {
+        //         console.log('end');
+        //     }
+        // )
+        // this.client.on('error',
+        //     function()
+        //     {
+        //         console.log("Error");
+        //     }
+        // );
     }
 
     handleUsername(event)
@@ -31,12 +50,28 @@ class Login extends React.Component
 
     handlePassword(event)
     {
-        this.setState({password: event.target.value});
+        var password=event.target.value;
+        console.log(password);
+        if(password)
+        {
+            var regexToPass=[/.{7,}/g, /[0-9]+/g, /[A-Z]+/g],
+                pass=true;
+            for(let i=0;i<regexToPass.length&&pass;i++)
+            {
+                pass&=(new RegExp(regexToPass[i])).test(password);
+            }
+            this.setState({password: password, pass: pass});
+        }
     }
 
     handleLogin()
     {
-        
+
+    }
+
+    handleRegistration()
+    {
+        ipcRenderer.send('goToRegistration');
     }
 
     render()
@@ -47,17 +82,15 @@ class Login extends React.Component
                 <div className={classes.textFieldCnt}>
                     <TextField
                         label="Username"
-                        placeholder="Insert username"
                         fullWidth={true}
                         margin="normal"
                         onChange={this.handleUsername} />
                     <TextField
                         label="Password"
-                        placeholder="Insert password"
                         type="password"
                         fullWidth={true}
                         margin="normal"
-                        onChange={this.handleRegistration} />
+                        onChange={this.handlePassword} />
                 </div>
                 <div className={classes.buttonsCnt}>
                     <Button raised className={classes.button} onClick={this.handleRegistration}>

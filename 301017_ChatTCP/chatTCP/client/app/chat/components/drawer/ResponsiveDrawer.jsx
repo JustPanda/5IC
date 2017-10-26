@@ -27,11 +27,11 @@ class ResponsiveDrawer extends React.Component
 
     render()
     {
-        const {classes, theme}=this.props;
+        const {classes, theme, changeChat}=this.props;
         const drawer = (
             <div>
                 <div className={classes.drawerHeader} />
-                <ListChat listChat={this.props.listChat} />
+                <ListChat changeChat={changeChat} listChat={this.props.listChat} />
             </div>
         );
         return (
