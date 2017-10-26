@@ -16,26 +16,29 @@ export default class SendBar extends React.Component
     }
     ButtonSendOnClick ()
     {
-        var Text = document.getElementById( "TextBoxSend" ).value;
-        var Date;
+        var text = document.getElementById( "TextBoxSend" ).value;
+        var date = "Adesso";
+       // var type = "Client"
         var Message;
         if ( this.state.a == true )
         {
-            Message = (
+            Message = {Text:text,Date:date, Type:"client" };
+                /*
                 <div className="row" style={ { width: '100%' } }>
                     <div className="col-md-8"></div>
                     <MessageUser className="col-md-4" text={ Text } date={ "10/20/200" }></MessageUser>
                 </div>
-            );
+            */
         }
         else
         {
-            Message = (
+            Message = {Text:text, Date:date, Type:"server"};
+                /*
                 <div className="row" style={ { width: '100%' } }>
                     <MessageOther className="col-md-4" text={ Text } date={ "10/20/200" }></MessageOther>
                     <div className="col-md-8"></div>
-                </div>
-            );
+                </div> */
+            
         }
 
         this.setState({a: !this.state.a})

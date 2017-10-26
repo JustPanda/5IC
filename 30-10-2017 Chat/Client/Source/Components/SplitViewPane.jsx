@@ -27,14 +27,14 @@ export default class SplitViewPane extends React.Component
     render()
     {
         return (
-            <div>
+            <div> {/*
                 <div>
                     <WinJS.SplitViewPaneToggle
                         aria-controls={ "splitView" }
                         paneOpened={ this.state.paneOpened }
                         onInvoked={ this.handleTogglePane } >
                     </WinJS.SplitViewPaneToggle>
-                </div>
+            </div> */}
                 <WinJS.SplitView.Command
                     label="Home"
                     icon="home"

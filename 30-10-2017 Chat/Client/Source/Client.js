@@ -2,22 +2,26 @@ const net = require( 'net' );
 
 export default class Client {
     StartClient() {
-        var client = net.connect( {
+        this.client = net.connect( {
             port: 8080
         }, function () {
             console.log( "connected to server" );
         } );
-        client.on( 'data', function ( data ) {
-            console.log( data.toString() );
-            client.write( "bb\n" );
+
+        this.client.on( 'data', function ( data ) {
+
         } );
 
-        client.on( "end", function () {
+        this.client.on( "end", function () {
             console.log( "disconnected from server" );
         } );
 
-        client.on( "error", function () {
+        this.client.on( "error", function () {
 
         } )
+    }
+
+    WriteMessage( message ) {
+        this.client.write( message );
     }
 }

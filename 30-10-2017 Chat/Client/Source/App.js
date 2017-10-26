@@ -63,7 +63,3 @@ ipcMain.on( "signup", function () {
   loginWindow.hide();
   signupWindow.show();
 } );
-
-
-var client = new Client();
-client.StartClient();
