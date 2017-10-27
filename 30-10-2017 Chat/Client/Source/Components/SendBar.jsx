@@ -17,29 +17,16 @@ export default class SendBar extends React.Component
     ButtonSendOnClick ()
     {
         var text = document.getElementById( "TextBoxSend" ).value;
-        var date = "Adesso";
-       // var type = "Client"
-        var Message;
-        if ( this.state.a == true )
+        document.getElementById( "TextBoxSend" ).value ="";
+        var Message =text;
+     /*   if ( this.state.a == true )
         {
-            Message = {Text:text,Date:date, Type:"client" };
-                /*
-                <div className="row" style={ { width: '100%' } }>
-                    <div className="col-md-8"></div>
-                    <MessageUser className="col-md-4" text={ Text } date={ "10/20/200" }></MessageUser>
-                </div>
-            */
+            Message = text;
         }
         else
         {
-            Message = {Text:text, Date:date, Type:"server"};
-                /*
-                <div className="row" style={ { width: '100%' } }>
-                    <MessageOther className="col-md-4" text={ Text } date={ "10/20/200" }></MessageOther>
-                    <div className="col-md-8"></div>
-                </div> */
-            
-        }
+            Message = text;            
+        } */
 
         this.setState({a: !this.state.a})
         this.props.method( Message );
@@ -50,9 +37,8 @@ export default class SendBar extends React.Component
     {
         return (
             <div className="row sendBar" style={ { width: '100%', height: '5%' } }>
-                {/*     <button className="win-button ms-Grid-col ms-sm3 ms-md2 ms-lg2">Attach</button> */ }
-                <input id="TextBoxSend" type="text" className="win-textbox col-md-8" />
-                <button id="ButtonSend" className="win-button col-md-4 " onClick={ this.ButtonSendOnClick }>Send</button>
+                <input id="TextBoxSend" type="text" className="win-textbox col-md-8" style={{marginLeft:"40px", marginRight:"20px"}}/>
+                <button id="ButtonSend" className="win-button col-md-4 " onClick={ this.ButtonSendOnClick } style={{marginRight:"20px", marginTop:"5px", marginBottom:"5px", width:"75px"}}>Send</button>
             </div>
         );
     }

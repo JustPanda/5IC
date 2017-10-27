@@ -13,6 +13,7 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -32,17 +33,17 @@ public class Server
     {
         ServerSocket s = new ServerSocket(8080);
         
-        Socket socket = (Socket) s.accept();
-        System.out.println("Connesso");
-        PrintWriter out = new PrintWriter(socket.getOutputStream());
+        /*Socket socket = (Socket) s.accept();
+        System.out.println("Connesso"); */
+     /*   PrintWriter out = new PrintWriter(socket.getOutputStream());
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         while(true)
         {
             //out.println("GESUUUUUUU");
-            System.out.println(in.read()); 
-        }
+            System.out.println("Ho ricevuto: " + in.readLine()); 
+        } */
         
-       /* ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         int clientIndex = 0;
         while (clientIndex <= 1000)
         {
@@ -53,7 +54,7 @@ public class Server
             executor.execute(client);
         }
         executor.shutdown();
-        s.close(); */
+        s.close(); 
        
        
     }
@@ -72,7 +73,7 @@ class ClientConnection implements Runnable
     // the User of the Client
     User user;
     // the only type of message a will receive
-    Message m;
+    ArrayList<Message> messages = new ArrayList<Message>();
     // the date I connect
     String date;
 
@@ -109,7 +110,7 @@ class Receiver implements Runnable
     @Override
     public void run()
     {
-
+        
     }
 
 }

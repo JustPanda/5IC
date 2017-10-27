@@ -20,22 +20,24 @@ export default class SplitViewContent extends React.Component
     }
     RefreshMessages ( message )
     {
+        var d = new Date();
+        var date = d.getHours() + ":" +d.getMinutes() + ":" + d.getSeconds() + "," + d.getDate() + "/" + d.getMonth() +"/" + d.getFullYear();
         this.setState( function ( prevstate )
         {
             prevstate.messages.push( message );
             
             var tag;
         //    console.log(prevstate.messages);
-            if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "client" )
-            {
-                var msg =prevstate.messages[ prevstate.messages.length - 1 ];
-                tag = (
-                    <div className="row" style={ { width: '100%' } }>
-                        <div className="col-md-8"></div>
-                        <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date }></MessageUser>
-                    </div>
-                )
-            }
+            //if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "client" )
+            //{
+            var msg =prevstate.messages[ prevstate.messages.length - 1 ];
+            tag = (
+                <div className="row" style={ { width: '100%' } }>
+                    <div className="col-md-8"></div>
+                    <MessageUser className="col-md-4" text={ msg } date={ date}></MessageUser>
+                </div>
+            )
+            /* } 
             else if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "server" )
             {
                 var msg = prevstate.messages[ prevstate.messages.length - 1 ];
@@ -45,14 +47,14 @@ export default class SplitViewContent extends React.Component
                         <div className="col-md-8"></div>
                     </div>
                 )
-            }
+            } */
             prevstate.tags.push( tag );
 
             return { messages: prevstate.messages, tags:prevstate.tags }
         } );
 
-        console.log("Sto per inviare :" + "Text:" + message.Text + "Date:" + message.date + "Type:" + message.Type);
-        this.state.client.WriteMessage( "Text:" + message.Text + /*"Date:" + message.date +*/ "|Type:" + message.Type);
+   //     console.log("Sto per inviare :" + "Text:" + message.Text +/* "Date:" + message.date*/ + "|Type:" + message.Type);
+        this.state.client.WriteMessage(message + " " + date);
 
     }
     render ()
