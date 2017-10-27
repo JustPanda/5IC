@@ -23,5 +23,6 @@ export default class Client {
 
     WriteMessage( message ) {
         this.client.write( message );
+        console.log("Ho inviato " + message);
     }
 }

@@ -51,7 +51,8 @@ export default class SplitViewContent extends React.Component
             return { messages: prevstate.messages, tags:prevstate.tags }
         } );
 
-        this.state.client.WriteMessage( toString( message ) );
+        console.log("Sto per inviare :" + "Text:" + message.Text + "Date:" + message.date + "Type:" + message.Type);
+        this.state.client.WriteMessage( "Text:" + message.Text + /*"Date:" + message.date +*/ "|Type:" + message.Type);
 
     }
     render ()

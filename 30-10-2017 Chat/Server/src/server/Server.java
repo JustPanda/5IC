@@ -38,8 +38,8 @@ public class Server
         BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         while(true)
         {
-            out.println("GESUUUUUUU");
-            System.out.println(in.readLine()); 
+            //out.println("GESUUUUUUU");
+            System.out.println(in.read()); 
         }
         
        /* ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();

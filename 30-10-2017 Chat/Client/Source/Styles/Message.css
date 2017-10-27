@@ -1,24 +1,24 @@
 .messageOther {
     background: #0078d7;
-    padding: 40px;
-    height: 50px; 
+    padding: 20px;
+   /* height: 50px;  */
    /* display: flex; */
     float: left;
   /*  flex-direction: column; */
     justify-content: center;
-    margin: 50px;
+   /* margin: 50px; */
     width: auto;
 }
 
 .messageUser {
     background: #005a9e;
-    height: 50px; 
-    padding: 40px;
+  /*  height: 50px; */
+    padding: 20px;
  /*   display: flex; */
     float: right;
   /*  flex-direction: column; */
     justify-content: center; 
-    margin: 50px;
+  /*  margin: 50px; */
     width: auto;
 }
 
