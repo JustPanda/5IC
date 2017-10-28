@@ -1,6 +1,7 @@
 .messageOther {
     background: #0078d7;
     padding: 20px;
+    max-width: 60%;
    /* height: 50px;  */
    /* display: flex; */
     float: left;
@@ -14,6 +15,7 @@
     background: #005a9e;
   /*  height: 50px; */
     padding: 20px;
+    max-width: 60%;
  /*   display: flex; */
     float: right;
   /*  flex-direction: column; */
@@ -26,13 +28,14 @@
     align-self: right;
     vertical-align: bottom;
     color: white;
-    padding: 20px;
+    padding-bottom: 10px;
 }
 
 .messageText {
     align-self: center;
     color: white;
-      top: 50%; 
+    /*top: 50%;  */
     padding: 20px;
-     transform: translateY(-100%); 
+    font-size: 20;
+    /* transform: translateY(-100%); */
 }

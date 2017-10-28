@@ -2,8 +2,9 @@ const net = require( 'net' );
 
 export default class Client
 {
-    StartClient()
+    StartClient(method)
     {
+        this.refresh = method;
         this.client = net.connect( 
         {
             port: 8080

@@ -17,6 +17,10 @@ export default class SendBar extends React.Component
     ButtonSendOnClick ()
     {
         var text = document.getElementById( "TextBoxSend" ).value;
+        if(text==""||text==null)
+        {
+            return;
+        }
         document.getElementById( "TextBoxSend" ).value ="";
         var Message =text;
      /*   if ( this.state.a == true )

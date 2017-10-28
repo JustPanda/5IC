@@ -4,13 +4,13 @@ import WinJS from 'react-winjs';
 
 export default class MessageUser extends React.Component
 {
-  render()
+  render ()
   {
     return (
-        <div className="messageUser">
-          <div className="messageText">{ this.props.text }</div>
-          <div className="messageDate">{ this.props.date }</div>
-        </div>
+      <div className="messageUser" style={ { marginTop: "10px", marginBottom: "10px" } }>
+        <div className="messageText" style={ { fontSize:"20" } }>{ this.props.text }</div>
+        <div className="messageDate">{ this.props.date }</div>
+      </div>
     )
   }
 }
