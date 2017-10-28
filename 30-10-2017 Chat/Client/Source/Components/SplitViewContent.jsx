@@ -21,8 +21,6 @@ export default class SplitViewContent extends React.Component
     }
     RefreshMessages ( message )
     {
-        var d = new Date();
-        var date = d.getHours() + ":" +d.getMinutes() + ":" + d.getSeconds() + "," + d.getDate() + "/" + d.getMonth() +"/" + d.getFullYear();
         this.setState( function ( prevstate )
         {
             prevstate.messages.push( message );
@@ -32,22 +30,30 @@ export default class SplitViewContent extends React.Component
             //if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "client" )
             //{
             var msg =prevstate.messages[ prevstate.messages.length - 1 ];
-            tag = (
+            if(msg.Type=="client")
+            {
+                 tag = (
                 <div className="row" style={ { width: '100%' } }>
                     <div className="col-md-8"></div>
-                    <MessageUser className="col-md-4" text={ msg } date={ date}></MessageUser>
+                    <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date}></MessageUser>
                 </div>
             )
-            /* } 
-            else if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "server" )
+            }
+            else if(msg.Type=="server")
             {
-                var msg = prevstate.messages[ prevstate.messages.length - 1 ];
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
                         <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date }></MessageOther>
                         <div className="col-md-8"></div>
                     </div>
                 )
+            }
+           
+            /* } 
+            else if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "server" )
+            {
+                var msg = prevstate.messages[ prevstate.messages.length - 1 ];
+                
             } */
             prevstate.tags.push( tag );
 
@@ -55,7 +61,7 @@ export default class SplitViewContent extends React.Component
         } );
 
    //     console.log("Sto per inviare :" + "Text:" + message.Text +/* "Date:" + message.date*/ + "|Type:" + message.Type);
-        this.state.client.WriteMessage(message + " " + date);
+        this.state.client.WriteMessage("{" + "Type:" + "\"" + message.Type + "\"" + ",Text:"+ "\"" + message.Text  + "\"" + ",Date:"+ "\"" + message.Date + "\"" +"}");
 
     }
     render ()

@@ -12,7 +12,7 @@ export default class SendBar extends React.Component
     {
         super();
         this.ButtonSendOnClick = this.ButtonSendOnClick.bind( this );
-        this.state = { a: true };
+        //this.state = { a: true };
     }
     ButtonSendOnClick ()
     {
@@ -22,7 +22,9 @@ export default class SendBar extends React.Component
             return;
         }
         document.getElementById( "TextBoxSend" ).value ="";
-        var Message =text;
+        var d = new Date();
+        var date = d.getHours() + ":" +d.getMinutes() + "," + d.getDate() + "/" + d.getMonth() +"/" + d.getFullYear();
+        var Message ={Type:"client", Text:text, Date:date};
      /*   if ( this.state.a == true )
         {
             Message = text;
@@ -32,7 +34,7 @@ export default class SendBar extends React.Component
             Message = text;            
         } */
 
-        this.setState({a: !this.state.a})
+    //    this.setState({a: !this.state.a})
         this.props.method( Message );
 
     }
