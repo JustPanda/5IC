@@ -13,4 +13,5 @@ public class Message
 {
     public String Text;
     public String Date;
+    public String User;
 }

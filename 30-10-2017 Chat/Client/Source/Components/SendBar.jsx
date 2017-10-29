@@ -24,7 +24,7 @@ export default class SendBar extends React.Component
         document.getElementById( "TextBoxSend" ).value ="";
         var d = new Date();
         var date = d.getHours() + ":" +d.getMinutes() + "," + d.getDate() + "/" + d.getMonth() +"/" + d.getFullYear();
-        var Message ={Type:"client", Text:text, Date:date};
+        var Message ={User:"cesare", Text:text, Date:date};
      /*   if ( this.state.a == true )
         {
             Message = text;

@@ -37,53 +37,66 @@ public class Server
      */
     public static void main(String[] args) throws IOException
     {
-        ServerSocket s = new ServerSocket(8080);
+        Mixer mixer = new Mixer();
+        mixer.Start();      
 
-        /*Socket socket = (Socket) s.accept();
-        System.out.println("Connesso"); */
- /*   PrintWriter out = new PrintWriter(socket.getOutputStream());
-        BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        while(true)
-        {
-            //out.println("GESUUUUUUU");
-            System.out.println("Ho ricevuto: " + in.readLine()); 
-        } */
+    }
+
+}
+
+class Mixer 
+{
+    ArrayList<ClientConnection> connections = new ArrayList<ClientConnection>();
+    private ArrayList<Message> messages = new ArrayList<Message>();
+    
+    public void Start() throws IOException
+    {
+        ServerSocket s = new ServerSocket(8080);
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         int clientIndex = 0;
         while (clientIndex <= 1000)
         {
             clientIndex++;
             Socket socket = (Socket) s.accept();
-            ClientConnection client = new ClientConnection(socket, clientIndex);
+            ClientConnection client = new ClientConnection(socket, this);
             System.out.println("Connesso al client n°" + clientIndex);
+            connections.add(client);
             executor.execute(client);
         }
         executor.shutdown();
         s.close();
-
     }
-
+    
+    public void UpdateMessages(Message message)
+    {
+        this.messages.add(message);
+        for(int i=0; i<connections.size(); i++)
+        {
+            ClientConnection c = connections.get(i);
+            if(!message.User.equals(c.user.Username))
+            {
+                c.executor.execute(new Sender(c, c.output, message));
+            }
+        }
+    }
 }
 
 class ClientConnection implements Runnable
 {
-
-    // the socket where to listen/talk
+    Mixer mixer;
     Socket socket;
+    ExecutorService executor;
     BufferedReader input;
     PrintWriter output;
-    // my unique id (easier for deconnection)
-    int id;
-    // the User of the Client
-    User user;
-    // the only type of message a will receive
-    ArrayList<Message> messages = new ArrayList<Message>();
-    // the date I connect
-    String date;
+  //  int id;
 
-    public ClientConnection(Socket socket, int index) throws IOException
+    public User user;
+
+
+    public ClientConnection(Socket socket, Mixer mixer) throws IOException
     {
-        this.id = index;
+        //this.id = index;
+        this.mixer = mixer;
         this.socket = socket;
         this.output = new PrintWriter(socket.getOutputStream());
         this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -92,18 +105,18 @@ class ClientConnection implements Runnable
     @Override
     public void run()
     {
-        ExecutorService executor = Executors.newFixedThreadPool(2);
+        executor = Executors.newFixedThreadPool(2);
         Receiver receiver = new Receiver(this, input);
-        Sender sender = new Sender(this, output);
         executor.execute(receiver);
-        executor.execute(sender);
     }
 }
 
 class Receiver implements Runnable
 {
-ClientConnection connection;
+    ClientConnection connection;
     BufferedReader receiver;
+    
+    GregorianCalendar cal = new GregorianCalendar();
 
     public Receiver(ClientConnection connection, BufferedReader receiver)
     {
@@ -117,7 +130,15 @@ ClientConnection connection;
         {
             while (true)
             {
+                String s = receiver.readLine();
                 System.out.println("Ho ricevuto: " + receiver.readLine());
+                
+                //parse
+                Message message = new Message();
+                message.User= "manuelelucchi";
+                message.Date = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + "," + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
+                message.Text = "CIaooooooooo";
+                connection.mixer.UpdateMessages(message);
             }
 
         } catch (IOException ex)
@@ -136,10 +157,12 @@ class Sender implements Runnable
     GregorianCalendar cal = new GregorianCalendar();
     Scanner scanner = new Scanner(System.in);
     String type = "server";
+    Message message;
 
-    public Sender(ClientConnection connection, PrintWriter sender)
+    public Sender(ClientConnection connection, PrintWriter sender, Message message)
     {
         this.sender = sender;
+        this.message = message;
     }
 
     @Override
@@ -147,11 +170,10 @@ class Sender implements Runnable
     {
         while (true)
         {
-            String date = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + "," + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
-            String text = scanner.nextLine();
-            String message = "{" + "Type:" + "\"" + type + "\"" + ",Text:" + "\"" + text + "\"" + ",Date:" + "\"" + date + "\"" + "}";
-            sender.println(message + "\n");
-            System.out.println("Ho inviato: " + message);
+ 
+            String output = "{" + "User:" + "\"" + message.User + "\"" + ",Text:" + "\"" + message.Text + "\"" + ",Date:" + "\"" + message.Date + "\"" + "}";
+            sender.println(output + "\n");
+            System.out.println("Ho inviato: " + output);
         }
 
     }

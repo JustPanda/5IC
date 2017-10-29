@@ -14,7 +14,7 @@ export default class SplitViewContent extends React.Component
     {
         super();
         var ws = new Client();
-        this.state = { messages: [], tags: [], client: ws };
+        this.state = { user: "cesare",messages: [], tags: [], client: ws };
         this.RefreshMessages = this.RefreshMessages.bind( this );
         this.state.client.StartClient(this.RefreshMessages);
         
@@ -26,42 +26,34 @@ export default class SplitViewContent extends React.Component
             prevstate.messages.push( message );
             
             var tag;
-        //    console.log(prevstate.messages);
-            //if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "client" )
-            //{
+
             var msg =prevstate.messages[ prevstate.messages.length - 1 ];
-            if(msg.Type=="client")
+            if(msg.User==prevstate.user)
             {
                  tag = (
                 <div className="row" style={ { width: '100%' } }>
                     <div className="col-md-8"></div>
-                    <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date}></MessageUser>
+                    <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date} user={msg.User}></MessageUser>
                 </div>
             )
+
+            this.state.client.WriteMessage("{" + "User:" + "\"" + message.Type + "\"" + ",Text:"+ "\"" + message.Text  + "\"" + ",Date:"+ "\"" + message.Date + "\"" +"}");
             }
-            else if(msg.Type=="server")
+            else if(msg.User!=prevstate.user)
             {
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
-                        <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date }></MessageOther>
+                        <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date } user={msg.User}></MessageOther>
                         <div className="col-md-8"></div>
                     </div>
                 )
             }
-           
-            /* } 
-            else if ( prevstate.messages[ prevstate.messages.length - 1 ].Type == "server" )
-            {
-                var msg = prevstate.messages[ prevstate.messages.length - 1 ];
-                
-            } */
+        
             prevstate.tags.push( tag );
 
             return { messages: prevstate.messages, tags:prevstate.tags }
         } );
-
-   //     console.log("Sto per inviare :" + "Text:" + message.Text +/* "Date:" + message.date*/ + "|Type:" + message.Type);
-        this.state.client.WriteMessage("{" + "Type:" + "\"" + message.Type + "\"" + ",Text:"+ "\"" + message.Text  + "\"" + ",Date:"+ "\"" + message.Date + "\"" +"}");
+        
 
     }
     render ()

@@ -16,6 +16,12 @@ public class User
         this.Username = Username;
         this.Password = Password;
     }
+    
+    public User()
+    {
+        this.Username = "server";
+        this.Password = "";
+    }
     String Username;
     String Password;
 }
