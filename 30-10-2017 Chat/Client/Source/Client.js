@@ -5,7 +5,7 @@ export default class Client
     StartClient(method)
     {
         this.Refresh = method;
-        this.client = net.connect( 
+        this.client =new  net.connect( 
         {
             port: 8080
         }, function ()
@@ -15,10 +15,12 @@ export default class Client
 
         this.client.on( 'data', function ( data )
         {
-            var final = JSON.parse(data);
-            console.log("Ho ricevuto: " + final);
+            var d = data.toString();
+       //     console.log("Mi è arrivata roba")
+            console.log("Ho ricevuto: " + d);
+            var final = JSON.parse(d);  
             this.Refresh(final);
-        } );
+        }.bind(this) );
 
         this.client.on( "end", function ()
         {

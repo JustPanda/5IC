@@ -36,8 +36,9 @@ export default class SplitViewContent extends React.Component
                     <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date} user={msg.User}></MessageUser>
                 </div>
             )
-
-            this.state.client.WriteMessage("{" + "User:" + "\"" + message.Type + "\"" + ",Text:"+ "\"" + message.Text  + "\"" + ",Date:"+ "\"" + message.Date + "\"" +"}");
+            console.log("sto inviando")
+            this.state.client.WriteMessage("{" + "\"" + "User" + "\"" +":" + "\"" + msg.User + "\"" + "," +"\"" + "Text" +"\"" + ":" + "\"" + msg.Text  + "\"" + "," + "\"" + "Date"+"\"" +":"+ "\"" + msg.Date + "\"" +"}");
+            this.state.client.WriteMessage("{" + "\"" + "User" + "\"" +":" + "\"" + msg.User + "\"" + "," +"\"" + "Text" +"\"" + ":" + "\"" + msg.Text  + "\"" + "," + "\"" + "Date"+"\"" +":"+ "\"" + msg.Date + "\"" +"}");
             }
             else if(msg.User!=prevstate.user)
             {

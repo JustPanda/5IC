@@ -38,17 +38,26 @@ public class Server
     public static void main(String[] args) throws IOException
     {
         Mixer mixer = new Mixer();
-        mixer.Start();      
+        mixer.Start();
+        /*  ServerSocket s = new ServerSocket(8080);
+        
+        Socket socket = s.accept();
+        PrintWriter p = new PrintWriter(socket.getOutputStream(), true);
+        BufferedReader r = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        p.println("DIO CAN");
+        System.out.println("Ho inviato");
+        r.readLine(); */
 
     }
 
 }
 
-class Mixer 
+class Mixer
 {
+
     ArrayList<ClientConnection> connections = new ArrayList<ClientConnection>();
     private ArrayList<Message> messages = new ArrayList<Message>();
-    
+
     public void Start() throws IOException
     {
         ServerSocket s = new ServerSocket(8080);
@@ -66,15 +75,19 @@ class Mixer
         executor.shutdown();
         s.close();
     }
-    
+
     public void UpdateMessages(Message message)
     {
         this.messages.add(message);
-        for(int i=0; i<connections.size(); i++)
+        for (int i = 0; i < connections.size(); i++)
         {
             ClientConnection c = connections.get(i);
-            if(!message.User.equals(c.user.Username))
+            System.out.println("Client connection esiste?" + !c.equals(null));
+            System.out.println("Message user" + message.User);
+            System.out.println("Cc user" + c.user.Username);
+            if (!message.User.equals(c.user.Username))
             {
+                System.out.println("Eseguo il sender");
                 c.executor.execute(new Sender(c, c.output, message));
             }
         }
@@ -83,23 +96,25 @@ class Mixer
 
 class ClientConnection implements Runnable
 {
+
     Mixer mixer;
     Socket socket;
     ExecutorService executor;
     BufferedReader input;
     PrintWriter output;
-  //  int id;
+    //  int id;
 
     public User user;
-
 
     public ClientConnection(Socket socket, Mixer mixer) throws IOException
     {
         //this.id = index;
         this.mixer = mixer;
         this.socket = socket;
-        this.output = new PrintWriter(socket.getOutputStream());
+        this.output = new PrintWriter(socket.getOutputStream(), true);
         this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        this.user = new User();
+        user.Username = "cesare";
     }
 
     @Override
@@ -108,19 +123,22 @@ class ClientConnection implements Runnable
         executor = Executors.newFixedThreadPool(2);
         Receiver receiver = new Receiver(this, input);
         executor.execute(receiver);
+        System.out.println("Sto eseguendo il receiver");
     }
 }
 
 class Receiver implements Runnable
 {
+
     ClientConnection connection;
     BufferedReader receiver;
-    
+
     GregorianCalendar cal = new GregorianCalendar();
 
     public Receiver(ClientConnection connection, BufferedReader receiver)
     {
         this.receiver = receiver;
+        this.connection = connection;
     }
 
     @Override
@@ -130,14 +148,16 @@ class Receiver implements Runnable
         {
             while (true)
             {
+                System.out.println("Sto aspettando");
                 String s = receiver.readLine();
                 System.out.println("Ho ricevuto: " + receiver.readLine());
-                
+
                 //parse
                 Message message = new Message();
-                message.User= "manuelelucchi";
+                message.User = "manuelelucchi";
                 message.Date = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + "," + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
                 message.Text = "CIaooooooooo";
+                System.out.println("Inizio UpdateMessage");
                 connection.mixer.UpdateMessages(message);
             }
 
@@ -168,11 +188,11 @@ class Sender implements Runnable
     @Override
     public void run()
     {
-        while (true)
+        // for(int i= 0; i<1000; i++)
         {
- 
-            String output = "{" + "User:" + "\"" + message.User + "\"" + ",Text:" + "\"" + message.Text + "\"" + ",Date:" + "\"" + message.Date + "\"" + "}";
-            sender.println(output + "\n");
+            String output = "{" + "\"" + "User" + "\"" + ":" + "\"" + message.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + message.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + message.Date + "\"" + "}";
+            sender.println(output);
+            // sender.print("Ciao");
             System.out.println("Ho inviato: " + output);
         }
 

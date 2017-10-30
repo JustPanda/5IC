@@ -12,6 +12,17 @@ export default class Signup extends React.Component
 
     ButtonSendOnClick()
     {
+        var tbUser = document.getElementById("TextBoxUser");
+        var tbPsd = document.getElementById("TextBoxPsd");
+        var tbConfPsd = document.getElementById("TextBoxConfPsd");
+        if(tbPsd.value == tbConfPsd.value)
+        {
+            
+        }
+        else
+        {
+            
+        }
         ipcRenderer.send("main")
     }
 
@@ -20,11 +31,11 @@ export default class Signup extends React.Component
         return (
             <div className="" style={ { display: 'flex', alignItems:'center', height:"100%", width:"100%", justifyContent:'center', flexDirection:"column"  } }>
                 <div className="win-textblock">Username</div>
-                <input className="win-textbox" type="text" />
+                <input id="TextBoxUser" className="win-textbox" type="text" />
                 <div className="win-textblock">Password</div>
-                <input className="win-textbox" type="text" />
+                <input id="TextBoxPsd" className="win-textbox" type="text" />
                 <div className="win-textblock">Conferma password</div>
-                <input className="win-textbox" type="text" />
+                <input id="TextBoxConfPsd" className="win-textbox" type="text" />
                 <button className="win-button" onClick={this.ButtonSendOnClick}>Registrati</button>
                 <a onClick={this.ButtonSwitchOnClick} style={{margin:"20px"}}>Hai già un account? Fai il Login!</a>
             </div>
