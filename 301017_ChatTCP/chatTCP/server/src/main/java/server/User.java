@@ -5,16 +5,38 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.function.Function;
 
 class User implements Runnable
 {
 	private Socket client;
+	private BufferedReader in;
+	private PrintWriter out;
+	private SQLiteJDBC database;
 	private Room room;
+	private HashMap<String, Function<Room, Void>> phases=new HashMap<>();
 
-	User(Socket client, Room room)
+	User(Socket client, SQLiteJDBC database, Room room)
 	{
 		this.client=client;
+		this.database=database;
 		this.room=room;
+		this.database.addUser("filippo", "aaaa");
+		try{
+			this.in=new BufferedReader(new InputStreamReader(client.getInputStream()));
+			this.out=new PrintWriter(client.getOutputStream(), true);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+//		phases.put("l", (room) => {
+//			try{
+//
+//			}catch(IOException e){
+//
+//			}
+//			return ;
+//		});
 	}
 
 	public void run()
@@ -28,7 +50,6 @@ class User implements Runnable
 			while(notExit)
 			{
 				String msg=in.readLine();
-
 			}
 			in.close();
 			out.close();

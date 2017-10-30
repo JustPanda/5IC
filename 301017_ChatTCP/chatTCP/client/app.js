@@ -15,7 +15,7 @@ function createWindows()
     loginWindow=new BrowserWindow({
         width: 525,
         height: 400,
-        // resizable: false,
+        resizable: false,
         icon: iconPath
     });
     loginWindow.loadURL(url.format({
@@ -51,18 +51,22 @@ function createWindows()
 }
 
 ipcMain.on('goToRegistration',
-    function()
+    function(event, arg)
     {
         registrationWindow.show();
         loginWindow.hide();
+        console.log(arg);
+        event.sender.send("registrationGetClientObj", arg);
     }
 );
 
 ipcMain.on('goToLogin',
-    function()
+    function(event, args)
     {
         loginWindow.show();
         registrationWindow.hide();
+        console.log(arg);
+        event.sender.send("loginGetClientObj", arg);
     }
 );
 

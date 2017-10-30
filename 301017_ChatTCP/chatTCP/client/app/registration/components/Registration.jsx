@@ -10,11 +10,43 @@ class Registration extends React.Component
     constructor(props)
     {
         super(props);
+        this.init=this.init.bind(this);
+        ipcRenderer.on('registrationGetClientObj',
+            function(event, arg)
+            {
+                console.log(arg);
+                this.init(arg);
+            }.bind(this)
+        );
+    }
+
+    init(client)
+    {
+        this.client=client;
+        this.client.on('connect', () => {this.client.send("login")});
+        this.client.on('data',
+            function(data)
+            {
+
+            }
+        );
+        this.client.on('end',
+            function()
+            {
+                console.log('end');
+            }
+        )
+        this.client.on('error',
+            function()
+            {
+                console.log("Error");
+            }
+        );
     }
 
     handleBack()
     {
-        ipcRenderer.send('goToLogin');
+        ipcRenderer.send('goToLogin', this.client);
     }
 
     render()

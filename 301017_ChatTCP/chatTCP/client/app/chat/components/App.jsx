@@ -113,7 +113,7 @@ const styles=(theme) => ({
     content: {
         width: '100%',
         height: 'calc(100% - 56px)',
-        backgroundImage: 'url(app/chat/images/Background.jpg)',
+        backgroundImage: 'url(../images/app/Background.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         marginTop: 56,

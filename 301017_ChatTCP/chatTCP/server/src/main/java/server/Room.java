@@ -1,4 +1,9 @@
 package server;
 
-public class Room {
+public class Room
+{
+	Room()
+	{
+
+	}
 }
