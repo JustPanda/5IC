@@ -5,6 +5,12 @@ import {ipcRenderer} from "electron"
 
 export default class Login extends React.Component
 {
+constructor()
+{
+    super();
+    this.ButtonSendOnClick = this.ButtonSendOnClick.bind(this);
+    this.user = "";
+}
 
     ButtonSwitchOnClick()
     {
@@ -13,7 +19,8 @@ export default class Login extends React.Component
 
     ButtonSendOnClick()
     {
-        ipcRenderer.send("main")
+        this.user = document.getElementById("TextBoxUser").value;
+        ipcRenderer.send("main", this.user);
     }
 
     render()
@@ -21,7 +28,7 @@ export default class Login extends React.Component
         return (
             <div className="" style={ { display: 'flex', alignItems:'center', height:"100%", width:"100%", justifyContent:'center', flexDirection:"column"  } }>
                 <div className="win-textblock">Username</div>
-                <input className="win-textbox" type="text" />
+                <input className="win-textbox" type="text" id="TextBoxUser"/>
                 <div className="win-textblock">Password</div>
                 <input className="win-textbox" type="text" />
                 <button className="win-button" onClick={this.ButtonSendOnClick}>Conferma</button>

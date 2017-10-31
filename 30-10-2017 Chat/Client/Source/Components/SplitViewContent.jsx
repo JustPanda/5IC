@@ -7,6 +7,7 @@ import TopAppBar from "./TopAppBar"
 import SendBar from "./SendBar"
 import MessageUser from "./MessageUser"
 import MessageOther from "./MessageOther";
+import { ipcRenderer } from "electron"
 
 export default class SplitViewContent extends React.Component
 {
@@ -14,47 +15,57 @@ export default class SplitViewContent extends React.Component
     {
         super();
         var ws = new Client();
-        this.state = { user: "cesare",messages: [], tags: [], client: ws };
+
+        this.state = { user: "", messages: [], tags: [], client: ws };
         this.RefreshMessages = this.RefreshMessages.bind( this );
-        this.state.client.StartClient(this.RefreshMessages);
-        
+        this.state.client.StartClient( this.RefreshMessages );
+
+        ipcRenderer.on( "main", function ( data )
+        {
+            this.username = toString( data );
+            this.setState( { user: this.username } );
+        }.bind( this ) );
+
+
+
+
     }
     RefreshMessages ( message )
     {
         this.setState( function ( prevstate )
         {
             prevstate.messages.push( message );
-            
-            var tag;
 
-            var msg =prevstate.messages[ prevstate.messages.length - 1 ];
-            if(msg.User==prevstate.user)
-            {
-                 tag = (
-                <div className="row" style={ { width: '100%' } }>
-                    <div className="col-md-8"></div>
-                    <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date} user={msg.User}></MessageUser>
-                </div>
-            )
-            console.log("sto inviando")
-            this.state.client.WriteMessage("{" + "\"" + "User" + "\"" +":" + "\"" + msg.User + "\"" + "," +"\"" + "Text" +"\"" + ":" + "\"" + msg.Text  + "\"" + "," + "\"" + "Date"+"\"" +":"+ "\"" + msg.Date + "\"" +"}");
-            this.state.client.WriteMessage("{" + "\"" + "User" + "\"" +":" + "\"" + msg.User + "\"" + "," +"\"" + "Text" +"\"" + ":" + "\"" + msg.Text  + "\"" + "," + "\"" + "Date"+"\"" +":"+ "\"" + msg.Date + "\"" +"}");
-            }
-            else if(msg.User!=prevstate.user)
+            var tag;
+console.log("")
+            var msg = prevstate.messages[ prevstate.messages.length - 1 ];
+            if ( msg.User == prevstate.user )
             {
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
-                        <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date } user={msg.User}></MessageOther>
+                        <div className="col-md-8"></div>
+                        <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.User }></MessageUser>
+                    </div>
+                )
+                console.log( "sto inviando" )
+                this.state.client.WriteMessage( "{" + "\"" + "User" + "\"" + ":" + "\"" + msg.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" + "}" );
+                this.state.client.WriteMessage( "{" + "\"" + "User" + "\"" + ":" + "\"" + msg.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" + "}" );
+            }
+            else if ( msg.User != prevstate.user )
+            {
+                tag = (
+                    <div className="row" style={ { width: '100%' } }>
+                        <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.User }></MessageOther>
                         <div className="col-md-8"></div>
                     </div>
                 )
             }
-        
+
             prevstate.tags.push( tag );
 
-            return { messages: prevstate.messages, tags:prevstate.tags }
+            return { messages: prevstate.messages, tags: prevstate.tags }
         } );
-        
+
 
     }
     render ()

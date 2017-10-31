@@ -2,9 +2,16 @@
 import React from 'react';
 import WinJS from 'react-winjs';
 import {ipcRenderer} from "electron"
+import ContentDialog from "./ContentDialog"
 
 export default class Signup extends React.Component
 {
+    constructor()
+    {
+        super();
+        this.ButtonSendOnClick = this.ButtonSendOnClick.bind(this);
+        this.state={dialogText:""};
+    }
     ButtonSwitchOnClick()
     {
         ipcRenderer.send("login")
@@ -17,13 +24,13 @@ export default class Signup extends React.Component
         var tbConfPsd = document.getElementById("TextBoxConfPsd");
         if(tbPsd.value == tbConfPsd.value)
         {
-            
+            ipcRenderer.send("main");
         }
         else
         {
             
         }
-        ipcRenderer.send("main")
+        
     }
 
     render()
@@ -38,6 +45,7 @@ export default class Signup extends React.Component
                 <input id="TextBoxConfPsd" className="win-textbox" type="text" />
                 <button className="win-button" onClick={this.ButtonSendOnClick}>Registrati</button>
                 <a onClick={this.ButtonSwitchOnClick} style={{margin:"20px"}}>Hai già un account? Fai il Login!</a>
+                <ContentDialog text={"La password deve essere uguale"}></ContentDialog>
             </div>
         );
     }

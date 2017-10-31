@@ -46,7 +46,8 @@ app.on( 'ready', () => {
   } );
 } );
 
-ipcMain.on( "main", function () {
+ipcMain.on( "main", function (event, arg) {
+  event.sender.send("main", arg)
   mainWindow.show();
   loginWindow.hide();
   signupWindow.hide();
