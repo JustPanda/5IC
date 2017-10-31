@@ -16,18 +16,16 @@ export default class SplitViewContent extends React.Component
         super();
         var ws = new Client();
 
-        this.state = { user: "", messages: [], tags: [], client: ws };
+        this.state = { user: "cesare", messages: [], tags: [], client: ws };
         this.RefreshMessages = this.RefreshMessages.bind( this );
         this.state.client.StartClient( this.RefreshMessages );
 
-        ipcRenderer.on( "main", function ( data )
+        ipcRenderer.on( "main", function (event, data )
         {
             this.username = toString( data );
+            console.log("mi è arrivato l'user: " + toString(data));
             this.setState( { user: this.username } );
         }.bind( this ) );
-
-
-
 
     }
     RefreshMessages ( message )
@@ -37,9 +35,11 @@ export default class SplitViewContent extends React.Component
             prevstate.messages.push( message );
 
             var tag;
-console.log("")
+
             var msg = prevstate.messages[ prevstate.messages.length - 1 ];
-            if ( msg.User == prevstate.user )
+            console.log("User arrivato dal messaggio: " + msg.User);
+            console.log("User stabile: " + this.state.user)
+            if ( msg.User == this.state.user )
             {
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
@@ -51,7 +51,7 @@ console.log("")
                 this.state.client.WriteMessage( "{" + "\"" + "User" + "\"" + ":" + "\"" + msg.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" + "}" );
                 this.state.client.WriteMessage( "{" + "\"" + "User" + "\"" + ":" + "\"" + msg.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" + "}" );
             }
-            else if ( msg.User != prevstate.user )
+            else if ( msg.User != this.state.user )
             {
                 tag = (
                     <div className="row" style={ { width: '100%' } }>

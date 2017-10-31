@@ -1,16 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package server;
-
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,9 +12,8 @@ import java.util.Scanner;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 /**
  *
  * @author manue
@@ -153,10 +142,15 @@ class Receiver implements Runnable
                 System.out.println("Ho ricevuto: " + s);
 
                 //parse
-                Message message = new Message();
-                message.User = "manuelelucchi";
+                Message message;
+                
+                Gson gson = new GsonBuilder().create();
+                message = gson.fromJson(s, Message.class);
+                
+                
+              /*  message.User = "manuelelucchi";
                 message.Date = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + "," + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
-                message.Text = s;
+                message.Text = "Testo"; */
                 System.out.println("Inizio UpdateMessage");
                 connection.mixer.UpdateMessages(message);
             }

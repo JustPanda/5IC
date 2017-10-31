@@ -47,7 +47,8 @@ app.on( 'ready', () => {
 } );
 
 ipcMain.on( "main", function (event, arg) {
-  event.sender.send("main", arg)
+  event.sender.send("main", arg);
+  console.log("Ho inviato al main: " + arg);
   mainWindow.show();
   loginWindow.hide();
   signupWindow.hide();
