@@ -14,6 +14,8 @@ public class SQLiteJDBC
 			this.connection=DriverManager.getConnection("jdbc:sqlite:register.db");
 			this.stmt=connection.createStatement();
 			connection.setAutoCommit(false);
+//			stmt.executeUpdate("create table register(id integer primary key autoincrement,username text not null,password text not null)");
+//			connection.commit();
 		}catch(ClassNotFoundException|SQLException e){
 			e.printStackTrace();
 		}
@@ -31,8 +33,11 @@ public class SQLiteJDBC
 		}
 	}
 
-	boolean isPresent()
+	boolean existUser(String username) throws SQLException
 	{
-		return true;
+		ResultSet rs=stmt.executeQuery("SELECT (COUNT(*) > 0) FROM register WHERE username='"+username+"'");
+		rs.next()
+		System.out.println();
+		return rs.getBoolean(1);
 	}
 }

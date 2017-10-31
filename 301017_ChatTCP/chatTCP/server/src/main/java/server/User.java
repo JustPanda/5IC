@@ -1,5 +1,7 @@
 package server;
 
+import jdk.nashorn.internal.parser.JSONParser;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -22,21 +24,20 @@ class User implements Runnable
 		this.client=client;
 		this.database=database;
 		this.room=room;
-		this.database.addUser("filippo", "aaaa");
 		try{
 			this.in=new BufferedReader(new InputStreamReader(client.getInputStream()));
 			this.out=new PrintWriter(client.getOutputStream(), true);
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-//		phases.put("l", (room) => {
-//			try{
-//
-//			}catch(IOException e){
-//
-//			}
-//			return ;
-//		});
+		phases.put("l", (room) => {
+			try{
+
+			}catch(IOException e){
+
+			}
+			return ;
+		});
 	}
 
 	public void run()
@@ -50,6 +51,8 @@ class User implements Runnable
 			while(notExit)
 			{
 				String msg=in.readLine();
+				JSONParser parser=new JSONParser();
+				parser.parse();
 			}
 			in.close();
 			out.close();
