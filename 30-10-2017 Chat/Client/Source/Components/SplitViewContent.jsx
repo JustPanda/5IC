@@ -20,11 +20,13 @@ export default class SplitViewContent extends React.Component
         this.RefreshMessages = this.RefreshMessages.bind( this );
         this.state.client.StartClient( this.RefreshMessages );
 
-        ipcRenderer.on( "main", function (event, data )
+        ipcRenderer.on( "content", function (event, data )
         {
-            this.username = toString( data );
+            console.log("DIOCAN")
+            var userObj =data;
+            this.client.WriteMessage(toString(userObj));
             console.log("mi è arrivato l'user: " + toString(data));
-            this.setState( { user: this.username } );
+            this.setState( { user: userObj.Username } );
         }.bind( this ) );
 
     }

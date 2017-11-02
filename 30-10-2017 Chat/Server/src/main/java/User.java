@@ -10,17 +10,20 @@
  */
 public class User
 {
-    public User(String Username, String Password)
+    public User(String Username, String Password, String Action)
     {
         this.Username = Username;
         this.Password = Password;
+        this.Action = Action;
     }
     
     public User()
     {
-        this.Username = "server";
+        this.Username = "";
         this.Password = "";
+        this.Action = "";
     }
     String Username;
     String Password;
+    String Action;
 }

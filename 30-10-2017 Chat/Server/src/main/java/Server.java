@@ -1,3 +1,4 @@
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -14,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 /**
  *
  * @author manue
@@ -49,7 +51,7 @@ class Mixer
 
     public void Start() throws IOException
     {
-        ServerSocket s = new ServerSocket(8080);
+        ServerSocket s = new ServerSocket(9090);
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         int clientIndex = 0;
         while (clientIndex <= 1000)
@@ -58,8 +60,58 @@ class Mixer
             Socket socket = (Socket) s.accept();
             ClientConnection client = new ClientConnection(socket, this);
             System.out.println("Connesso al client n°" + clientIndex);
-            connections.add(client);
-            executor.execute(client);
+            client.output = new PrintWriter(socket.getOutputStream(), true);
+            client.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            boolean HasLogin = false;
+            while (!HasLogin)
+            {
+                String loginInfo = client.input.readLine();
+                System.out.println("Ho ricevuto per il login/signup " + loginInfo);
+                User user;
+                try
+                {
+                    Gson gson = new GsonBuilder().create();
+                    user = gson.fromJson(loginInfo, User.class);
+
+                    if (user.Action.equals("Registration"))
+                    {
+                        if(user.Username!="") //se esiste nel databse
+                        {
+                            client.output.println("RegistrationFail\n");
+                        }
+                        else
+                        {
+                            //registralo
+                            client.output.println("RegistrationSuccess\n");
+                            client.user = user;
+                            connections.add(client);
+                            executor.execute(client);
+                            HasLogin = true;
+                        }
+                    }
+                    else if (user.Action.equals("Login"))
+                    {
+                        //controlla 
+                        if(user.Password != "")
+                        {
+                            client.output.println("LoginFail\n");
+                        }
+                        else
+                        {
+                            client.output.println("LoginSuccess\n");
+                            client.user = user;
+                            System.out.println("Login riuscito");
+                            connections.add(client);
+                            executor.execute(client);
+                            HasLogin = true;
+                        }
+                    }
+                } catch (Exception ex)
+                {
+                    ex.printStackTrace();
+                }
+            }
+            
         }
         executor.shutdown();
         s.close();
@@ -100,10 +152,8 @@ class ClientConnection implements Runnable
         //this.id = index;
         this.mixer = mixer;
         this.socket = socket;
-        this.output = new PrintWriter(socket.getOutputStream(), true);
-        this.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         this.user = new User();
-        user.Username = "cesare";
+        //user.Username = "cesare";
     }
 
     @Override
@@ -143,12 +193,11 @@ class Receiver implements Runnable
 
                 //parse
                 Message message;
-                
+
                 Gson gson = new GsonBuilder().create();
                 message = gson.fromJson(s, Message.class);
-                
-                
-              /*  message.User = "manuelelucchi";
+
+                /*  message.User = "manuelelucchi";
                 message.Date = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + "," + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
                 message.Text = "Testo"; */
                 System.out.println("Inizio UpdateMessage");
