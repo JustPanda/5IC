@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -48,7 +49,7 @@ public class SQLiteManager
         Connect();
 
         String user
-                = "CREATE TABLE USER "
+                = "CREATE TABLE IF NOT EXISTS USER "
                 + "("
                 + " ID         INT PRIMARY KEY     NOT NULL,"
                 + " USERNAME   TEXT                NOT NULL,"
@@ -58,7 +59,7 @@ public class SQLiteManager
         System.out.println("Tabella User creata con successo");
 
         String message
-                = "CREATE TABLE MESSAGE "
+                = "CREATE TABLE IF NOT EXISTS MESSAGE "
                 + "("
                 + " ID         INT PRIMARY KEY     NOT NULL,"
                 + " USERID     INT                 NOT NULL,"
@@ -68,6 +69,8 @@ public class SQLiteManager
         statement.executeUpdate(message);
         System.out.println("Tabella Message creata con successo");
 
+        Commit();
+
         Disconnect();
     }
 
@@ -75,31 +78,33 @@ public class SQLiteManager
     {
         Connect();
 
-        boolean success=false;
+        boolean success = false;
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
-        
-        while(rs.next())
+
+        while (rs.next())
         {
             String usr = rs.getString("username");
-            if(usr.equals(user.Username))
+            if (usr.equals(user.Username))
             {
                 success = false;
                 System.out.println("Esiste già l'account");
                 return success;
             }
         }
-        
-        String id ="1";
-        String add = 
-                  "INSERT INTO USER (ID,USERNAME,PASSWORD) "
-                + "VALUES (" + id + "," + user.Username + "," + user.Password + ");"; //Da sistemare gli id
+        System.out.println("Ho superato la fase di controllo dell'esistenza dell'utente");
+        String id = "1";
+        String add
+                = "INSERT INTO USER (USERNAME,PASSWORD) "
+                + "VALUES (" + "\'" + user.Username + "\'" + "," + "\'" + user.Password + "\'" + ");"; //Da sistemare gli id
         statement.executeUpdate(add);
         System.out.println("Utente registrato con successo");
-        
+
         rs.close();
-        
+
+        Commit();
+
         Disconnect();
-        
+
         return true;
     }
 
@@ -107,37 +112,78 @@ public class SQLiteManager
     {
         boolean success = false;
         Connect();
-        
+
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
-        
-        while(rs.next())
+
+        while (rs.next())
         {
             String usr = rs.getString("username");
             String psd = rs.getString("password");
-            if(usr.equals(user.Username) && psd.equals(user.Password))
+            if (usr.equals(user.Username) && psd.equals(user.Password))
             {
                 success = true;
                 System.out.println("Login riuscito");
                 break;
             }
         }
-        
+
         rs.close();
+
+        Commit();
         Disconnect();
         return success;
     }
 
-    public void AddMessage(Message message) throws SQLException
+    public void AddMessage(Message message) throws SQLException, ClassNotFoundException
     {
-        String id ="1";
-        String add = 
-                  "INSERT INTO MESAGE (ID,USERID,CONTENT,DATE) "
-                + "VALUES (" + id + "," + id + "," + message.Text + "," + message.Date + ");"; //Da sistemare gli id
+        Connect();
+        ResultSet rs = statement.executeQuery("SELECT * FROM USER;");
+        int id =0;
+        
+        while (rs.next())
+        {
+            String usr = rs.getString("username");
+            if(usr.equals(message.User))
+            {
+                id = rs.getInt("id");
+            }
+                    
+        }
+        rs.close();
+        
+        String add
+                = "INSERT INTO MESSAGE (USERID,CONTENT,DATE) "
+                + "VALUES (" + id + "," + "\'" + message.Text + "\'" + "," + "\'" + message.Date + "\'" + ");"; //Da sistemare gli id
         statement.executeUpdate(add);
+
+        Commit();
+        Disconnect();
     }
 
-    public List<Message> GetMessages()
+    public List<Message> GetMessages() throws SQLException, ClassNotFoundException
     {
+        List<Message> messages = new ArrayList<Message>();
+        Connect();
+
+        ResultSet rs = statement.executeQuery("SELECT * FROM MESSAGE;");
+
+        while (rs.next())
+        {
+            Message mes = new Message();
+            mes.Date = rs.getString("date");
+            mes.Text = rs.getString("content");
+            
+            messages.add(mes);
+        }
+        rs.close();
+
+        Commit();
+        Disconnect();
         return null;
+    }
+
+    public void Commit() throws SQLException
+    {
+        connection.commit();
     }
 }
