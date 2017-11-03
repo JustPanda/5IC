@@ -15,6 +15,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import java.sql.SQLException;
 
 /**
  *
@@ -26,7 +27,7 @@ public class Server
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException
     {
         Mixer mixer = new Mixer();
         mixer.Start();
@@ -49,7 +50,7 @@ class Mixer
     ArrayList<ClientConnection> connections = new ArrayList<ClientConnection>();
     private ArrayList<Message> messages = new ArrayList<Message>();
 
-    public void Start() throws IOException
+    public void Start() throws IOException, ClassNotFoundException, SQLException
     {
         ServerSocket s = new ServerSocket(9090);
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
@@ -59,6 +60,7 @@ class Mixer
             clientIndex++;
             Socket socket = (Socket) s.accept();
             ClientConnection client = new ClientConnection(socket, this);
+            SQLiteManager sql = new SQLiteManager();
             System.out.println("Connesso al client n°" + clientIndex);
             client.output = new PrintWriter(socket.getOutputStream(), true);
             client.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -75,14 +77,14 @@ class Mixer
 
                     if (user.Action.equals("Registration"))
                     {
-                        if(user.Username=="") //se esiste nel databse
+                        boolean success = sql.Register(user);
+                        if(!success) //se esiste nel databse
                         {
                             client.output.println("RegistrationFail\n");
                             System.out.println("Registration Failed");
                         }
-                        else
+                        else if(success)
                         {
-                            //registralo
                             client.output.println("RegistrationSuccess\n");
                             client.user = user;
                             connections.add(client);
@@ -93,13 +95,13 @@ class Mixer
                     }
                     else if (user.Action.equals("Login"))
                     {
-                        //controlla 
-                        if(user.Password == "")
+                        boolean success = sql.Login(user);
+                        if(!success)
                         {
                             client.output.println("LoginFail\n");
                             System.out.println("Login Fail");
                         }
-                        else
+                        else if(success)
                         {
                             client.output.println("LoginSuccess\n");
                             client.user = user;

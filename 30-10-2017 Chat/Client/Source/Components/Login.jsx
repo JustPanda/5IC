@@ -32,9 +32,9 @@ constructor()
     {
         var username = document.getElementById("TextBoxUser").value;
         var psd = document.getElementById("TextBoxPsd").value;
-        this.user = {User:username, Password:psd, Action:"Login"};
+        this.user = {Username:username, Password:psd, Action:"Login"};
         ipcRenderer.send("main", this.user);
-        console.log("Ho inviato al main---->" + this.user)
+        console.log("Ho inviato al main---->" + JSON.stringify(this.user));
     }
 
     render()

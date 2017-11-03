@@ -26,7 +26,7 @@ public class SQLiteManager
     public SQLiteManager() throws ClassNotFoundException, SQLException
     {
         Connect();
-        CreateTables();
+       // CreateTables();
     }
 
     public void Connect() throws ClassNotFoundException, SQLException
@@ -118,8 +118,11 @@ public class SQLiteManager
 
         while (rs.next())
         {
+            int id = rs.getInt("id");
             String usr = rs.getString("username");
             String psd = rs.getString("password");
+            System.out.println("Ho trovato: " + usr + " ---- " + psd + "all'id:" + id);
+            System.out.println("Sto cercando: " + user.Username + " ---- " + user.Password);
             if (usr.equals(user.Username) && psd.equals(user.Password))
             {
                 success = true;
