@@ -19,7 +19,7 @@ app.on( 'ready', () => {
   mainWindow = new BrowserWindow( {
     width: 1600,
     height: 1000,
-    show: false
+    show: true
   } );
   mainWindow.loadURL( 'file://' + __dirname + '/Index.html' );
   mainWindow.on( 'closed', () => {
@@ -46,18 +46,25 @@ app.on( 'ready', () => {
   } );
 } );
 
-ipcMain.on( "main", function (event, arg) {
-
+ipcMain.on( "main", function (event, arg) 
+{
+  console.log("DIOCANE PERCHE' NON VA UN CAZZO")
+  if(arg==null)
   {
     mainWindow.show();
     loginWindow.hide();
     signupWindow.hide();
   }
+  else
+  {
+    mainWindow.webContents.send("content", arg);
+    console.log("Ho inviato: " + arg);
+  }
  
 } );
 
 ipcMain.on( "login", function () {
-  mainWindow.hide();
+  mainWindow.show();
   loginWindow.show();
   signupWindow.hide();
 } );

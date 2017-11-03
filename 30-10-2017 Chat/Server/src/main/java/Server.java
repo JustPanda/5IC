@@ -75,9 +75,10 @@ class Mixer
 
                     if (user.Action.equals("Registration"))
                     {
-                        if(user.Username!="") //se esiste nel databse
+                        if(user.Username=="") //se esiste nel databse
                         {
                             client.output.println("RegistrationFail\n");
+                            System.out.println("Registration Failed");
                         }
                         else
                         {
@@ -87,14 +88,16 @@ class Mixer
                             connections.add(client);
                             executor.execute(client);
                             HasLogin = true;
+                            System.out.println("Registration success");
                         }
                     }
                     else if (user.Action.equals("Login"))
                     {
                         //controlla 
-                        if(user.Password != "")
+                        if(user.Password == "")
                         {
                             client.output.println("LoginFail\n");
+                            System.out.println("Login Fail");
                         }
                         else
                         {
@@ -104,6 +107,7 @@ class Mixer
                             connections.add(client);
                             executor.execute(client);
                             HasLogin = true;
+                            System.out.println("Login success");
                         }
                     }
                 } catch (Exception ex)

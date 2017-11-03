@@ -28,20 +28,22 @@ public class Test
         success=man.Register(new User("merda", "dio", "Register"));
         System.out.println("Registrazione: " + success);
         
-       /* for(int i=0; i<10; i++)
+        for(int i=0; i<10; i++)
         {
             Message message = new Message();
             message.Text = "PORCODDIO ";// + i;
             message.User = "manuele" ;
             message.Date = "Adesso dio can";
-            man.AddMessage(new Message());
-        } */
+            man.AddMessage(message);
+        } 
         
         List<Message> messages = man.GetMessages();
         for(int i=0; i<messages.size(); i++)
         {
             System.out.println("Message N°: " + i + " from " + "\"" + messages.get(i).User + "\"" + "\"" + messages.get(i).Text + "\"" + " at " + "\"" + messages.get(i).Date + "\"");
         }
+        
+        man.Disconnect();
         
     }
 }

@@ -24,8 +24,8 @@ export default class SplitViewContent extends React.Component
         {
             console.log("DIOCAN")
             var userObj =data;
-            this.client.WriteMessage(toString(userObj));
-            console.log("mi è arrivato l'user: " + toString(data));
+            this.state.client.WriteMessage(JSON.stringify(userObj));
+            console.log("mi è arrivato l'user: " + JSON.stringify(data));
             this.setState( { user: userObj.Username } );
         }.bind( this ) );
 

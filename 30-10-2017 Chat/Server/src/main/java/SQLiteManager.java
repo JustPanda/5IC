@@ -25,6 +25,7 @@ public class SQLiteManager
 
     public SQLiteManager() throws ClassNotFoundException, SQLException
     {
+        Connect();
         CreateTables();
     }
 
@@ -46,14 +47,14 @@ public class SQLiteManager
 
     public void CreateTables() throws ClassNotFoundException, SQLException, SQLException
     {
-        Connect();
+     //   Connect();
 
         String user
                 = "CREATE TABLE IF NOT EXISTS USER "
                 + "("
-                + " ID         INT PRIMARY KEY     NOT NULL,"
-                + " USERNAME   TEXT                NOT NULL,"
-                + " PASSWORD   TEXT                NOT NULL "
+                + " ID         INTEGER PRIMARY KEY AUTOINCREMENT    NOT NULL,"
+                + " USERNAME   TEXT                             NOT NULL,"
+                + " PASSWORD   TEXT                             NOT NULL "
                 + ")";
         statement.executeUpdate(user);
         System.out.println("Tabella User creata con successo");
@@ -61,22 +62,22 @@ public class SQLiteManager
         String message
                 = "CREATE TABLE IF NOT EXISTS MESSAGE "
                 + "("
-                + " ID         INT PRIMARY KEY     NOT NULL,"
-                + " USERID     INT                 NOT NULL,"
-                + " CONTENT    TEXT                NOT NULL,"
-                + " DATE       TEXT                NOT NULL "
+                + " ID         INTEGER PRIMARY KEY AUTOINCREMENT    NOT NULL,"
+                + " USERID     INT                              NOT NULL,"
+                + " CONTENT    TEXT                             NOT NULL,"
+                + " DATE       TEXT                             NOT NULL "
                 + ")";
         statement.executeUpdate(message);
         System.out.println("Tabella Message creata con successo");
 
         Commit();
 
-        Disconnect();
+      //  Disconnect();
     }
 
     public boolean Register(User user) throws ClassNotFoundException, SQLException, SQLException
     {
-        Connect();
+      //  Connect();
 
         boolean success = false;
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
@@ -103,7 +104,7 @@ public class SQLiteManager
 
         Commit();
 
-        Disconnect();
+      //  Disconnect();
 
         return true;
     }
@@ -111,7 +112,7 @@ public class SQLiteManager
     public boolean Login(User user) throws ClassNotFoundException, SQLException, SQLException
     {
         boolean success = false;
-        Connect();
+   //     Connect();
 
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
 
@@ -130,13 +131,13 @@ public class SQLiteManager
         rs.close();
 
         Commit();
-        Disconnect();
+   //     Disconnect();
         return success;
     }
 
     public void AddMessage(Message message) throws SQLException, ClassNotFoundException
     {
-        Connect();
+      //  Connect();
         ResultSet rs = statement.executeQuery("SELECT * FROM USER;");
         int id =0;
         
@@ -150,6 +151,7 @@ public class SQLiteManager
                     
         }
         rs.close();
+        System.out.println("Sto aggiungendo: " + id + "," + "\'" + message.Text + "\'" + "," + "\'" + message.Date + "\'");
         
         String add
                 = "INSERT INTO MESSAGE (USERID,CONTENT,DATE) "
@@ -157,13 +159,13 @@ public class SQLiteManager
         statement.executeUpdate(add);
 
         Commit();
-        Disconnect();
+     //   Disconnect();
     }
 
     public List<Message> GetMessages() throws SQLException, ClassNotFoundException
     {
         List<Message> messages = new ArrayList<Message>();
-        Connect();
+    //    Connect();
 
         ResultSet rs = statement.executeQuery("SELECT * FROM MESSAGE;");
 
@@ -174,12 +176,13 @@ public class SQLiteManager
             mes.Text = rs.getString("content");
             
             messages.add(mes);
+            System.out.println("Ho aggiunto un messaggio");
         }
         rs.close();
 
         Commit();
-        Disconnect();
-        return null;
+    //    Disconnect();
+        return messages;
     }
 
     public void Commit() throws SQLException
