@@ -4,7 +4,7 @@
   "description": "Client side of chatTCP",
   "main": "app.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron app.js",
     "watch": "webpack -d --watch"
   },
   "author": "Fantinato Filippo",
