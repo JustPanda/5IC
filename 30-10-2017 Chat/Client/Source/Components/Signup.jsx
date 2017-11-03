@@ -10,6 +10,17 @@ export default class Signup extends React.Component
     {
         super();
         this.ButtonSendOnClick = this.ButtonSendOnClick.bind(this);
+        ipcRenderer.on("signup", function(event, data)
+        {
+            if(JSON.stringify(data)=="SignupFail")
+            {
+                console.log("Errore nel login")
+            }
+            else if(JSON.stringify(data)=="SignupSuccess")
+            {
+                event.sender.send("main");
+            }
+        })
         this.state={dialogText:""};
     }
     ButtonSwitchOnClick()
@@ -24,7 +35,8 @@ export default class Signup extends React.Component
         var tbConfPsd = document.getElementById("TextBoxConfPsd");
         if(tbPsd.value == tbConfPsd.value)
         {
-            ipcRenderer.send("main");
+            var user = {Username:tbUser.value, Password:tbPsd.value, Action:"Registration"};
+            ipcRenderer.send("main", user);
         }
         else
         {

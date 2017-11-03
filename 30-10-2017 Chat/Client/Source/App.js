@@ -48,7 +48,6 @@ app.on( 'ready', () => {
 
 ipcMain.on( "main", function (event, arg) 
 {
-  console.log("DIOCANE PERCHE' NON VA UN CAZZO")
   if(arg==null)
   {
     mainWindow.show();

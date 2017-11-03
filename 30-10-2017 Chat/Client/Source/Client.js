@@ -20,7 +20,8 @@ export default class Client
             console.log("Ho ricevuto: " + d);
             if(d=="LoginSuccess")
             {
-                ipcRenderer.send("login", "LoginSuccess");
+                //ipcRenderer.send("login", "LoginSuccess");
+                ipcRenderer.send("main")
             }
             else if(d=="LoginFail")
             {
@@ -28,7 +29,8 @@ export default class Client
             }
             else if(d=="RegistrationSuccess")
             {
-                ipcRenderer.send("signup", "RegistrationSuccess");
+                //ipcRenderer.send("signup", "RegistrationSuccess");
+                ipcRenderer.send("main")
             }
             else if(d=="RegistrationFail")
             {
