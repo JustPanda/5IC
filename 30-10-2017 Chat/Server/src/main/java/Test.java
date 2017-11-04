@@ -17,7 +17,7 @@ public class Test
     public static void main(String[] args) throws ClassNotFoundException, SQLException
     {
         SQLiteManager man = new SQLiteManager();    
-        
+        man.CreateTables();
         man.Disconnect();
         
     }

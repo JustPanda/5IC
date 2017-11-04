@@ -26,7 +26,7 @@ public class SQLiteManager
     public SQLiteManager() throws ClassNotFoundException, SQLException
     {
         Connect();
-       // CreateTables();
+        // CreateTables();
     }
 
     public void Connect() throws ClassNotFoundException, SQLException
@@ -47,14 +47,14 @@ public class SQLiteManager
 
     public void CreateTables() throws ClassNotFoundException, SQLException, SQLException
     {
-     //   Connect();
+        //   Connect();
 
         String user
                 = "CREATE TABLE IF NOT EXISTS USER "
                 + "("
                 + " ID         INTEGER PRIMARY KEY AUTOINCREMENT    NOT NULL,"
-                + " USERNAME   TEXT                             NOT NULL,"
-                + " PASSWORD   TEXT                             NOT NULL "
+                + " USERNAME   TEXT                                 NOT NULL,"
+                + " PASSWORD   TEXT                                 NOT NULL "
                 + ")";
         statement.executeUpdate(user);
         System.out.println("Tabella User creata con successo");
@@ -63,21 +63,27 @@ public class SQLiteManager
                 = "CREATE TABLE IF NOT EXISTS MESSAGE "
                 + "("
                 + " ID         INTEGER PRIMARY KEY AUTOINCREMENT    NOT NULL,"
-                + " USERID     INT                              NOT NULL,"
-                + " CONTENT    TEXT                             NOT NULL,"
-                + " DATE       TEXT                             NOT NULL "
+                + " USERID     INT                                  NOT NULL,"
+                + " CONTENT    TEXT                                 NOT NULL,"
+                + " DATE       TEXT                                 NOT NULL,"
+                + " TOUSERID   INT                                  NOT NULL "
                 + ")";
         statement.executeUpdate(message);
         System.out.println("Tabella Message creata con successo");
 
+        String add
+                = "INSERT INTO USER (USERNAME,PASSWORD) "
+                + "VALUES (" + "\'" + "group" + "\'" + "," + "\'" + "" + "\'" + ");";
+        statement.executeUpdate(add);
+
         Commit();
 
-      //  Disconnect();
+        //  Disconnect();
     }
 
     public boolean Register(User user) throws ClassNotFoundException, SQLException, SQLException
     {
-      //  Connect();
+        //  Connect();
 
         boolean success = false;
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
@@ -104,15 +110,14 @@ public class SQLiteManager
 
         Commit();
 
-      //  Disconnect();
-
+        //  Disconnect();
         return true;
     }
 
     public boolean Login(User user) throws ClassNotFoundException, SQLException, SQLException
     {
         boolean success = false;
-   //     Connect();
+        //     Connect();
 
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
 
@@ -134,57 +139,93 @@ public class SQLiteManager
         rs.close();
 
         Commit();
-   //     Disconnect();
+        //     Disconnect();
         return success;
     }
 
     public void AddMessage(Message message) throws SQLException, ClassNotFoundException
     {
-      //  Connect();
+        //  Connect();
         ResultSet rs = statement.executeQuery("SELECT * FROM USER;");
-        int id =0;
-        
+        int id = 0;
+        int toId = 0;
         while (rs.next())
         {
             String usr = rs.getString("username");
-            if(usr.equals(message.User))
+            if (usr.equals(message.Username))
             {
                 id = rs.getInt("id");
             }
-                    
+            if (usr.equals(message.ToUser))
+            {
+                toId = rs.getInt("id");
+            }
+
         }
         rs.close();
         System.out.println("Sto aggiungendo: " + id + "," + "\'" + message.Text + "\'" + "," + "\'" + message.Date + "\'");
-        
+
         String add
-                = "INSERT INTO MESSAGE (USERID,CONTENT,DATE) "
-                + "VALUES (" + id + "," + "\'" + message.Text + "\'" + "," + "\'" + message.Date + "\'" + ");"; //Da sistemare gli id
+                = "INSERT INTO MESSAGE (USERID,CONTENT,DATE,TOUSERID) "
+                + "VALUES (" + id + "," + "\'" + message.Text + "\'" + "," + "\'" + message.Date + "\'" + "," + toId + ");"; //Da sistemare gli id
         statement.executeUpdate(add);
 
         Commit();
-     //   Disconnect();
+        //   Disconnect();
     }
 
-    public List<Message> GetMessages() throws SQLException, ClassNotFoundException
+    public List<Message> GetMessages(String user, String toUser) throws SQLException, ClassNotFoundException
     {
         List<Message> messages = new ArrayList<Message>();
-    //    Connect();
+        ResultSet rs = statement.executeQuery("SELECT * FROM USER;");
 
-        ResultSet rs = statement.executeQuery("SELECT * FROM MESSAGE;");
+        int userId = 0;
+        int toUserId = 0;
 
         while (rs.next())
         {
-            Message mes = new Message();
-            mes.Date = rs.getString("date");
-            mes.Text = rs.getString("content");
-            
-            messages.add(mes);
-            System.out.println("Ho aggiunto un messaggio");
+            if (rs.getString("username").equals(toUser))
+            {
+                toUserId = rs.getInt("id");
+            }
+            if (rs.getString("username").equals(user))
+            {
+                userId = rs.getInt("id");
+            }
+
+        }
+
+        rs.close();
+        rs = statement.executeQuery("SELECT * FROM MESSAGE;");
+
+        while (rs.next())
+        {
+            if (rs.getInt("touserid") == toUserId/* && rs.getInt("userid") == userId*/)
+            {
+                Message mes = new Message();
+                mes.Date = rs.getString("date");
+                mes.Text = rs.getString("content");
+                int id = rs.getInt("userid");
+                ResultSet rss = statement.executeQuery("SELECT * FROM USER;");
+                while(rss.next())
+                {
+                    if(rss.getInt("id")==id)
+                    {
+                        mes.Username = rss.getString("username");
+                    }
+                    
+                }
+                
+                mes.ToUser = toUser;
+                messages.add(mes);
+                System.out.println("Ho aggiunto un messaggio");
+            }
+
         }
         rs.close();
 
         Commit();
-    //    Disconnect();
+        //    Disconnect();
         return messages;
     }
 

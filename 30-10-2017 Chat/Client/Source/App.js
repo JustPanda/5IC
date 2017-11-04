@@ -29,6 +29,7 @@ app.on( 'ready', () => {
   loginWindow = new BrowserWindow( {
     width: 800,
     height: 500,
+    show:true
   } );
   loginWindow.loadURL( "file://" + __dirname + "/Login.html" );
   loginWindow.on( 'closed', () => {
@@ -48,7 +49,7 @@ app.on( 'ready', () => {
 
 ipcMain.on( "main", function (event, arg) 
 {
-  if(arg==null)
+  if(arg===null|arg===undefined)
   {
     mainWindow.show();
     loginWindow.hide();
@@ -62,14 +63,30 @@ ipcMain.on( "main", function (event, arg)
  
 } );
 
-ipcMain.on( "login", function () {
-  mainWindow.show();
-  loginWindow.show();
-  signupWindow.hide();
+ipcMain.on( "login", function (event, data) {
+  if(data===null|data===undefined)
+  {
+     mainWindow.show();
+    loginWindow.show();
+    signupWindow.hide();
+  }
+  else
+  {
+    loginWindow.webContents.send("logincomponent", data);
+  }
+ 
 } );
 
-ipcMain.on( "signup", function () {
-  mainWindow.hide();
-  loginWindow.hide();
-  signupWindow.show();
+ipcMain.on( "signup", function (event, data) {
+  console.log("Il nodo del signup ha ricevuto"  +data);
+  if(data===null|data===undefined)
+  {
+     mainWindow.show();
+    loginWindow.hide();
+    signupWindow.show();
+  }
+  else
+  {
+    signupWindow.webContents.send("signupcomponent", data);
+  }
 } );

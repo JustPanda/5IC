@@ -9,15 +9,16 @@ constructor()
 {
     super();
     this.ButtonSendOnClick = this.ButtonSendOnClick.bind(this);
-    ipcRenderer.on("login", function(event, data)
+    ipcRenderer.on("logincomponent", function(event, data)
     {
-        if(toString(data)=="LoginFail")
+        if(data.includes("LoginFail"))
         {
             console.log("Errore nel login")
         }
-        else if(toString(data)=="LoginSuccess")
+        else if(data.includes("LoginSuccess"))
         {
-            event.sender.send("main");
+            console.log("Fine login, apro il main")
+            event.sender.send("main", null);
         }
     })
     this.user = "";
@@ -44,7 +45,7 @@ constructor()
                 <div className="win-textblock">Username</div>
                 <input className="win-textbox" type="text" id="TextBoxUser"/>
                 <div className="win-textblock">Password</div>
-                <input className="win-textbox" type="text" id="TextBoxPsd" />
+                <input className="win-textbox" type="password" id="TextBoxPsd" />
                 <button className="win-button" onClick={this.ButtonSendOnClick}>Conferma</button>
                 <a onClick={this.ButtonSwitchOnClick} style={{margin:"20px"}}>Non hai un account? Registrati!</a>
             </div>

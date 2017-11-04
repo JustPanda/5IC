@@ -10,13 +10,13 @@ export default class Signup extends React.Component
     {
         super();
         this.ButtonSendOnClick = this.ButtonSendOnClick.bind(this);
-        ipcRenderer.on("signup", function(event, data)
+        ipcRenderer.on("signupcomponent", function(event, data)
         {
-            if(JSON.stringify(data)=="SignupFail")
+            if(data.includes("SignupFail"))
             {
                 console.log("Errore nel login")
             }
-            else if(JSON.stringify(data)=="SignupSuccess")
+            else if(data.inculdes("SignupSuccess"))
             {
                 event.sender.send("main");
             }
@@ -52,9 +52,9 @@ export default class Signup extends React.Component
                 <div className="win-textblock">Username</div>
                 <input id="TextBoxUser" className="win-textbox" type="text" />
                 <div className="win-textblock">Password</div>
-                <input id="TextBoxPsd" className="win-textbox" type="text" />
+                <input id="TextBoxPsd" className="win-textbox" type="password" />
                 <div className="win-textblock">Conferma password</div>
-                <input id="TextBoxConfPsd" className="win-textbox" type="text" />
+                <input id="TextBoxConfPsd" className="win-textbox" type="password" />
                 <button className="win-button" onClick={this.ButtonSendOnClick}>Registrati</button>
                 <a onClick={this.ButtonSwitchOnClick} style={{margin:"20px"}}>Hai già un account? Fai il Login!</a>
                 <ContentDialog text={"La password deve essere uguale"}></ContentDialog>

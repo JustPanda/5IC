@@ -16,6 +16,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -49,6 +52,7 @@ class Mixer
 
     ArrayList<ClientConnection> connections = new ArrayList<ClientConnection>();
     private ArrayList<Message> messages = new ArrayList<Message>();
+    SQLiteManager sql;
 
     public void Start() throws IOException, ClassNotFoundException, SQLException
     {
@@ -60,7 +64,7 @@ class Mixer
             clientIndex++;
             Socket socket = (Socket) s.accept();
             ClientConnection client = new ClientConnection(socket, this);
-            SQLiteManager sql = new SQLiteManager();
+            sql = new SQLiteManager();
             System.out.println("Connesso al client n°" + clientIndex);
             client.output = new PrintWriter(socket.getOutputStream(), true);
             client.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -78,35 +82,35 @@ class Mixer
                     if (user.Action.equals("Registration"))
                     {
                         boolean success = sql.Register(user);
-                        if(!success) //se esiste nel databse
+                        if (!success) //se esiste nel databse
                         {
                             client.output.println("RegistrationFail\n");
                             System.out.println("Registration Failed");
-                        }
-                        else if(success)
+                        } else if (success)
                         {
                             client.output.println("RegistrationSuccess\n");
                             client.user = user;
                             connections.add(client);
+                            SendPreviousMessages(client);
                             executor.execute(client);
                             HasLogin = true;
                             System.out.println("Registration success");
                         }
-                    }
-                    else if (user.Action.equals("Login"))
+                    } else if (user.Action.equals("Login"))
                     {
                         boolean success = sql.Login(user);
-                        if(!success)
+                        if (!success)
                         {
                             client.output.println("LoginFail\n");
                             System.out.println("Login Fail");
-                        }
-                        else if(success)
+                        } else if (success)
                         {
                             client.output.println("LoginSuccess\n");
                             client.user = user;
                             System.out.println("Login riuscito");
                             connections.add(client);
+                            Thread.sleep(100);
+                            SendPreviousMessages(client);
                             executor.execute(client);
                             HasLogin = true;
                             System.out.println("Login success");
@@ -117,22 +121,37 @@ class Mixer
                     ex.printStackTrace();
                 }
             }
-            
+
         }
         executor.shutdown();
         s.close();
     }
 
-    public void UpdateMessages(Message message)
+    private void SendPreviousMessages(ClientConnection conn) throws SQLException, ClassNotFoundException
+    {
+        List<Message> l = sql.GetMessages(conn.user.Username, conn.toUser);
+        Message[] m = l.toArray(new Message[l.size()]);
+
+        MessageGroup group = new MessageGroup(m);
+
+        Gson gson = new Gson();
+        String toBeOut = gson.toJson(group);
+        System.out.println(toBeOut);
+
+        conn.output.println(toBeOut);
+    }
+
+    public void UpdateMessages(Message message) throws SQLException, ClassNotFoundException
     {
         this.messages.add(message);
+        this.sql.AddMessage(message);
         for (int i = 0; i < connections.size(); i++)
         {
             ClientConnection c = connections.get(i);
-            System.out.println("Client connection esiste?" + !c.equals(null));
-            System.out.println("Message user" + message.User);
-            System.out.println("Cc user" + c.user.Username);
-            if (!message.User.equals(c.user.Username))
+            System.out.println("Client connection esiste? " + !c.equals(null));
+            System.out.println("Message user " + message.Username);
+            System.out.println("Cc user " + c.user.Username);
+            if (!message.Username.equals(c.user.Username))
             {
                 System.out.println("Eseguo il sender");
                 c.executor.execute(new Sender(c, c.output, message));
@@ -152,6 +171,7 @@ class ClientConnection implements Runnable
     //  int id;
 
     public User user;
+    public String toUser = "group";
 
     public ClientConnection(Socket socket, Mixer mixer) throws IOException
     {
@@ -206,8 +226,19 @@ class Receiver implements Runnable
                 /*  message.User = "manuelelucchi";
                 message.Date = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + "," + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
                 message.Text = "Testo"; */
-                System.out.println("Inizio UpdateMessage");
-                connection.mixer.UpdateMessages(message);
+                if (message.Username != null)
+                {
+                    System.out.println("Inizio UpdateMessage");
+                    try
+                    {
+                        connection.mixer.UpdateMessages(message);
+                    } catch (SQLException ex)
+                    {
+                    } catch (ClassNotFoundException ex)
+                    {
+                    }
+                }
+
             }
 
         } catch (IOException ex)
@@ -239,7 +270,7 @@ class Sender implements Runnable
     {
         // for(int i= 0; i<1000; i++)
         {
-            String output = "{" + "\"" + "User" + "\"" + ":" + "\"" + message.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + message.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + message.Date + "\"" + "}";
+            String output = "{" + "\"" + "Username" + "\"" + ":" + "\"" + message.Username + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + message.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + message.Date + "\"" + "," + "\"" +  "ToUser" + "\"" + ":" + "\"" + message.ToUser + "\"" +"}";
             sender.println(output);
             // sender.print("Ciao");
             System.out.println("Ho inviato: " + output);

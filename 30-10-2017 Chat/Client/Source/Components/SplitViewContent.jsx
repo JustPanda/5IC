@@ -16,7 +16,7 @@ export default class SplitViewContent extends React.Component
         super();
         var ws = new Client();
 
-        this.state = { user: "cesare", messages: [], tags: [], client: ws };
+        this.state = { user: "cesare", toUser: "group", messages: [], tags: [], client: ws };
         this.RefreshMessages = this.RefreshMessages.bind( this );
         this.state.client.StartClient( this.RefreshMessages );
 
@@ -39,25 +39,30 @@ export default class SplitViewContent extends React.Component
             var tag;
 
             var msg = prevstate.messages[ prevstate.messages.length - 1 ];
-            console.log("User arrivato dal messaggio: " + msg.User);
+            console.log("User arrivato dal messaggio: " + msg.Username);
             console.log("User stabile: " + this.state.user)
-            if ( msg.User == this.state.user )
+            if ( msg.Username == "" || msg.Username == this.state.user)
             {
+                console.log(msg.Username)
+                if(msg.Username == "")
+                {
+                    msg.Username = this.state.user
+                    this.state.client.WriteMessage( "{" + "\"" + "Username" + "\"" + ":" + "\"" + msg.Username + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" +  "," + "\"" + "ToUser" + "\"" + ":" + "\"" + this.state.toUser + "\"" + "}" );
+                }
+                
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
                         <div className="col-md-8"></div>
-                        <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.User }></MessageUser>
+                        <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageUser>
                     </div>
                 )
-                console.log( "sto inviando" )
-                this.state.client.WriteMessage( "{" + "\"" + "User" + "\"" + ":" + "\"" + msg.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" + "}" );
-                this.state.client.WriteMessage( "{" + "\"" + "User" + "\"" + ":" + "\"" + msg.User + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" + "}" );
+
             }
-            else if ( msg.User != this.state.user )
+            else if ( msg.Username != this.state.user )
             {
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
-                        <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.User }></MessageOther>
+                        <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageOther>
                         <div className="col-md-8"></div>
                     </div>
                 )
@@ -74,7 +79,7 @@ export default class SplitViewContent extends React.Component
     {
         return (
             <div style={ { height: "100%" } }>
-                <TopAppBar></TopAppBar>
+                <TopAppBar name={this.state.toUser}></TopAppBar>
                 <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '90%' } }>
                     { this.state.tags }
                 </section>

@@ -10,7 +10,20 @@
  */
 public class Message
 {
+
     public String Text;
     public String Date;
-    public String User;
+    public String Username;
+    public String ToUser;
+}
+
+class MessageGroup
+{
+
+    Message[] Messages;
+
+    public MessageGroup(Message[] m)
+    {
+        this.Messages = m;
+    }
 }
