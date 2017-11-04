@@ -18,8 +18,7 @@ class Message extends React.Component
         return(
             <div className={classes.messageCnt}>
                 <Paper className={classes.message} elevation={4} style={{
-                    float: info.orientation
-                }}>
+                    float: info.orientation}}>
                     {
                         (function(name){
                             if(name)
@@ -34,7 +33,7 @@ class Message extends React.Component
                         })(info.name)
                     }
                     <Typography type="body2" gutterBottom>
-                        {info.text}
+                        {info.text.split("\n").map((item, index) => {return (<span key={index}>{item}<br /></span>)})}
                     </Typography>
                     <Typography type="caption" gutterBottom align="right">
                         {info.date}
@@ -53,11 +52,11 @@ const style={
     messageCnt: {
         position: 'relative',
         width: '100%',
-        marginBottom: '3%'
+        marginBottom: '3%',
     },
     message: {
         width: '40%'
-    }
+    },
 };
 
 export default withStyles(style)(Message);

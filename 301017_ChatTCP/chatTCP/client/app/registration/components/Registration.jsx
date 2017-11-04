@@ -31,6 +31,7 @@ class Registration extends React.Component
         this.handleVerifyPassword=this.handleVerifyPassword.bind(this);
         this.handleBack=this.handleBack.bind(this);
         this.handleRegister=this.handleRegister.bind(this);
+        this.handleRequestClose=this.handleRequestClose.bind(this);
         this.handleMessage=this.handleMessage.bind(this);
         ipcRenderer.on('message', this.handleMessage)
     }
@@ -63,16 +64,16 @@ class Registration extends React.Component
             state.color='';
             state.verify=false;
         }
-        this.setState(state);
         this.handleVerifyPassword({target: { value: this.state.verifyPassword}});
+        this.setState(state);
     }
 
     handleVerifyPassword(event)
     {
         var verifyPassword=event.target.value, verify;
-        if(this.state.password)
+        if(this.state.pass)
         {
-            verify=verifyPassword==this.state.password;
+            verify=(verifyPassword==this.state.password);
             console.log(verifyPassword, verify);
             this.setState({verify: verify, verifyPassword: verifyPassword});
         }
@@ -80,7 +81,7 @@ class Registration extends React.Component
 
     handleBack()
     {
-        ipcRenderer.send('goToLogin', this.client);
+        ipcRenderer.send('login', this.client);
     }
 
     handleRegister()
@@ -117,13 +118,22 @@ class Registration extends React.Component
         }
     }
 
+    handleRequestClose(event, reason)
+    {
+        if(reason!=='clickaway')
+        {
+            this.setState({message: { open: false }});
+        }
+    }
+
     handleMessage(event, data)
     {
         var text;
         switch(data)
         {
-            case 'ok': break;
+            case 'ok': ipcRenderer.send('chat', this.state.username); break;
             case 'ae': text='Already exist'; break;
+            case 'al': text='Already logged'; break;
         }
         if(text)
         {

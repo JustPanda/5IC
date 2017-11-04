@@ -1,5 +1,8 @@
 package server;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import java.sql.*;
 
 public class SQLiteJDBC
@@ -33,8 +36,7 @@ public class SQLiteJDBC
 		String password=null;
 		if(existUser(username))
 		{
-			password=stmt.executeQuery("SELECT * FROM register WHERE username='"+username+"'").getString("username");
-			System.out.println(password);
+			password=stmt.executeQuery("SELECT * FROM register WHERE username='"+username+"'").getString("password"); //(trecord REGEXP '^ALA[0-9]')
 		}
 		return password;
 	}
@@ -45,4 +47,23 @@ public class SQLiteJDBC
 		rs.next();
 		return rs.getBoolean(1);
 	}
+
+	JSONArray getJSONArrayOfUsers(String requestUsername) throws SQLException
+	{
+		ResultSet rs=stmt.executeQuery("SELECT * FROM register");
+		JSONArray listOfUsers=new JSONArray();
+		JSONObject tmp;
+		while(rs.next())
+		{
+			String username=rs.getString("username");
+			if(!username.equals(requestUsername))
+			{
+				tmp=new JSONObject();
+				tmp.put("name", username);
+				listOfUsers.add(tmp);
+			}
+		}
+		return listOfUsers;
+	}
+
 }

@@ -14,6 +14,7 @@ class User implements Runnable
 {
 
 	private final String OUT_SIGNAL="out", LOGIN_SIGNAL="l", REGISTER_SIGNAL="r", CHAT_SIGNAL="c";
+	private String username;
 	private Socket client;
 	private BufferedReader in;
 	private PrintWriter out;
@@ -29,25 +30,37 @@ class User implements Runnable
 		try{
 			this.in=new BufferedReader(new InputStreamReader(client.getInputStream()));
 			this.out=new PrintWriter(client.getOutputStream(), true);
-		}catch(IOException e){
+		}catch(IOException e) {
 			e.printStackTrace();
 		}
+		initFunction();
+	}
+
+	private void initFunction()
+	{
 		phases.put(LOGIN_SIGNAL, (Void) -> {
 			try{
 				String data;
 				JSONParser parser=new JSONParser();
 				while(!(data=in.readLine()).equals(OUT_SIGNAL))
 				{
-					String password;
+					String password, tmpUsername, toSend;
 					JSONObject msg=(JSONObject) parser.parse(data), outJson=new JSONObject();
-					password=database.getPassword((String) msg.get("username"));
+					tmpUsername=(String) msg.get("username");
+					password=database.getPassword(tmpUsername);
+					toSend=password==null?"ne":(!password.equals(msg.get("password"))?"wp":(room.isLogged(tmpUsername)?"al":"ok"));
 					outJson.put("section", LOGIN_SIGNAL);
-					outJson.put("message", password==null?"ne":(password.equals(msg.get("password"))?"ok":"wp"));
+					outJson.put("message", toSend);
+					if(toSend.equals("ok"))
+					{
+						username=tmpUsername;
+						room.addUser(username, out);
+					}
 					out.println(outJson.toJSONString());
 				}
-			}catch(IOException|SQLException|ParseException e){
+			}catch(SQLException|ParseException e){
 				e.printStackTrace();
-			}
+			}catch(IOException e){}
 			return null;
 		});
 		phases.put(REGISTER_SIGNAL, (Void) -> {
@@ -56,28 +69,38 @@ class User implements Runnable
 				JSONParser parser=new JSONParser();
 				while(!(data=in.readLine()).equals(OUT_SIGNAL))
 				{
+					String toSend, tmpUsername;
 					JSONObject msg=(JSONObject) parser.parse(data), outJson=new JSONObject();
+					tmpUsername=(String) msg.get("username");
+					toSend=database.existUser(tmpUsername)?"ae":(room.isLogged(tmpUsername)?"al":"ok");
 					outJson.put("section", REGISTER_SIGNAL);
-					outJson.put("message", database.existUser((String) msg.get("username"))?"ae":"ok");
-					database.addUser((String) msg.get("username"), (String) msg.get("password"));
+					outJson.put("message", toSend);
+					if(toSend.equals("ok"))
+					{
+						username=tmpUsername;
+						database.addUser(username, (String) msg.get("password"));
+						room.addUser(username, out);
+					}
 					out.println(outJson.toJSONString());
 				}
-			}catch(IOException|SQLException|ParseException e){
+			}catch(SQLException|ParseException e){
 				e.printStackTrace();
-			}
+			}catch(IOException e){}
 			return null;
 		});
 		phases.put(CHAT_SIGNAL, (Void) -> {
 			try{
 				String data;
 				JSONParser parser=new JSONParser();
+				room.sendListOfUsers(username, database.getJSONArrayOfUsers(username));
 				while(!(data=in.readLine()).equals(OUT_SIGNAL))
 				{
 					JSONObject msg=(JSONObject) parser.parse(data);
+					room.sendMessage(msg, username);
 				}
-			}catch(IOException|ParseException e){
+			}catch(ParseException|SQLException e){
 				e.printStackTrace();
-			}
+			}catch(IOException e){}
 			return null;
 		});
 	}
@@ -94,7 +117,8 @@ class User implements Runnable
 			in.close();
 			out.close();
 		}catch(IOException e){
-			e.printStackTrace();
+			if(username!=null)
+				room.removedUser(username);
 		}
 	}
 }

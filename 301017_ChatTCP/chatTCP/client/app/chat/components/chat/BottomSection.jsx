@@ -28,17 +28,9 @@ class BottomSection extends React.Component
     {
         if(this.state.actualText.trim())
         {
-            let text=this.state.actualText.split("\n").map((item, index) => {return (<span key={index}>{item}<br /></span>)});
-            let d=new Date();
-            let min=d.getMinutes();
-            if (min < 10) {
-                min = "0" + min;
-            }
             this.props.updateMessages({
-                orientation: 'right',
-                text: text,
-                date: d.getHours()+":"+min
-            });
+                text: this.state.actualText,
+            }, this.props.section, true);
             this.setState({actualText: ''});
         }
     }

@@ -37,18 +37,18 @@ app.on('ready',
             slashes: true
         }));
         registrationWindow.on('close', closeAll);
-        // chatWindow=new BrowserWindow({
-        //     width: 800,
-        //     height: 600,
-        //     show: true,
-        //     icon: iconPath
-        // });
-        // chatWindow.loadURL(url.format({
-        //     pathname: path.join(__dirname, 'chat/index.html'),
-        //     protocols: 'files',
-        //     slashes: true
-        // }));
-        // chatWindow.on('close', closeAll);
+        chatWindow=new BrowserWindow({
+            width: 800,
+            height: 600,
+            show: false,
+            icon: iconPath
+        });
+        chatWindow.loadURL(url.format({
+            pathname: path.join(__dirname, 'chat/index.html'),
+            protocols: 'files',
+            slashes: true
+        }));
+        chatWindow.on('close', closeAll);
     }
 );
 
@@ -70,37 +70,44 @@ client.on('data',
             case REGISTER_SIGNAL:
                 registrationWindow.webContents.send('message', data.message);
                 break;
+            case CHAT_SIGNAL:
+                chatWindow.webContents.send('message', data.message);
+                break;
         }
+    }
+);
+
+process.on('uncaughtException',
+    function(err)
+    {
+        console.log('Error with server');
     }
 );
 
 client.on('close', () => {console.log('end');});
 
 ipcMain.on('sendLogin',
-    function(event, data)
+    function(event, arg)
     {
-        client.write(data+'\n');
+        client.write(arg+'\n');
     }
 );
 
 ipcMain.on('sendRegister',
-    function(event, data)
-    {
-        client.write(data+'\n');
-    }
-);
-
-ipcMain.on('goToRegistration',
     function(event, arg)
     {
-        loginWindow.hide();
-        registrationWindow.show();
-        client.write(OUT_SIGNAL+'\n');
-        client.write(REGISTER_SIGNAL+'\n');
+        client.write(arg+'\n');
     }
 );
 
-ipcMain.on('goToLogin',
+ipcMain.on('sendMessage',
+    function(event, arg)
+    {
+        client.write(JSON.stringify(arg)+'\n');
+    }
+);
+
+ipcMain.on('login',
     function(event, arg)
     {
         loginWindow.show();
@@ -110,14 +117,25 @@ ipcMain.on('goToLogin',
     }
 );
 
-ipcMain.on('goToChat',
+ipcMain.on('registration',
     function(event, arg)
     {
-        chat.show();
+        loginWindow.hide();
+        registrationWindow.show();
+        client.write(OUT_SIGNAL+'\n');
+        client.write(REGISTER_SIGNAL+'\n');
+    }
+);
+
+ipcMain.on('chat',
+    function(event, arg)
+    {
+        chatWindow.show();
         loginWindow.hide();
         registrationWindow.hide();
         client.write(OUT_SIGNAL+'\n');
         client.write(CHAT_SIGNAL+'\n');
+        chatWindow.webContents.send('username', arg);
     }
 );
 

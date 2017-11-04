@@ -12,27 +12,6 @@ class Chat extends React.Component
     constructor(props)
     {
         super(props);
-        this.state={
-            messages: [],
-            index: 0
-        };
-        this.updateMessages=this.updateMessages.bind(this);
-    }
-
-    updateMessages(info)
-    {
-        this.setState(
-            function(prevState)
-            {
-                prevState.messages.push(
-                    <Message key={++prevState.index} info={info} />
-                );
-                return {
-                    messages: prevState.messages,
-                    index: prevState.index
-                };
-            }
-        );
     }
 
     render()
@@ -40,23 +19,16 @@ class Chat extends React.Component
         const {classes}=this.props;
         return (
             <div className={classes.chatCnt}>
-                <div style={{
-                    position: 'relative',
-                    display: 'flex',
-                    width: '95%',
-                    height: '100%',
-                    flexDirection: 'column-reverse',
-                    overflow: 'vertical'
-                }}>
-                    {this.state.messages}
+                <div className={classes.messagesCnt}>
+                    {this.props.messages}
                 </div>
-                <BottomSection updateMessages={this.updateMessages} />
+                <BottomSection updateMessages={this.props.updateMessages} section={this.props.section} />
             </div>
         );
     }
 }
 
-Chat.propTypes = {
+Chat.propTypes={
     classes: PropTypes.object.isRequired,
 };
 
@@ -67,7 +39,15 @@ const styles={
         width: '100%',
         height: '100%',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
+    },
+    messagesCnt: {
+        position: 'relative',
+        display: 'flex',
+        width: '95%',
+        height: '100%',
+        flexDirection: 'column-reverse',
+        overflow: 'auto'
     }
 };
 

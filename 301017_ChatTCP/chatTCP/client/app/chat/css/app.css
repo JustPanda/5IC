@@ -1,6 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Open+Sans");
 html, body {
   margin: 0;
   padding: 0; }
+a {
+    text-decoration: none;
+
+}
 
 /*# sourceMappingURL=app.css.map */

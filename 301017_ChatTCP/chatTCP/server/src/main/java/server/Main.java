@@ -1,5 +1,7 @@
 package server;
 
+import com.sun.media.sound.SoftTuning;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.util.concurrent.Executors;
@@ -14,9 +16,9 @@ public class Main
 		ServerSocket server=null;
 		SQLiteJDBC database=new SQLiteJDBC();
 		Room room=new Room();
+		System.out.println("Server online");
 		try{
 			server=new ServerSocket(PORT);
-			System.out.println("Server online");
 			while(true)
 			{
 				executor.execute(new User(server.accept(), database, room));

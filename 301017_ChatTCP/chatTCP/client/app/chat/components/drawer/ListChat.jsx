@@ -9,6 +9,7 @@ import AccountCircleIcon from 'material-ui-icons/AccountCircle';
 import GroupWork from 'material-ui-icons/GroupWork';
 import ExpandLess from 'material-ui-icons/ExpandLess';
 import ExpandMore from 'material-ui-icons/ExpandMore';
+import {Link} from 'react-router-dom';
 
 class ListChat extends React.Component
 {
@@ -25,10 +26,12 @@ class ListChat extends React.Component
     createUserChat(item, index)
     {
         return (
-            <ListItem key={index} button className={this.props.classes.nested} onClick={this.changeChat.bind(this, item)}>
-                <Avatar className={this.props.classes.avatar}>{item.name[0]}</Avatar>
-                <ListItemText inset primary={item.name} />
-            </ListItem>
+            <Link key={index} to={'/'+item.name}>
+                <ListItem button className={this.props.classes.nested} onClick={this.changeChat.bind(this, item)}>
+                    <Avatar className={this.props.classes.avatar}>{item.name[0]}</Avatar>
+                    <ListItemText inset primary={item.name} />
+                </ListItem>
+            </Link>
         );
     }
 
@@ -47,21 +50,23 @@ class ListChat extends React.Component
         const {classes}=this.props;
         return (
             <List className={classes.root}>
-                <ListItem button onClick={this.changeChat.bind(this, {name: "Global chat"})}>
-                    <ListItemIcon>
-                        <GroupWork />
-                    </ListItemIcon>
-                    <ListItemText inset primary="Global chat" />
-                </ListItem>
+                <Link to='/Global'>
+                    <ListItem button onClick={this.changeChat.bind(this, {name: "Global"})}>
+                        <ListItemIcon>
+                            <GroupWork />
+                        </ListItemIcon>
+                        <ListItemText inset primary="Global" />
+                    </ListItem>
+                </Link>
                 <ListItem button onClick={this.handleNestedListToggle}>
                     <ListItemIcon>
                         <AccountCircleIcon />
                     </ListItemIcon>
                     <ListItemText inset primary="Users" />
-                    {this.state.open?<ExpandLess />:<ExpandMore />}
+                    {(this.state.open?<ExpandLess />:<ExpandMore />)}
                 </ListItem>
                 <Collapse in={this.state.open} transitionDuration="auto" unmountOnExit>
-                    {this.props.listChat['users'].map(this.createUserChat)}
+                    {this.props.listChat.map(this.createUserChat)}
                 </Collapse>
             </List>
         );

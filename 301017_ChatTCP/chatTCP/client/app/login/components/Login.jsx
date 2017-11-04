@@ -85,7 +85,7 @@ class Login extends React.Component
 
     handleRegistration()
     {
-        ipcRenderer.send('goToRegistration');
+        ipcRenderer.send('registration');
     }
 
     handleRequestClose(event, reason)
@@ -101,9 +101,10 @@ class Login extends React.Component
         var text;
         switch(data)
         {
-            case 'ok': break;
+            case 'ok': ipcRenderer.send('chat', this.state.username); break;
             case 'ne': text='User not exist'; break;
             case 'wp': text='Wrong password'; break;
+            case 'al': text='Already logged'; break;
         }
         if(text)
         {
