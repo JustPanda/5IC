@@ -57,8 +57,18 @@ ipcMain.on( "main", function (event, arg)
   }
   else
   {
-    mainWindow.webContents.send("content", arg);
-    console.log("Ho inviato: " + arg);
+    console.log("mi è arrivato un parametro nel main")
+    if(Array.isArray(arg))
+    {
+      mainWindow.webContents.send("pane", arg);
+      console.log("Ho inviato a pane: " + arg);
+    }
+    else
+    {
+      mainWindow.webContents.send("content", arg);
+      console.log("Ho inviato a content: " + arg);
+    }
+    
   }
  
 } );

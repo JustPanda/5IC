@@ -221,8 +221,6 @@ public class SQLiteManager
         }
         rs.close();
 
-        
-
         int j = 0;
         for (int i = 0; i < userIds.size(); i++)
         {
@@ -235,7 +233,7 @@ public class SQLiteManager
                 {
                     System.out.println("Ho aggiunto: " + rss.getString("username"));
                     messages.get(i).Username = rss.getString("username");
-                    System.out.println("PORCO DIOOOOO " +messages.get(i).Username);
+                    System.out.println("PORCO DIOOOOO " + messages.get(i).Username);
                     System.out.println("Ho aggiunto un username");
                 }
                 //    j++;
@@ -243,10 +241,26 @@ public class SQLiteManager
             rss.close();
         }
 
-        
         Commit();
         //    Disconnect();
         return messages;
+    }
+
+    public List<String> GetUsersExceptOne(String user) throws SQLException
+    {
+        List<String> users = new ArrayList<String>();
+        ResultSet rs = statement.executeQuery("SELECT * FROM USER");
+        while (rs.next())
+        {
+            
+            String userGet = rs.getString("username");
+            System.out.println("L'userget è " + userGet);
+            if (!userGet.equals(user) && !userGet.contains("group"))
+            {
+                users.add(userGet);
+            }
+        }
+        return users;
     }
 
     public void Commit() throws SQLException

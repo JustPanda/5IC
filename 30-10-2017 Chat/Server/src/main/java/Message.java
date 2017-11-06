@@ -19,9 +19,8 @@ public class Message
 
 class MessageGroup
 {
-
     Message[] Messages;
-
+    String[] Users;
     public MessageGroup(Message[] m)
     {
         this.Messages = m;

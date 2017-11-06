@@ -5,7 +5,8 @@
   "license": "MIT",
   "repository": "",
   "scripts": {
-    "start": "electron -r babel-register ./Source/App.js"
+    "start": "electron -r babel-register ./Source/App.js",
+    "build": "webpack -d --watch"
   },
   "dependencies": {
     "babel-preset-es2015": "^6.3.13",

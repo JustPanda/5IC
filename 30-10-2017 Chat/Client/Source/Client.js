@@ -42,6 +42,7 @@ export default class Client
                 var final = JSON.parse(d);  
                 if(final.Messages!=null || final.Messages!=undefined)
                 {
+                    ipcRenderer.send("main", final.Users);
                     for(var i=0; i<final.Messages.length; i++)
                     {
                         console.log("Eseguo refresh con " + final.Messages[i].Text)

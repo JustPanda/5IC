@@ -1,4 +1,4 @@
-
+ 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -133,6 +133,8 @@ class Mixer
         Message[] m = l.toArray(new Message[l.size()]);
         
         MessageGroup group = new MessageGroup(m);
+        List<String> users = sql.GetUsersExceptOne(conn.user.Username);
+        group.Users = users.toArray(new String[users.size()]);
         for(int i=0; i<m.length; i++)
         {
             System.out.println("ZIO KHEN " + m[i].Username);
