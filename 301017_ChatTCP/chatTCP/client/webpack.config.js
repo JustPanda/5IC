@@ -8,7 +8,8 @@ var config = {
     entry: {
         chat: APP_DIR+"/chat/index.jsx",
         login: APP_DIR+"/login/index.jsx",
-        registration: APP_DIR+"/registration/index.jsx"
+        registration: APP_DIR+"/registration/index.jsx",
+        error: APP_DIR+"/error/index.jsx"
     },
     output: {
         path: BUILD_DIR,

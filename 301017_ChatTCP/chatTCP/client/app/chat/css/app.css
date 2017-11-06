@@ -1,9 +1,9 @@
 html, body {
-  margin: 0;
-  padding: 0; }
-a {
-    text-decoration: none;
-
+    margin: 0;
+    padding: 0;
 }
 
-/*# sourceMappingURL=app.css.map */
+a {
+    text-decoration: none;
+    color: inherit;
+}

@@ -5,8 +5,9 @@ const {app, BrowserWindow, ipcMain} = require('electron'),
 
 const PORT=6844, IP='127.0.0.1';
 const OUT_SIGNAL="out", LOGIN_SIGNAL='l', REGISTER_SIGNAL='r', CHAT_SIGNAL='c';
-let loginWindow, registrationWindow, chatWindow;
-let iconPath=path.join(__dirname, 'images/Icon.png'),
+let loginWindow, registrationWindow, chatWindow, errorWindow;
+let chatIconPath=path.join(__dirname, 'images/Chat.png'),
+    errorIconPath=path.join(__dirname, 'images/Error.png');
     client=new net.Socket();
 
 app.on('ready',
@@ -16,7 +17,7 @@ app.on('ready',
             width: 525,
             height: 425,
             resizable: false,
-            icon: iconPath
+            icon: chatIconPath
         });
         loginWindow.loadURL(url.format({
             pathname: path.join(__dirname, 'login/index.html'),
@@ -29,7 +30,7 @@ app.on('ready',
             height: 550,
             show: false,
             resizable: false,
-            icon: iconPath
+            icon: chatIconPath
         });
         registrationWindow.loadURL(url.format({
             pathname: path.join(__dirname, 'registration/index.html'),
@@ -41,7 +42,7 @@ app.on('ready',
             width: 800,
             height: 600,
             show: false,
-            icon: iconPath
+            icon: chatIconPath
         });
         chatWindow.loadURL(url.format({
             pathname: path.join(__dirname, 'chat/index.html'),
@@ -49,6 +50,19 @@ app.on('ready',
             slashes: true
         }));
         chatWindow.on('close', closeAll);
+        errorWindow=new BrowserWindow({
+            width: 400,
+            height: 120,
+            show: false,
+            resizable: false,
+            icon: errorIconPath
+        });
+        errorWindow.loadURL(url.format({
+            pathname: path.join(__dirname, 'error/index.html'),
+            protocols: 'files',
+            slashes: true
+        }));
+        errorWindow.on('close', closeAll);
     }
 );
 
@@ -80,11 +94,12 @@ client.on('data',
 process.on('uncaughtException',
     function(err)
     {
-        console.log('Error with server');
+        loginWindow.hide();
+        registrationWindow.hide();
+        chatWindow.hide();
+        errorWindow.show();
     }
 );
-
-client.on('close', () => {console.log('end');});
 
 ipcMain.on('sendLogin',
     function(event, arg)
@@ -111,9 +126,9 @@ ipcMain.on('login',
     function(event, arg)
     {
         loginWindow.show();
+        chatWindow.hide();
         registrationWindow.hide();
-        client.write(OUT_SIGNAL+'\n');
-        client.write(LOGIN_SIGNAL+'\n');
+        changeSection(LOGIN_SIGNAL);
     }
 );
 
@@ -122,8 +137,7 @@ ipcMain.on('registration',
     {
         loginWindow.hide();
         registrationWindow.show();
-        client.write(OUT_SIGNAL+'\n');
-        client.write(REGISTER_SIGNAL+'\n');
+        changeSection(REGISTER_SIGNAL);
     }
 );
 
@@ -133,11 +147,16 @@ ipcMain.on('chat',
         chatWindow.show();
         loginWindow.hide();
         registrationWindow.hide();
-        client.write(OUT_SIGNAL+'\n');
-        client.write(CHAT_SIGNAL+'\n');
+        changeSection(CHAT_SIGNAL);
         chatWindow.webContents.send('username', arg);
     }
 );
+
+function changeSection(section)
+{
+    client.write(OUT_SIGNAL+'\n');
+    client.write(section+'\n');
+}
 
 function closeAll()
 {

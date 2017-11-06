@@ -15,7 +15,7 @@ public class Main
 		ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
 		ServerSocket server=null;
 		SQLiteJDBC database=new SQLiteJDBC();
-		Room room=new Room();
+		Room room=new Room(database.getAllUsers());
 		System.out.println("Server online");
 		try{
 			server=new ServerSocket(PORT);

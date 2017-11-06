@@ -25,7 +25,7 @@ class Message extends React.Component
                             {
                                 return (
                                     <div>
-                                        <Typography  type="title" gutterBottom>{name}</Typography>
+                                        <Typography type="title" gutterBottom>{name}</Typography>
                                         <Divider />
                                     </div>
                                 );
@@ -52,7 +52,7 @@ const style={
     messageCnt: {
         position: 'relative',
         width: '100%',
-        marginBottom: '3%',
+        marginTop: '3%',
     },
     message: {
         width: '40%'

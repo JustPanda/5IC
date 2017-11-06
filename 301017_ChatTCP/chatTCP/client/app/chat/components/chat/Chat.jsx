@@ -1,9 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import Paper from 'material-ui/Paper';
-import Typography from 'material-ui/Typography';
-import classNames from 'classnames';
 import Message from './Message.jsx';
 import BottomSection from './BottomSection.jsx';
 
@@ -46,7 +43,7 @@ const styles={
         display: 'flex',
         width: '95%',
         height: '100%',
-        flexDirection: 'column-reverse',
+        flexDirection: 'column',
         overflow: 'auto'
     }
 };

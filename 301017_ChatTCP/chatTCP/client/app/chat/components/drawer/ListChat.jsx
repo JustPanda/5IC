@@ -26,10 +26,13 @@ class ListChat extends React.Component
     createUserChat(item, index)
     {
         return (
-            <Link key={index} to={'/'+item.name}>
-                <ListItem button className={this.props.classes.nested} onClick={this.changeChat.bind(this, item)}>
-                    <Avatar className={this.props.classes.avatar}>{item.name[0]}</Avatar>
-                    <ListItemText inset primary={item.name} />
+            <Link key={index} to={'/'+item.username}>
+                <ListItem button className={this.props.classes.nested} onClick={this.changeChat.bind(this, item.username)}>
+                    <Avatar className={this.props.classes.avatar} style={{
+                        backgroundColor: item.online?'#00C853':'red'}}>
+                        {item.username[0]}
+                    </Avatar>
+                    <ListItemText inset primary={item.username} />
                 </ListItem>
             </Link>
         );
@@ -50,7 +53,7 @@ class ListChat extends React.Component
         const {classes}=this.props;
         return (
             <List className={classes.root}>
-                <Link to='/Global'>
+                <Link to='/'>
                     <ListItem button onClick={this.changeChat.bind(this, {name: "Global"})}>
                         <ListItemIcon>
                             <GroupWork />

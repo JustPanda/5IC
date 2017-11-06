@@ -42,19 +42,20 @@ class App extends React.Component
 
     createListChat(listChat, chats, updateMessages)
     {
-        let ActualChat;
-        var listChat=listChat.map(
+        var ActualChat,
+            listChat=listChat.map(
             function(item, index)
             {
-                if(!chats[item.name])
+                let ActualChat;
+                if(!chats[item.username])
                 {
-                    chats[item.name]={chat: Chat, messages: [], index: 0};
+                    chats[item.username]={chat: Chat, messages: [], index: 0};
                 }
-                ActualChat=chats[item.name].chat;
+                ActualChat=chats[item.username].Chat;
                 return (
                     <Route key={index}
-                        path={'/'+item.name}
-                        render={() => <ActualChat messages={chats[item.name].messages} updateMessages={updateMessages} section={item.name} /> } />
+                        path={'/'+item.username}
+                        render={() => <ActualChat messages={chats[item.username].messages} updateMessages={updateMessages} section={item.username} /> } />
                 );
             }.bind(this)
         );
@@ -68,9 +69,9 @@ class App extends React.Component
         this.setState({ open: !this.state.open });
     }
 
-    changeChat(objChat)
+    changeChat(username)
     {
-        this.setState({titleBar: objChat.name});
+        this.setState({titleBar: username});
     }
 
     handleMessage(event, data)
@@ -83,17 +84,6 @@ class App extends React.Component
                     {
                         return {
                             listChat: data.users
-                        };
-                    }
-                );
-                break;
-            case "au":
-                this.setState(
-                    function(prevState)
-                    {
-                        prevState.listChat.push(data.user);
-                        return {
-                            listChat: prevState.listChat
                         };
                     }
                 );
@@ -113,13 +103,12 @@ class App extends React.Component
         this.setState(
             function(prevState)
             {
-                console.log(prevState.chats, destination);
                 var destinationObj=prevState.chats[destination];
                 var d=new Date(), min=d.getMinutes();
                 if (min<10) {
                     min='0'+min;
                 }
-                info.orientation=toSend?'right':'left'
+                info.orientation=toSend?'right':'left';
                 info.date=d.getHours()+':'+min;
                 destinationObj.messages.push(<Message key={++destinationObj.index} info={info} />);
                 return {
@@ -131,7 +120,7 @@ class App extends React.Component
 
     exit()
     {
-        ipcRenderer.send('exitFromChat');
+        ipcRenderer.send('login');
     }
 
     render()

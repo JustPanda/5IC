@@ -54,6 +54,7 @@ class User implements Runnable
 					if(toSend.equals("ok"))
 					{
 						username=tmpUsername;
+						database.loginAndLogoutManaged(username, true);
 						room.addUser(username, out);
 					}
 					out.println(outJson.toJSONString());
@@ -92,12 +93,15 @@ class User implements Runnable
 			try{
 				String data;
 				JSONParser parser=new JSONParser();
-				room.sendListOfUsers(username, database.getJSONArrayOfUsers(username));
+				room.sendListOfUsers(username);
 				while(!(data=in.readLine()).equals(OUT_SIGNAL))
 				{
 					JSONObject msg=(JSONObject) parser.parse(data);
 					room.sendMessage(msg, username);
 				}
+				database.loginAndLogoutManaged(username, false);
+				room.removedUser(username);
+				username=null;
 			}catch(ParseException|SQLException e){
 				e.printStackTrace();
 			}catch(IOException e){}
@@ -118,6 +122,7 @@ class User implements Runnable
 			out.close();
 		}catch(IOException e){
 			if(username!=null)
+				database.loginAndLogoutManaged(username, false);
 				room.removedUser(username);
 		}
 	}
