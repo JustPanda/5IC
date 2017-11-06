@@ -2,7 +2,7 @@ const webpack=require('webpack'),
     path=require('path');
 
 const APP_DIR=path.resolve(__dirname, 'app');
-const BUILD_DIR=path.resolve(__dirname, 'public');
+const BUILD_DIR=path.resolve(__dirname, 'pages/public');
 
 var config = {
     entry: {

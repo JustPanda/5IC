@@ -15,6 +15,7 @@ class Message extends React.Component
     render()
     {
         const {classes, info}=this.props;
+        console.log(info, info.name);
         return(
             <div className={classes.messageCnt}>
                 <Paper className={classes.message} elevation={4} style={{
@@ -33,7 +34,7 @@ class Message extends React.Component
                         })(info.name)
                     }
                     <Typography type="body2" gutterBottom>
-                        {info.text.split("\n").map((item, index) => {return (<span key={index}>{item}<br /></span>)})}
+                        {info.text}
                     </Typography>
                     <Typography type="caption" gutterBottom align="right">
                         {info.date}

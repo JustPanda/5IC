@@ -4,7 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 import IconButton from 'material-ui/IconButton';
-import CheckIcon from 'material-ui-icons/Check';
+import LockIcon from 'material-ui-icons/LockOutline';
+import LockOpenIcon from 'material-ui-icons/LockOpen';
 import CloseIcon from 'material-ui-icons/Close';
 import Snackbar from 'material-ui/Snackbar';
 import {ipcRenderer} from 'electron';
@@ -17,15 +18,16 @@ class Registration extends React.Component
         this.state={
             username: '',
             password: '',
-            verify: true,
-            verifyPassoword: '',
             pass: false,
+            verify: false,
+            verifypassoword: '',
             color: '',
             message: {
                 text: '',
                 open: false
             }
         };
+        this.colors=['#D50000', '#FFD600', '#00C853'];
         this.handleUsername=this.handleUsername.bind(this);
         this.handlePassword=this.handlePassword.bind(this);
         this.handleVerifyPassword=this.handleVerifyPassword.bind(this);
@@ -43,40 +45,29 @@ class Registration extends React.Component
 
     handlePassword(event)
     {
-        var password=event.target.value, state={};
+        var password=event.target.value;
         if(password)
         {
             var regexToPass=[/.{7,}/g, /[0-9]+/g, /[A-Z]+/g],
-                colors=['#D50000', '#FFD600', '#00C853'],
                 pass=true;
             for(var i=0;i<regexToPass.length&&pass;i++)
             {
                 pass=pass&&(new RegExp(regexToPass[i])).test(password);
             }
-            i--;
-            state.pass=pass;
-            state.color=colors[i];
-            if(pass)
-            {
-                state.password=password;
-            }
+            this.state.pass=pass;
+            this.state.color=this.colors[--i];
+            this.state.password=password;
         }else{
-            state.color='';
-            state.verify=false;
+            this.state.color='';
+            this.state.verify=false;
         }
         this.handleVerifyPassword({target: { value: this.state.verifyPassword}});
-        this.setState(state);
     }
 
     handleVerifyPassword(event)
     {
-        var verifyPassword=event.target.value, verify;
-        if(this.state.pass)
-        {
-            verify=(verifyPassword==this.state.password);
-            console.log(verifyPassword, verify);
-            this.setState({verify: verify, verifyPassword: verifyPassword});
-        }
+        var verifyPassword=event.target.value;
+        this.setState({verify: this.state.pass&&verifyPassword==this.state.password, verifyPassword: verifyPassword});
     }
 
     handleBack()
@@ -149,30 +140,16 @@ class Registration extends React.Component
         const {classes}=this.props;
         console.log();
         return (
-            <div className={classes.registrationCnt} style={{
-                backgroundColor: this.state.bgColor
-            }}>
+            <div className={classes.registrationCnt}>
                 <div className={classes.textFieldCnt}>
                     <TextField
                         label="Username"
-                        SelectProps={{
-                            value: 'green'
-                        }}
-                        InputLabelProps={{
-                            value: 'rgba(255, 0, 0, 0.87)'
-                        }}
                         fullWidth={true}
                         margin="normal"
                         onChange={this.handleUsername} />
-                    <div style={{
-                        position: 'relative',
-                        display: 'block',
-                        width: '100%'}}>
-                        <CheckIcon style={{position: 'absolute', right: 0, bottom: 15, fill: this.state.color}} />
+                    <div className={classes.passwordCnt}>
+                        {(this.state.color==this.colors[this.colors.length-1]?<LockOpenIcon className={classes.lockStyle} style={{fill: this.state.color}} />:<LockIcon className={classes.lockStyle} style={{fill: this.state.color}} />)}
                         <TextField
-                            style={{
-                                color: 'green'
-                            }}
                             label="Password"
                             fullWidth={true}
                             type="password"
@@ -236,6 +213,16 @@ const styles={
         height: '75%',
         flexDirection: 'column',
         justifyContent: 'space-between'
+    },
+    passwordCnt: {
+        position: 'relative',
+        display: 'block',
+        width: '100%'
+    },
+    lockStyle: {
+        position: 'absolute',
+        right: 0,
+        bottom: 15
     },
     textFieldCnt: {
         width: '100%',

@@ -37,20 +37,21 @@ public class Room
 	void sendMessage(JSONObject msg, String fromUser)
 	{
 		String destination=(String) msg.get("destination");
-		JSONObject outJson=new JSONObject(), tmp;
+		JSONObject outJson=new JSONObject(), info, message;
 		outJson.put("section", "c");
 		outJson.put("message", new JSONObject());
-		tmp=(JSONObject) outJson.get("message");
-		tmp.put("key", "msg");
-		tmp.put("destination", fromUser);
-		tmp.put("info", new JSONObject());
-		tmp=(JSONObject) tmp.get("info");
-		tmp.put("text", msg.get("text"));
+		message=(JSONObject) outJson.get("message");
+		message.put("key", "msg");
+		message.put("info", new JSONObject());
+		info=(JSONObject) message.get("info");
+		info.put("text", msg.get("text"));
 		if(destination.equals("Global"))
 		{
-			tmp.put("name", fromUser);
+			info.put("name", fromUser);
+			message.put("destination", "Global");
 			broadcastMessage(fromUser, outJson.toJSONString());
 		}else{
+			message.put("destination", fromUser);
 			nameToSocket.get(destination).println(outJson.toJSONString());
 		}
 	}

@@ -53,8 +53,8 @@ class ListChat extends React.Component
         const {classes}=this.props;
         return (
             <List className={classes.root}>
-                <Link to='/'>
-                    <ListItem button onClick={this.changeChat.bind(this, {name: "Global"})}>
+                <Link to='/Global'>
+                    <ListItem button onClick={this.changeChat.bind(this, "Global")}>
                         <ListItemIcon>
                             <GroupWork />
                         </ListItemIcon>

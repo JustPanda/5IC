@@ -7,3 +7,15 @@ a {
     text-decoration: none;
     color: inherit;
 }
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(white, 0.8);
+}
+
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(white, 0.4);
+}

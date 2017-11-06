@@ -30,6 +30,7 @@ class App extends React.Component
             open: false,
         };
         this.username=null;
+        this.createChats=this.createChats.bind(this);
         this.handleDrawerToggle=this.handleDrawerToggle.bind(this);
         this.changeChat=this.changeChat.bind(this);
         this.handleMessage=this.handleMessage.bind(this);
@@ -40,28 +41,27 @@ class App extends React.Component
         this.state.chats['Global']={chat: Chat, messages: [], index: 0};
     }
 
-    createListChat(listChat, chats, updateMessages)
+    createChats(listChat, chats, updateMessages)
     {
-        var ActualChat,
-            listChat=listChat.map(
+        var ActualChat, tmp;
+        tmp=listChat.map(
             function(item, index)
             {
-                let ActualChat;
                 if(!chats[item.username])
                 {
                     chats[item.username]={chat: Chat, messages: [], index: 0};
                 }
-                ActualChat=chats[item.username].Chat;
+                ActualChat=chats[item.username].chat;
                 return (
                     <Route key={index}
                         path={'/'+item.username}
                         render={() => <ActualChat messages={chats[item.username].messages} updateMessages={updateMessages} section={item.username} /> } />
                 );
-            }.bind(this)
+            }
         );
         ActualChat=chats['Global'].chat;
-        listChat.push(<Route key={-1} path='/' render={() => <ActualChat messages={chats['Global'].messages} updateMessages={updateMessages} section='Global' />} />);
-        return listChat;
+        tmp.push(<Route key={-1} path='/' render={() => <ActualChat messages={chats['Global'].messages} updateMessages={updateMessages} section={'Global'} />} />);
+        return tmp;
     }
 
     handleDrawerToggle()
@@ -104,6 +104,7 @@ class App extends React.Component
             function(prevState)
             {
                 var destinationObj=prevState.chats[destination];
+                console.log(destination);
                 var d=new Date(), min=d.getMinutes();
                 if (min<10) {
                     min='0'+min;
@@ -152,7 +153,7 @@ class App extends React.Component
                          listChat={this.state.listChat}
                          changeChat={this.changeChat} />
                     <main className={classes.content}>
-                        {this.createListChat(this.state.listChat, this.state.chats, this.updateMessages)}
+                        {this.createChats(this.state.listChat, this.state.chats, this.updateMessages)}
                     </main>
                 </div>
             </Router>
@@ -196,6 +197,7 @@ const styles=(theme) => ({
         height: 'calc(100% - 56px)',
         backgroundImage: 'url(../images/app/Background.jpg)',
         backgroundSize: 'cover',
+        backgroundAttachment: 'fixed',
         backgroundPosition: 'center',
         marginTop: 56,
         [theme.breakpoints.up('sm')]: {

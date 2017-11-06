@@ -16,12 +16,21 @@ class BottomSection extends React.Component
             actualText: ''
         };
         this.handleChange=this.handleChange.bind(this);
+        this.handleKeyDown=this.handleKeyDown.bind(this);
         this.updateMessages=this.updateMessages.bind(this);
     }
 
     handleChange(event)
     {
         this.setState({actualText: event.target.value});
+    }
+
+    handleKeyDown(e)
+    {
+        if(e.keyCode == 13)
+        {
+            this.updateMessages();
+        }
     }
 
     updateMessages()
@@ -35,6 +44,7 @@ class BottomSection extends React.Component
         }
     }
 
+
     render()
     {
         const {classes}=this.props;
@@ -45,10 +55,10 @@ class BottomSection extends React.Component
                         id="multiline-static"
                         className={classes.textField}
                         label="Message"
-                        multiline
                         fullWidth={true}
                         value={this.state.actualText}
                         onChange={this.handleChange}
+                        onKeyDown={this.handleKeyDown}
                         margin="normal" />
                         <Tooltip id="tooltip-icon" className={classes.send} title="Send" placement="top-end">
                             <Button fab color="primary" aria-label="Send" onClick={this.updateMessages}>

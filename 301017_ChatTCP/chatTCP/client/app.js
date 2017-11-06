@@ -1,4 +1,4 @@
-const {app, BrowserWindow, ipcMain} = require('electron'),
+const {app, BrowserWindow, ipcMain}=require('electron'),
     path=require('path'),
     url=require('url'),
     net=require('net');
@@ -6,8 +6,8 @@ const {app, BrowserWindow, ipcMain} = require('electron'),
 const PORT=6844, IP='127.0.0.1';
 const OUT_SIGNAL="out", LOGIN_SIGNAL='l', REGISTER_SIGNAL='r', CHAT_SIGNAL='c';
 let loginWindow, registrationWindow, chatWindow, errorWindow;
-let chatIconPath=path.join(__dirname, 'images/Chat.png'),
-    errorIconPath=path.join(__dirname, 'images/Error.png');
+let chatIconPath=path.join(__dirname, 'images/icon/Chat.png'),
+    errorIconPath=path.join(__dirname, 'images/icon/Error.png');
     client=new net.Socket();
 
 app.on('ready',
@@ -20,7 +20,7 @@ app.on('ready',
             icon: chatIconPath
         });
         loginWindow.loadURL(url.format({
-            pathname: path.join(__dirname, 'login/index.html'),
+            pathname: path.join(__dirname, 'pages/login.html'),
             protocols: 'files',
             slashes: true,
         }));
@@ -33,7 +33,7 @@ app.on('ready',
             icon: chatIconPath
         });
         registrationWindow.loadURL(url.format({
-            pathname: path.join(__dirname, 'registration/index.html'),
+            pathname: path.join(__dirname, 'pages/registration.html'),
             protocols: 'files',
             slashes: true
         }));
@@ -45,7 +45,7 @@ app.on('ready',
             icon: chatIconPath
         });
         chatWindow.loadURL(url.format({
-            pathname: path.join(__dirname, 'chat/index.html'),
+            pathname: path.join(__dirname, 'pages/chat.html'),
             protocols: 'files',
             slashes: true
         }));
@@ -58,7 +58,7 @@ app.on('ready',
             icon: errorIconPath
         });
         errorWindow.loadURL(url.format({
-            pathname: path.join(__dirname, 'error/index.html'),
+            pathname: path.join(__dirname, 'pages/error.html'),
             protocols: 'files',
             slashes: true
         }));

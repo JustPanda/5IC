@@ -8,6 +8,7 @@ import CloseIcon from 'material-ui-icons/Close';
 import Snackbar from 'material-ui/Snackbar';
 import {ipcRenderer} from 'electron';
 
+
 class Login extends React.Component
 {
     constructor(props)
