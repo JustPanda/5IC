@@ -19,7 +19,7 @@ app.on( 'ready', () => {
   mainWindow = new BrowserWindow( {
     width: 1600,
     height: 1000,
-    show: true
+    show: false
   } );
   mainWindow.loadURL( 'file://' + __dirname + '/Index.html' );
   mainWindow.on( 'closed', () => {
@@ -66,7 +66,7 @@ ipcMain.on( "main", function (event, arg)
 ipcMain.on( "login", function (event, data) {
   if(data===null|data===undefined)
   {
-     mainWindow.show();
+     mainWindow.hide();
     loginWindow.show();
     signupWindow.hide();
   }
@@ -81,7 +81,7 @@ ipcMain.on( "signup", function (event, data) {
   console.log("Il nodo del signup ha ricevuto"  +data);
   if(data===null|data===undefined)
   {
-     mainWindow.show();
+     mainWindow.hide();
     loginWindow.hide();
     signupWindow.show();
   }

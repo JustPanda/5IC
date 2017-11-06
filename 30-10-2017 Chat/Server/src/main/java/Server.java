@@ -131,10 +131,14 @@ class Mixer
     {
         List<Message> l = sql.GetMessages(conn.user.Username, conn.toUser);
         Message[] m = l.toArray(new Message[l.size()]);
-
+        
         MessageGroup group = new MessageGroup(m);
+        for(int i=0; i<m.length; i++)
+        {
+            System.out.println("ZIO KHEN " + m[i].Username);
+        }
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().create();
         String toBeOut = gson.toJson(group);
         System.out.println(toBeOut);
 

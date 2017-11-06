@@ -177,7 +177,10 @@ public class SQLiteManager
     public List<Message> GetMessages(String user, String toUser) throws SQLException, ClassNotFoundException
     {
         List<Message> messages = new ArrayList<Message>();
+        List<Integer> userIds = new ArrayList<Integer>();
         ResultSet rs = statement.executeQuery("SELECT * FROM USER;");
+
+        System.out.println("ToUser: " + toUser);
 
         int userId = 0;
         int toUserId = 0;
@@ -200,30 +203,47 @@ public class SQLiteManager
 
         while (rs.next())
         {
+
             if (rs.getInt("touserid") == toUserId/* && rs.getInt("userid") == userId*/)
             {
                 Message mes = new Message();
                 mes.Date = rs.getString("date");
                 mes.Text = rs.getString("content");
                 int id = rs.getInt("userid");
-                ResultSet rss = statement.executeQuery("SELECT * FROM USER;");
-                while(rss.next())
-                {
-                    if(rss.getInt("id")==id)
-                    {
-                        mes.Username = rss.getString("username");
-                    }
-                    
-                }
-                
+                userIds.add(id);
+                System.out.println("Ho aggiunto l'id: " + id);
                 mes.ToUser = toUser;
                 messages.add(mes);
                 System.out.println("Ho aggiunto un messaggio");
+
             }
 
         }
         rs.close();
 
+        
+
+        int j = 0;
+        for (int i = 0; i < userIds.size(); i++)
+        {
+            ResultSet rss = statement.executeQuery("SELECT * FROM USER;");
+            while (rss.next())
+            {
+                System.out.println("Ripetizione");
+                System.out.println("Ho: " + rss.getInt("id") + " cerco: " + userIds.get(i));
+                if (rss.getInt("id") == userIds.get(i))
+                {
+                    System.out.println("Ho aggiunto: " + rss.getString("username"));
+                    messages.get(i).Username = rss.getString("username");
+                    System.out.println("PORCO DIOOOOO " +messages.get(i).Username);
+                    System.out.println("Ho aggiunto un username");
+                }
+                //    j++;
+            }
+            rss.close();
+        }
+
+        
         Commit();
         //    Disconnect();
         return messages;
