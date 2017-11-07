@@ -8,7 +8,6 @@ export default class SplitViewPane extends React.Component
     constructor ()
     {
         super();
-        this.handleTogglePane = this.handleTogglePane.bind( this );
         this.state = { users: [] };
         ipcRenderer.on( "pane", function ( event, arg )
         {
@@ -18,10 +17,10 @@ export default class SplitViewPane extends React.Component
             {
                 usrs.push
                     (
-                    <WinJS.SplitnView.Command
+                    <WinJS.SplitView.Command
                         label={arg[i]}
                         icon="home"
-                        onInvoked={ this.handleChangeContent.bind( null, arg[i] ) } ></WinJS.SplitView.Command>
+                        onInvoked={ this.handleChangeContent.bind( null, arg[i] ) } />
                     );
             }
             this.setState( { users: usrs } );
@@ -40,9 +39,7 @@ export default class SplitViewPane extends React.Component
                     label="Group"
                     icon="home"
                     onInvoked={ this.handleChangeContent.bind( null, "Group" ) } />
-                <div>
                     { this.state.users }
-                </div>
             </div>
         );
     }
