@@ -54,7 +54,8 @@ public class SQLiteManager
                 + "("
                 + " ID         INTEGER PRIMARY KEY AUTOINCREMENT    NOT NULL,"
                 + " USERNAME   TEXT                                 NOT NULL,"
-                + " PASSWORD   TEXT                                 NOT NULL "
+                + " PASSWORD   TEXT                                 NOT NULL,"
+                + " ISONLINE   INTEGER                              NULL "
                 + ")";
         statement.executeUpdate(user);
         System.out.println("Tabella User creata con successo");

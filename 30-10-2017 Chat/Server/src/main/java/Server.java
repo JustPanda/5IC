@@ -151,6 +151,7 @@ class Mixer
     {
         this.messages.add(message);
         this.sql.AddMessage(message);
+        System.out.println("Numero di connessioni " + connections.size());
         for (int i = 0; i < connections.size(); i++)
         {
             ClientConnection c = connections.get(i);

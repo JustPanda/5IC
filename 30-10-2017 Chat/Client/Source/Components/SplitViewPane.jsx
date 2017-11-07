@@ -1,49 +1,47 @@
 'use babel';
 import React from 'react';
 import WinJS from 'react-winjs';
-import {ipcRenderer} from "electron"
+import { ipcRenderer } from "electron"
 
 export default class SplitViewPane extends React.Component
 {
-    constructor()
+    constructor ()
     {
         super();
-        this.handleTogglePane=this.handleTogglePane.bind(this);
-        this.state= {users:[]};
-        ipcRenderer.on("pane", function(event, arg)
+        this.handleTogglePane = this.handleTogglePane.bind( this );
+        this.state = { users: [] };
+        ipcRenderer.on( "pane", function ( event, arg )
         {
-            console.log("mi è arrivato " + arg)
+            console.log( "mi è arrivato " + arg )
             var usrs = []
-            for(var i=0; i<arg.length; i++)
+            for ( var i = 0; i < arg.length; i++ )
             {
-                usrs.push(<div style={{height:"75px"}}>{arg[i]}</div>);
+                usrs.push
+                    (
+                    <WinJS.SplitnView.Command
+                        label={arg[i]}
+                        icon="home"
+                        onInvoked={ this.handleChangeContent.bind( null, arg[i] ) } ></WinJS.SplitView.Command>
+                    );
             }
-            this.setState({users:usrs});
-        }.bind(this));
+            this.setState( { users: usrs } );
+        }.bind( this ) );
     }
-    /*getInitialState()
-    {
-        return {
-            paneOpened: true,
-        }
-    } */
-    handleTogglePane()
-    {
-        this.setState( { paneOpened: !this.state.paneOpened } );
-    }
-    handleChangeContent( a, name )
+
+    handleChangeContent ( a, name )
     {
 
     }
-    render()
+    render ()
     {
         return (
-            <div> 
-                <div style={{height:"75px"}}>
-                    Group
-                </div>
+            <div>
+                <WinJS.SplitView.Command
+                    label="Group"
+                    icon="home"
+                    onInvoked={ this.handleChangeContent.bind( null, "Group" ) } />
                 <div>
-                   {this.state.users} 
+                    { this.state.users }
                 </div>
             </div>
         );

@@ -6,7 +6,7 @@ export default class Client
     StartClient(method)
     {
         this.Refresh = method;
-        this.client =new  net.connect( 
+        this.client = net.connect( 
         {
             port: 9090
         }, function ()
