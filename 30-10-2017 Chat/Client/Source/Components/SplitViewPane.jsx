@@ -30,6 +30,10 @@ export default class SplitViewPane extends React.Component
     handleChangeContent ( a, name )
     {
         var User={ToUser:a, Action:"ChangeToUser"};
+        if(User.ToUser == "Group")
+        {
+            User.ToUser == "group";
+        }
         ipcRenderer.send("main", User);
     }
     render ()

@@ -59,12 +59,13 @@ class Mixer
         ServerSocket s = new ServerSocket(9090);
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
         int clientIndex = 0;
+        sql = new SQLiteManager();
         while (clientIndex <= 1000)
         {
             clientIndex++;
             Socket socket = (Socket) s.accept();
             ClientConnection client = new ClientConnection(socket, this);
-            sql = new SQLiteManager();
+
             System.out.println("Connesso al client n°" + clientIndex);
             client.output = new PrintWriter(socket.getOutputStream(), true);
             client.input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -160,10 +161,20 @@ class Mixer
             System.out.println("Cc user " + c.user.Username);
             //  if (!message.Username.equals(c.user.Username))
             System.out.println("Ho " + c.toUser + " e cerco " + message.Username + " ho " + message.ToUser + "e cerco " + c.user.Username);
-            if (message.Username.equals(c.toUser) && message.ToUser.equals(c.user.Username))
+            if (message.ToUser.equals("group"))
             {
-                System.out.println("Eseguo il sender");
-                c.executor.execute(new Sender(c, c.output, message));
+                if (message.Username.equals(c.user.Username) && message.ToUser.equals(c.toUser))
+                {
+                    System.out.println("Eseguo il sender");
+                    c.executor.execute(new Sender(c, c.output, message));
+                }
+            } else
+            {
+                if (message.Username.equals(c.toUser) && message.ToUser.equals(c.user.Username))
+                {
+                    System.out.println("Eseguo il sender");
+                    c.executor.execute(new Sender(c, c.output, message));
+                }
             }
         }
     }
