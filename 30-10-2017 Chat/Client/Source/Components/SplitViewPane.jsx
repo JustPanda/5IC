@@ -20,7 +20,7 @@ export default class SplitViewPane extends React.Component
                     <WinJS.SplitView.Command
                         label={arg[i]}
                         icon="home"
-                        onInvoked={ this.handleChangeContent.bind( null, arg[i] ) } />
+                        onInvoked={ this.handleChangeContent.bind( this, arg[i] ) } />
                     );
             }
             this.setState( { users: usrs } );
@@ -29,7 +29,8 @@ export default class SplitViewPane extends React.Component
 
     handleChangeContent ( a, name )
     {
-
+        var User={ToUser:a, Action:"ChangeToUser"};
+        ipcRenderer.send("main", User);
     }
     render ()
     {

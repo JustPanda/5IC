@@ -25,5 +25,6 @@ public class User
     }
     String Username;
     String Password;
+    String ToUser;
     String Action;
 }

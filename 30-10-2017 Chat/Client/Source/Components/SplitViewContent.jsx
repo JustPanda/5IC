@@ -23,10 +23,24 @@ export default class SplitViewContent extends React.Component
         ipcRenderer.on( "content", function (event, data )
         {
             var userObj =data;
-            this.state.client.WriteMessage(JSON.stringify(userObj));
+            if(userObj.Action.includes("ChangeToUser"))
+            {this.setState({toUser:userObj.ToUser});
+            console.log("HO settato il toUser" + this.state.toUser );
+                console.log("Mi preparo a mandare al server change to user")
+                var User ={Username: this.state.user, ToUser:this.state.toUser, Action:"ChangeToUser"}
+                console.log(JSON.stringify(User));
+                this.state.client.WriteMessage(JSON.stringify(User));
+                
+            }
+            else
+            {
+                
+                this.state.client.WriteMessage(JSON.stringify(userObj));
             console.log("mi è arrivato l'user: " + JSON.stringify(data));
             this.setState( { user: userObj.Username } );
             console.log("Ho cambiato l'user a " + this.state.user )
+            }
+            
         }.bind( this ) );
 
     }

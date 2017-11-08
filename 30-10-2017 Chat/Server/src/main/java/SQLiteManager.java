@@ -205,18 +205,49 @@ public class SQLiteManager
         while (rs.next())
         {
 
-            if (rs.getInt("touserid") == toUserId/* && rs.getInt("userid") == userId*/)
+            if (toUser.equals("group"))
             {
-                Message mes = new Message();
-                mes.Date = rs.getString("date");
-                mes.Text = rs.getString("content");
-                int id = rs.getInt("userid");
-                userIds.add(id);
-                System.out.println("Ho aggiunto l'id: " + id);
-                mes.ToUser = toUser;
-                messages.add(mes);
-                System.out.println("Ho aggiunto un messaggio");
+                if (rs.getInt("touserid") == toUserId/* && rs.getInt("userid") == userId*/)
+                {
+                    Message mes = new Message();
+                    mes.Date = rs.getString("date");
+                    mes.Text = rs.getString("content");
+                    int id = rs.getInt("userid");
+                    userIds.add(id);
+                    System.out.println("Ho aggiunto l'id: " + id);
+                    mes.ToUser = toUser;
+                    messages.add(mes);
+                    System.out.println("Ho aggiunto un messaggio");
 
+                }
+            } else
+            {
+                System.out.println("ho avuto " + rs.getInt("touserid") + "cerco " + toUserId + " e ho avuto " + rs.getInt("userid") + " e cerco " + userId);
+                if (((rs.getInt("touserid") == toUserId && rs.getInt("userid") == userId)))
+                {
+                    System.out.println("Sono entrato nella merda");
+                    Message mes = new Message();
+                    mes.Date = rs.getString("date");
+                    mes.Text = rs.getString("content");
+                    int id = rs.getInt("userid");
+                    userIds.add(id);
+                    System.out.println("Ho aggiunto l'id: " + id);
+                    mes.ToUser = toUser;
+                    messages.add(mes);
+                    System.out.println("Ho aggiunto un messaggio");
+
+                } else if ((rs.getInt("touserid") == userId && rs.getInt("userid") == toUserId))
+                {
+                    Message mes = new Message();
+                    mes.Date = rs.getString("date");
+                    mes.Text = rs.getString("content");
+                    int id = rs.getInt("userid");
+                    userIds.add(id);
+                    System.out.println("Ho aggiunto l'id: " + id);
+                    mes.ToUser = toUser;
+                    messages.add(mes);
+                    System.out.println("Ho aggiunto un messaggio");
+                }
             }
 
         }
@@ -253,7 +284,7 @@ public class SQLiteManager
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
         while (rs.next())
         {
-            
+
             String userGet = rs.getString("username");
             System.out.println("L'userget è " + userGet);
             if (!userGet.equals(user) && !userGet.contains("group"))

@@ -127,7 +127,7 @@ class Mixer
         s.close();
     }
 
-    private void SendPreviousMessages(ClientConnection conn) throws SQLException, ClassNotFoundException
+    public void SendPreviousMessages(ClientConnection conn) throws SQLException, ClassNotFoundException
     {
         List<Message> l = sql.GetMessages(conn.user.Username, conn.toUser);
         Message[] m = l.toArray(new Message[l.size()]);
@@ -224,6 +224,15 @@ class Receiver implements Runnable
                 String s = receiver.readLine();
                 System.out.println("Ho ricevuto: " + s);
 
+                if(s.contains("ChangeToUser"))
+                {
+                    User u;
+                    Gson gson = new GsonBuilder().create();
+                    u = gson.fromJson(s, User.class);
+                    this.connection.toUser = u.ToUser;
+                    this.connection.mixer.SendPreviousMessages(this.connection);
+                    continue;
+                }
                 //parse
                 Message message;
 
@@ -249,6 +258,12 @@ class Receiver implements Runnable
             }
 
         } catch (IOException ex)
+        {
+            ex.printStackTrace();
+        } catch (SQLException ex)
+        {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex)
         {
             ex.printStackTrace();
         }
