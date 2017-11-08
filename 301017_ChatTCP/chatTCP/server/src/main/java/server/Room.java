@@ -3,11 +3,12 @@ package server;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.*;
+import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
-public class Room
+class Room
 {
 	private HashMap<String, PrintWriter> nameToSocket=new HashMap<>();
 	private JSONArray lu=new JSONArray();
@@ -34,54 +35,55 @@ public class Room
 		nameToSocket.get(username).println(luManaged(username));
 	}
 
-	void sendMessage(JSONObject msg, String fromUser)
+	void sendListOfMessages(String username, ResultSet rs) throws SQLException
 	{
-		String destination=(String) msg.get("destination");
-		JSONObject outJson=new JSONObject(), info, message;
-		outJson.put("section", "c");
-		outJson.put("message", new JSONObject());
-		message=(JSONObject) outJson.get("message");
-		message.put("key", "msg");
-		message.put("info", new JSONObject());
-		info=(JSONObject) message.get("info");
-		info.put("text", msg.get("text"));
-		if(destination.equals("Global"))
+		PrintWriter outUser=nameToSocket.get(username);
+		while(rs.next())
 		{
-			info.put("name", fromUser);
-			message.put("destination", "Global");
+			System.out.println(username+"\n"+rs.getString("destination")+"\n"+createMessageJson(rs.getString("message"), username, rs.getString("destination"),false));
+//			outUser.println(createMessageJson(rs.getString("message"), username,false).toJSONString());
+		}
+	}
+
+	void sendMessage(JSONObject msg, String fromUser, SQLiteJDBC database) throws SQLException
+	{
+		boolean isGlobal;
+		String destination=(String) msg.get("destination"), destinationJSON, text=(String) msg.get("text");
+		JSONObject outJson;
+		isGlobal=destination.equals("Global");
+		outJson=createMessageJson(text, fromUser, isGlobal?"Global":fromUser, isGlobal);
+		if(isGlobal)
+		{
 			broadcastMessage(fromUser, outJson.toJSONString());
 		}else{
-			message.put("destination", fromUser);
 			nameToSocket.get(destination).println(outJson.toJSONString());
 		}
-	}
-
-	private void broadcastListOfUsers(String toAvoid)
-	{
-		for(Map.Entry<String, PrintWriter> it: nameToSocket.entrySet())
-		{
-			String actualUser=it.getKey();
-			if(!actualUser.equals(toAvoid))
-			{
-				it.getValue().println(luManaged(actualUser));
-			}
-		}
-	}
-
-	private void broadcastMessage(String toAvoid, String msg)
-	{
-		for(Map.Entry<String, PrintWriter> it: nameToSocket.entrySet())
-		{
-			if(!it.getKey().equals(toAvoid))
-			{
-				it.getValue().println(msg);
-			}
-		}
+		database.addMessage(text, destination, fromUser);
 	}
 
 	boolean isLogged(String username)
 	{
 		return nameToSocket.get(username)!=null;
+	}
+
+	private void broadcastListOfUsers(String toAvoid)
+	{
+		nameToSocket.forEach((key, value) -> {
+			if(!key.equals(toAvoid))
+			{
+				value.println(luManaged(key));
+			}
+		});
+	}
+
+	private void broadcastMessage(String toAvoid, String msg)
+	{
+		nameToSocket.forEach((key, value) -> {
+			if(!key.equals(toAvoid))
+			{
+				value.println(msg);
+			}
+		});
 	}
 
 	private String luManaged(String toAvoid)
@@ -101,5 +103,23 @@ public class Room
 		});
 		tmp.put("users", luTmp);
 		return jsonLu.toJSONString();
+	}
+
+	private JSONObject createMessageJson(String text, String fromUser, String destination, boolean isGlobal)
+	{
+		JSONObject toReturn=new JSONObject(), message, info;
+		toReturn.put("section", "c");
+		toReturn.put("message", new JSONObject());
+		message=(JSONObject) toReturn.get("message");
+		message.put("key", "msg");
+		message.put("destination", destination);
+		message.put("info", new JSONObject());
+		info=(JSONObject) message.get("info");
+		info.put("text", text);
+		if(isGlobal)
+		{
+			info.put("name", fromUser);
+		}
+		return toReturn;
 	}
 }

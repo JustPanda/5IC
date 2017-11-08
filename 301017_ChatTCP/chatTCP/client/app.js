@@ -75,6 +75,7 @@ client.on('connect', () => {client.write(LOGIN_SIGNAL+'\n');});
 client.on('data',
     function(data)
     {
+        console.log(data.toString().trim());
         data=JSON.parse(data);
         switch(data.section)
         {
@@ -94,6 +95,7 @@ client.on('data',
 process.on('uncaughtException',
     function(err)
     {
+        console.log(err);
         loginWindow.hide();
         registrationWindow.hide();
         chatWindow.hide();
@@ -144,11 +146,11 @@ ipcMain.on('registration',
 ipcMain.on('chat',
     function(event, arg)
     {
-        chatWindow.show();
         loginWindow.hide();
         registrationWindow.hide();
+        chatWindow.show();
         changeSection(CHAT_SIGNAL);
-        chatWindow.webContents.send('username', arg);
+        chatWindow.webContents.send('init', arg);
     }
 );
 

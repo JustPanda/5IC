@@ -33,10 +33,11 @@ class App extends React.Component
         this.createChats=this.createChats.bind(this);
         this.handleDrawerToggle=this.handleDrawerToggle.bind(this);
         this.changeChat=this.changeChat.bind(this);
+        this.handleInit=this.handleInit.bind(this);
         this.handleMessage=this.handleMessage.bind(this);
         this.updateMessages=this.updateMessages.bind(this);
         this.exit=this.exit.bind(this);
-        ipcRenderer.on('username', function(event, arg){this.username=arg;}.bind(this));
+        ipcRenderer.on('init', this.handleInit);
         ipcRenderer.on('message', this.handleMessage);
         this.state.chats['Global']={chat: Chat, messages: [], index: 0};
     }
@@ -74,6 +75,17 @@ class App extends React.Component
         this.setState({titleBar: username});
     }
 
+    handleInit(event, data)
+    {
+        this.username=data;
+        for(let key in this.state.chats)
+        {
+            let actualChat=this.state.chats[key];
+            actualChat.messages=[];
+            actualChat.index=0;
+        }
+    }
+
     handleMessage(event, data)
     {
         switch (data.key)
@@ -98,7 +110,7 @@ class App extends React.Component
     {
         if(toSend)
         {
-            ipcRenderer.send('sendMessage', { destination: this.state.titleBar, text: info.text });
+            ipcRenderer.send('sendMessage', { destination: this.state.titleBar, text: info.text});
         }
         this.setState(
             function(prevState)

@@ -94,10 +94,11 @@ class User implements Runnable
 				String data;
 				JSONParser parser=new JSONParser();
 				room.sendListOfUsers(username);
+				room.sendListOfMessages(username, database.getMessagesOfUser(username));
 				while(!(data=in.readLine()).equals(OUT_SIGNAL))
 				{
 					JSONObject msg=(JSONObject) parser.parse(data);
-					room.sendMessage(msg, username);
+					room.sendMessage(msg, username, database);
 				}
 				database.loginAndLogoutManaged(username, false);
 				room.removedUser(username);

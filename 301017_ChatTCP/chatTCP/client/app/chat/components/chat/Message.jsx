@@ -15,7 +15,6 @@ class Message extends React.Component
     render()
     {
         const {classes, info}=this.props;
-        console.log(info, info.name);
         return(
             <div className={classes.messageCnt}>
                 <Paper className={classes.message} elevation={4} style={{
@@ -33,7 +32,9 @@ class Message extends React.Component
                             }
                         })(info.name)
                     }
-                    <Typography type="body2" gutterBottom>
+                    <Typography type="body2" gutterBottom style={{
+                        position: 'relative'
+                    }}>
                         {info.text}
                     </Typography>
                     <Typography type="caption" gutterBottom align="right">
