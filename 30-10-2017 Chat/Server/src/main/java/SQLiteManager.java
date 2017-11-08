@@ -172,6 +172,8 @@ public class SQLiteManager
         statement.executeUpdate(add);
 
         Commit();
+        
+        System.out.println("Ho finito l'add message");
         //   Disconnect();
     }
 

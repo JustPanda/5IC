@@ -1,4 +1,4 @@
- 
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -131,11 +131,11 @@ class Mixer
     {
         List<Message> l = sql.GetMessages(conn.user.Username, conn.toUser);
         Message[] m = l.toArray(new Message[l.size()]);
-        
+
         MessageGroup group = new MessageGroup(m);
         List<String> users = sql.GetUsersExceptOne(conn.user.Username);
         group.Users = users.toArray(new String[users.size()]);
-        for(int i=0; i<m.length; i++)
+        for (int i = 0; i < m.length; i++)
         {
             System.out.println("ZIO KHEN " + m[i].Username);
         }
@@ -158,7 +158,9 @@ class Mixer
             System.out.println("Client connection esiste? " + !c.equals(null));
             System.out.println("Message user " + message.Username);
             System.out.println("Cc user " + c.user.Username);
-            if (!message.Username.equals(c.user.Username))
+            //  if (!message.Username.equals(c.user.Username))
+            System.out.println("Ho " + c.toUser + " e cerco " + message.Username + " ho " + message.ToUser + "e cerco " + c.user.Username);
+            if (message.Username.equals(c.toUser) && message.ToUser.equals(c.user.Username))
             {
                 System.out.println("Eseguo il sender");
                 c.executor.execute(new Sender(c, c.output, message));
@@ -224,7 +226,7 @@ class Receiver implements Runnable
                 String s = receiver.readLine();
                 System.out.println("Ho ricevuto: " + s);
 
-                if(s.contains("ChangeToUser"))
+                if (s.contains("ChangeToUser"))
                 {
                     User u;
                     Gson gson = new GsonBuilder().create();
@@ -292,7 +294,7 @@ class Sender implements Runnable
     {
         // for(int i= 0; i<1000; i++)
         {
-            String output = "{" + "\"" + "Username" + "\"" + ":" + "\"" + message.Username + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + message.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + message.Date + "\"" + "," + "\"" +  "ToUser" + "\"" + ":" + "\"" + message.ToUser + "\"" +"}";
+            String output = "{" + "\"" + "Username" + "\"" + ":" + "\"" + message.Username + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + message.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + message.Date + "\"" + "," + "\"" + "ToUser" + "\"" + ":" + "\"" + message.ToUser + "\"" + "}";
             sender.println(output);
             // sender.print("Ciao");
             System.out.println("Ho inviato: " + output);

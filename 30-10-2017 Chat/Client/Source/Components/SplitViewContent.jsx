@@ -20,31 +20,33 @@ export default class SplitViewContent extends React.Component
         this.RefreshMessages = this.RefreshMessages.bind( this );
         this.state.client.StartClient( this.RefreshMessages );
 
-        ipcRenderer.on( "content", function (event, data )
+        ipcRenderer.on( "content", function ( event, data )
         {
-            var userObj =data;
-            if(userObj.Action.includes("ChangeToUser"))
-            {this.setState({toUser:userObj.ToUser});
-            console.log("HO settato il toUser" + this.state.toUser );
-                console.log("Mi preparo a mandare al server change to user")
-                var User ={Username: this.state.user, ToUser:this.state.toUser, Action:"ChangeToUser"}
-                console.log(JSON.stringify(User));
-                this.state.client.WriteMessage(JSON.stringify(User));
-                
+            var userObj = data;
+            if ( userObj.Action.includes( "ChangeToUser" ) )
+            {
+                this.setState( { toUser: userObj.ToUser } );
+                console.log( "HO settato il toUser" + this.state.toUser );
+                console.log( "Mi preparo a mandare al server change to user" )
+                var User = { Username: this.state.user, ToUser: this.state.toUser, Action: "ChangeToUser" }
+                console.log( JSON.stringify( User ) );
+                this.state.client.WriteMessage( JSON.stringify( User ) );
+                this.setState( { messages:[] , tags:[]} );
+
             }
             else
             {
-                
-                this.state.client.WriteMessage(JSON.stringify(userObj));
-            console.log("mi è arrivato l'user: " + JSON.stringify(data));
-            this.setState( { user: userObj.Username } );
-            console.log("Ho cambiato l'user a " + this.state.user )
+
+                this.state.client.WriteMessage( JSON.stringify( userObj ) );
+                console.log( "mi è arrivato l'user: " + JSON.stringify( data ) );
+                this.setState( { user: userObj.Username } );
+                console.log( "Ho cambiato l'user a " + this.state.user )
             }
-            
+
         }.bind( this ) );
 
     }
-    RefreshMessages ( message )
+    RefreshMessages( message )
     {
         this.setState( function ( prevstate )
         {
@@ -53,17 +55,17 @@ export default class SplitViewContent extends React.Component
             var tag;
 
             var msg = prevstate.messages[ prevstate.messages.length - 1 ];
-            console.log("User arrivato dal messaggio: " + msg.Username);
-            console.log("User stabile: " + this.state.user)
-            if ( msg.Username == "" || msg.Username == this.state.user)
+            console.log( "User arrivato dal messaggio: " + msg.Username );
+            console.log( "User stabile: " + this.state.user )
+            if ( msg.Username == "" || msg.Username == this.state.user )
             {
-                console.log(msg.Username)
-                if(msg.Username == "")
+                console.log( msg.Username )
+                if ( msg.Username == "" )
                 {
                     msg.Username = this.state.user
-                    this.state.client.WriteMessage( "{" + "\"" + "Username" + "\"" + ":" + "\"" + msg.Username + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" +  "," + "\"" + "ToUser" + "\"" + ":" + "\"" + this.state.toUser + "\"" + "}" );
+                    this.state.client.WriteMessage( "{" + "\"" + "Username" + "\"" + ":" + "\"" + msg.Username + "\"" + "," + "\"" + "Text" + "\"" + ":" + "\"" + msg.Text + "\"" + "," + "\"" + "Date" + "\"" + ":" + "\"" + msg.Date + "\"" + "," + "\"" + "ToUser" + "\"" + ":" + "\"" + this.state.toUser + "\"" + "}" );
                 }
-                
+
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
                         <div className="col-md-8"></div>
@@ -89,11 +91,11 @@ export default class SplitViewContent extends React.Component
 
 
     }
-    render ()
+    render()
     {
         return (
             <div style={ { height: "100%" } }>
-                <TopAppBar name={this.state.toUser}></TopAppBar>
+                <TopAppBar name={ this.state.toUser }></TopAppBar>
                 <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '90%' } }>
                     { this.state.tags }
                 </section>
