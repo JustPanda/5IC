@@ -44,7 +44,7 @@ export default class SendBar extends React.Component
         return (
             <div className="row sendBar" style={ { width: '100%', height: '5%' } }>
                 <input id="TextBoxSend" type="text" className="win-textbox col-md-8" style={{marginLeft:"40px", marginRight:"20px"}}/>
-                <button id="ButtonSend" className="win-button col-md-4 " onClick={ this.ButtonSendOnClick } style={{marginRight:"20px", marginTop:"5px", marginBottom:"5px", width:"75px"}}>Send</button>
+                <button id="ButtonSend" className="col-md-4 c-action-toggle c-glyph glyph-play f-toggle" data-toggled-label="Send" data-toggled-glyph="glyph-play" onClick={ this.ButtonSendOnClick } style={{marginRight:"20px", marginTop:"5px", marginBottom:"5px", width:"75px"}}>Send</button>
             </div>
         );
     }

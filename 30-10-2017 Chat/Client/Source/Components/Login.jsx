@@ -29,7 +29,7 @@ export default class Login extends React.Component
 
     HandleShow()
     {
-,       this.refs.dialog.winControl.show().then( function ( eventObject )
+       this.refs.dialog.winControl.show().then( function ( eventObject )
         {
             this.setState( { dialogResult: eventObject.result } );
         }.bind( this ) ); 

@@ -16,7 +16,7 @@ export default class SplitViewContent extends React.Component
         super();
         var ws = new Client();
 
-        this.state = { user: "cesare", toUser: "group", messages: [], tags: [], client: ws };
+        this.state = { user: "cesare", toUser: "Group", messages: [], tags: [], client: ws };
         this.RefreshMessages = this.RefreshMessages.bind( this );
         this.state.client.StartClient( this.RefreshMessages );
 
@@ -31,7 +31,7 @@ export default class SplitViewContent extends React.Component
                 var User = { Username: this.state.user, ToUser: this.state.toUser, Action: "ChangeToUser" }
                 console.log( JSON.stringify( User ) );
                 this.state.client.WriteMessage( JSON.stringify( User ) );
-                this.setState( { messages:[] , tags:[]} );
+                this.setState( { messages: [], tags: [] } );
 
             }
             else
@@ -41,6 +41,7 @@ export default class SplitViewContent extends React.Component
                 console.log( "mi è arrivato l'user: " + JSON.stringify( data ) );
                 this.setState( { user: userObj.Username } );
                 console.log( "Ho cambiato l'user a " + this.state.user )
+                ipcRenderer.send( "main", { UsernamePerPane: this.state.user } );
             }
 
         }.bind( this ) );
@@ -76,6 +77,7 @@ export default class SplitViewContent extends React.Component
             }
             else if ( msg.Username != this.state.user )
             {
+                console.log( msg.Username + " è l'username arrivato grffffffffff" )
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
                         <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageOther>
@@ -97,6 +99,11 @@ export default class SplitViewContent extends React.Component
             <div style={ { height: "100%" } }>
                 <TopAppBar name={ this.state.toUser }></TopAppBar>
                 <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '90%' } }>
+               {/*     <div class="m-ambient-video">
+                        <video role="img" alt="Ambient video alt text" muted autoplay loop>
+                            <source src="./Media/Video.mp4" type="video/mp4" />
+                        </video>
+        </div> */}
                     { this.state.tags }
                 </section>
                 <SendBar method={ this.RefreshMessages }></SendBar>

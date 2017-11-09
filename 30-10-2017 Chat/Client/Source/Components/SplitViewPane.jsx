@@ -8,38 +8,45 @@ export default class SplitViewPane extends React.Component
     constructor ()
     {
         super();
-        this.state = { users: [] };
+        this.state = { users: [], user:null };
         ipcRenderer.on( "pane", function ( event, arg )
         {
-            console.log( "mi è arrivato " + arg )
-            var usrs = []
-            for ( var i = 0; i < arg.length; i++ )
+            if(arg.UsernamePerPane!=null && arg.UsernamePerPane!=undefined)
             {
-                usrs.push
-                    (
-                    <WinJS.SplitView.Command
-                        label={arg[i]}
-                        icon="home"
-                        onInvoked={ this.handleChangeContent.bind( this, arg[i] ) } />
-                    );
+                this.setState({user:arg.UsernamePerPane})
             }
-            this.setState( { users: usrs } );
+            else
+            {
+                console.log( "mi è arrivato " + arg )
+                var usrs = []
+                for ( var i = 0; i < arg.length; i++ )
+                {
+                    usrs.push
+                        (
+                        <WinJS.SplitView.Command
+                            label={arg[i]}
+                            icon="home"
+                            onInvoked={ this.handleChangeContent.bind( this, arg[i] ) } />
+                        );
+                }
+                this.setState( { users: usrs } );
+            }
+           
         }.bind( this ) );
     }
 
     handleChangeContent ( a, name )
     {
         var User={ToUser:a, Action:"ChangeToUser"};
-        if(User.ToUser == "Group")
-        {
-            User.ToUser == "group";
-        }
         ipcRenderer.send("main", User);
     }
     render ()
     {
         return (
             <div>
+                <div style={{background:"azure", height:"75px", alignContent:"center", justifyContent:"center", textAlign:"center"}}>
+                    {this.state.user}
+                </div>
                 <WinJS.SplitView.Command
                     label="Group"
                     icon="home"

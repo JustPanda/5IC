@@ -26,7 +26,7 @@ public class SQLiteManager
     public SQLiteManager() throws ClassNotFoundException, SQLException
     {
         Connect();
-        // CreateTables();
+        CreateTables();
     }
 
     public void Connect() throws ClassNotFoundException, SQLException
@@ -74,7 +74,7 @@ public class SQLiteManager
 
         String add
                 = "INSERT INTO USER (USERNAME,PASSWORD) "
-                + "VALUES (" + "\'" + "group" + "\'" + "," + "\'" + "" + "\'" + ");";
+                + "VALUES (" + "\'" + "Group" + "\'" + "," + "\'" + "" + "\'" + ");";
         statement.executeUpdate(add);
 
         Commit();
@@ -207,7 +207,7 @@ public class SQLiteManager
         while (rs.next())
         {
 
-            if (toUser.equals("group"))
+            if (toUser.equals("Group"))
             {
                 if (rs.getInt("touserid") == toUserId/* && rs.getInt("userid") == userId*/)
                 {
@@ -289,7 +289,7 @@ public class SQLiteManager
 
             String userGet = rs.getString("username");
             System.out.println("L'userget è " + userGet);
-            if (!userGet.equals(user) && !userGet.contains("group"))
+            if (!userGet.equals(user) && !userGet.contains("Group"))
             {
                 users.add(userGet);
             }

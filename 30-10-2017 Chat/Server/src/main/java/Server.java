@@ -160,14 +160,12 @@ class Mixer
             System.out.println("Message user " + message.Username);
             System.out.println("Cc user " + c.user.Username);
             //  if (!message.Username.equals(c.user.Username))
-            System.out.println("Ho " + c.toUser + " e cerco " + message.Username + " ho " + message.ToUser + "e cerco " + c.user.Username);
-            if (message.ToUser.equals("group"))
+            System.out.println("Ho " + message.ToUser + " e cerco Group," + " ho " + message.Username + "e cerco " + c.user.Username);
+            if (message.ToUser.equals("Group") && !message.Username.equals(c.user.Username))
             {
-                if (message.Username.equals(c.user.Username) && message.ToUser.equals(c.toUser))
-                {
-                    System.out.println("Eseguo il sender");
-                    c.executor.execute(new Sender(c, c.output, message));
-                }
+
+                System.out.println("Eseguo il sender");
+                c.executor.execute(new Sender(c, c.output, message));
             } else
             {
                 if (message.Username.equals(c.toUser) && message.ToUser.equals(c.user.Username))
@@ -191,7 +189,7 @@ class ClientConnection implements Runnable
     //  int id;
 
     public User user;
-    public String toUser = "group";
+    public String toUser = "Group";
 
     public ClientConnection(Socket socket, Mixer mixer) throws IOException
     {

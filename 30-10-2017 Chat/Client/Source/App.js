@@ -63,7 +63,11 @@ ipcMain.on( "main", function (event, arg)
       mainWindow.webContents.send("pane", arg);
       console.log("Ho inviato a pane: " + arg);
     }
-    else
+    else if(arg.UsernamePerPane!=null)
+    {
+      mainWindow.webContents.send("pane", arg)
+    }
+    else 
     {
       mainWindow.webContents.send("content", arg);
       console.log("Ho inviato a content: " + arg);
