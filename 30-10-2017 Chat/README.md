@@ -12,6 +12,11 @@ Il client riceve dal server una stringa Json, ne controlla il contenuto e in bas
 * Confermare Login/Signup
 
 ### Strategie Server
-Il server fa partire un oggetto Mixer che associa le connessioni, 
+Il Server è composto da 4 file: 
+* SQL Manager, per gestire tutti i comandi SQL
+* Message per le classi dei messagi
+* User per le classi degli utenti e infine
+* Server che è la classe principale.
+Il server fa partire un oggetto Mixer che contiene tutte le connessioni, l'oggetto per interagire con l'sql e la lista con tutti i messaggi. Dopo aver stabilito la connessione e aver aggiornato la lista di connessioni, il server riceve stringhe che convertirà in json, e in base al loro contenuto farà determinate azioni 
 
 ## Spiegazioni Tecniche 
