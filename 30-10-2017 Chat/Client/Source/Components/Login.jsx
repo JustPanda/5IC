@@ -8,7 +8,7 @@ export default class Login extends React.Component
     constructor()
     {
         super();
-        this.state = { dialogResult: null }
+        this.state = { dialogResult: null, errorText: "Errore durante il login, l'utente non esiste o i dati erano incorretti" }
         this.HandleShow.bind( this );
         this.ButtonSendOnClick = this.ButtonSendOnClick.bind( this );
         ipcRenderer.on( "logincomponent", function ( event, data )
@@ -23,16 +23,16 @@ export default class Login extends React.Component
                 console.log( "Fine login, apro il main" )
                 event.sender.send( "main", null );
             }
-        }.bind(this) )
+        }.bind( this ) )
         this.user = "";
     }
 
     HandleShow()
     {
-       this.refs.dialog.winControl.show().then( function ( eventObject )
+        this.refs.dialog.winControl.show().then( function ( eventObject )
         {
             this.setState( { dialogResult: eventObject.result } );
-        }.bind( this ) ); 
+        }.bind( this ) );
 
     }
 
@@ -52,28 +52,26 @@ export default class Login extends React.Component
 
     render()
     {
-        var ContentDialog =
-            (
+        return (
+            <div className="" style={ { display: 'flex', alignItems: 'center', height: "100%", width: "100%", justifyContent: 'center', flexDirection: "column", background: "rgb(25,25,25" } }>
+                <div className="win-textblock" style={ { color: "white" } }>Username</div>
+                <input className="win-textbox" type="text" id="TextBoxUser" />
+                <div className="win-textblock" style={ { color: "white" } }>Password</div>
+                <input className="win-textbox" type="password" id="TextBoxPsd" />
+                <button className="win-button" onClick={ this.ButtonSendOnClick }>Conferma</button>
+                <a onClick={ this.ButtonSwitchOnClick } style={ { margin: "20px" } }>Non hai un account? Registrati!</a>
+                <div >
                     <WinJS.ContentDialog
                         ref="dialog"
                         title="Errore"
                         primaryCommandText="OK">
                         <div>
-                           Errore nel login
+                            { this.state.errorText }
                         </div>
                     </WinJS.ContentDialog>
-            );
-
-        return (
-            <div className="" style={ { display: 'flex', alignItems: 'center', height: "100%", width: "100%", justifyContent: 'center', flexDirection: "column", background:"rgb(25,25,25" } }>
-               {this.ContentDialog}
-                <div className="win-textblock" style={{color:"white"}}>Username</div>
-                <input className="win-textbox" type="text" id="TextBoxUser" />
-                <div className="win-textblock" style={{color:"white"}}>Password</div>
-                <input className="win-textbox" type="password" id="TextBoxPsd" />
-                <button className="win-button" onClick={ this.ButtonSendOnClick }>Conferma</button>
-                <a onClick={ this.ButtonSwitchOnClick } style={ { margin: "20px" } }>Non hai un account? Registrati!</a>
+                </div>
             </div>
+
         );
     }
 }

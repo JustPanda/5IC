@@ -6,8 +6,8 @@ export default class UserProfile extends React.Component
     render()
     {
         return (
-            <div style={ { height: "75px" , backgroundImage:"url(http://constructs.stampede-design.com/wp-content/uploads/2014/07/gradient-background.jpg)"} }>
-                <div style={ { color: "white", textAlign: "center", fontSize: "20" } }>{ this.props.username }</div>
+            <div style={ { height: "150px" , width:"100%", backgroundImage:"url('https://cdn.wallpapersafari.com/47/20/ShkRFa.png')", backgroundPosition:"center", backgroundAttachment:"fixed", backgroundRepeat:"no-repeat", backgroundSize:"contain"}}>
+                <div style={ { color: "white", textAlign: "center", fontSize: "20", flexDirection: "column",  justifyContent: "center", display:"flex" } }>{ this.props.username }</div>
             </div>
 
         );
