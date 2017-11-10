@@ -48,12 +48,12 @@ export default class Signup extends React.Component
     render()
     {
         return (
-            <div className="" style={ { display: 'flex', alignItems:'center', height:"100%", width:"100%", justifyContent:'center', flexDirection:"column"  } }>
-                <div className="win-textblock">Username</div>
+            <div className="" style={ { display: 'flex', alignItems:'center', height:"100%", width:"100%", justifyContent:'center', flexDirection:"column", background:"rgb(25, 25, 25)" } }>
+                <div className="win-textblock" style={{color:"white"}}>Username</div>
                 <input id="TextBoxUser" className="win-textbox" type="text" />
-                <div className="win-textblock">Password</div>
+                <div className="win-textblock" style={{color:"white"}}>Password</div>
                 <input id="TextBoxPsd" className="win-textbox" type="password" />
-                <div className="win-textblock">Conferma password</div>
+                <div className="win-textblock" style={{color:"white"}}>Conferma password</div>
                 <input id="TextBoxConfPsd" className="win-textbox" type="password" />
                 <button className="win-button" onClick={this.ButtonSendOnClick}>Registrati</button>
                 <a onClick={this.ButtonSwitchOnClick} style={{margin:"20px"}}>Hai già un account? Fai il Login!</a>

@@ -71,11 +71,25 @@ public class SQLiteManager
                 + ")";
         statement.executeUpdate(message);
         System.out.println("Tabella Message creata con successo");
+        ResultSet rs = statement.executeQuery("SELECT * FROM USER");
 
-        String add
-                = "INSERT INTO USER (USERNAME,PASSWORD) "
-                + "VALUES (" + "\'" + "Group" + "\'" + "," + "\'" + "" + "\'" + ");";
-        statement.executeUpdate(add);
+        boolean UserExist = false;
+        while (rs.next())
+        {
+            if (rs.getString("username").equals("Group"))
+            {
+                UserExist = true;
+            }
+        }
+        if (!UserExist)
+        {
+            String add
+                    = "INSERT INTO USER (USERNAME,PASSWORD) "
+                    + "VALUES (" + "\'" + "Group" + "\'" + "," + "\'" + "" + "\'" + ");";
+            statement.executeUpdate(add);
+        }
+
+        rs.close();
 
         Commit();
 
@@ -105,7 +119,7 @@ public class SQLiteManager
                 = "INSERT INTO USER (USERNAME,PASSWORD) "
                 + "VALUES (" + "\'" + user.Username + "\'" + "," + "\'" + user.Password + "\'" + ");"; //Da sistemare gli id
         statement.executeUpdate(add);
-        System.out.println("Utente registrato con successo");
+        System.out.println("Utente" + user.Username + " con successo");
 
         rs.close();
 
@@ -172,7 +186,7 @@ public class SQLiteManager
         statement.executeUpdate(add);
 
         Commit();
-        
+
         System.out.println("Ho finito l'add message");
         //   Disconnect();
     }

@@ -6,7 +6,7 @@ import Client from "../Client";
 import TopAppBar from "./TopAppBar"
 import SendBar from "./SendBar"
 import MessageUser from "./MessageUser"
-import MessageOther from "./MessageOther";
+import MessageOther from "./MessageOther"
 import { ipcRenderer } from "electron"
 
 export default class SplitViewContent extends React.Component
@@ -69,8 +69,8 @@ export default class SplitViewContent extends React.Component
 
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
-                        <div className="col-md-8"></div>
-                        <MessageUser className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageUser>
+                        <div data-grid="col-8"></div>
+                        <MessageUser data-grid="col-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageUser>
                     </div>
                 )
 
@@ -80,8 +80,8 @@ export default class SplitViewContent extends React.Component
                 console.log( msg.Username + " è l'username arrivato grffffffffff" )
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
-                        <MessageOther className="col-md-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageOther>
-                        <div className="col-md-8"></div>
+                        <MessageOther data-grid="col-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageOther>
+                        <div data-grid="col-8"></div>
                     </div>
                 )
             }
@@ -98,12 +98,7 @@ export default class SplitViewContent extends React.Component
         return (
             <div style={ { height: "100%" } }>
                 <TopAppBar name={ this.state.toUser }></TopAppBar>
-                <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '90%' } }>
-               {/*     <div class="m-ambient-video">
-                        <video role="img" alt="Ambient video alt text" muted autoplay loop>
-                            <source src="./Media/Video.mp4" type="video/mp4" />
-                        </video>
-        </div> */}
+                <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '90%', backgroundImage: "url(https://www.walldevil.com/wallpapers/a26/background-pictures-cool-funny-large.jpg)", backgroundPosition: "center", backgroundAttachment:"fixed"  } }>
                     { this.state.tags }
                 </section>
                 <SendBar method={ this.RefreshMessages }></SendBar>

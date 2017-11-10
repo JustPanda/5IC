@@ -9,11 +9,12 @@
   <link rel="stylesheet" href="./Styles/TopAppBar.css">
   <link rel="stylesheet" href="./Styles/Chat.css">
   <link rel="stylesheet" href="./Styles/Login.css">
-  <link rel="stylesheet" href="./WinJS/css/ui-light.min.css">
+  <link rel="stylesheet" href="./WinJS/css/ui-dark.min.css">
   <link rel="stylesheet" href="./Bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="./WinJS/css/mwf.min.css">
   <script>
     window.jQuery = window.$ = require( 'jquery' );
+    require("electron-titlebar")
   </script>
   <script src="./WinJS/js/base.min.js"></script>
   <script src="./WinJS/js/ui.min.js"></script>
@@ -28,6 +29,9 @@
 </head>
 
 <body>
+    <div id="electron-titlebar" class="drag">
+        <div style="width: 100%; height: 100%; text-align: center; line-height: 30px; background: rgb(50,50,50); color:white ">Signup</div>        
+    </div>
   <div id="Content" style="height:100%"></div>
 </body>
 

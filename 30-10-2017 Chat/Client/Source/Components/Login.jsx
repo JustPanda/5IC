@@ -65,11 +65,11 @@ export default class Login extends React.Component
             );
 
         return (
-            <div className="" style={ { display: 'flex', alignItems: 'center', height: "100%", width: "100%", justifyContent: 'center', flexDirection: "column" } }>
+            <div className="" style={ { display: 'flex', alignItems: 'center', height: "100%", width: "100%", justifyContent: 'center', flexDirection: "column", background:"rgb(25,25,25" } }>
                {this.ContentDialog}
-                <div className="win-textblock">Username</div>
+                <div className="win-textblock" style={{color:"white"}}>Username</div>
                 <input className="win-textbox" type="text" id="TextBoxUser" />
-                <div className="win-textblock">Password</div>
+                <div className="win-textblock" style={{color:"white"}}>Password</div>
                 <input className="win-textbox" type="password" id="TextBoxPsd" />
                 <button className="win-button" onClick={ this.ButtonSendOnClick }>Conferma</button>
                 <a onClick={ this.ButtonSwitchOnClick } style={ { margin: "20px" } }>Non hai un account? Registrati!</a>
