@@ -47,7 +47,6 @@ public class SQLiteManager
 
     public void CreateTables() throws ClassNotFoundException, SQLException, SQLException
     {
-        //   Connect();
 
         String user
                 = "CREATE TABLE IF NOT EXISTS USER "
@@ -93,12 +92,10 @@ public class SQLiteManager
 
         Commit();
 
-        //  Disconnect();
     }
 
     public boolean Register(User user) throws ClassNotFoundException, SQLException, SQLException
     {
-        //  Connect();
 
         boolean success = false;
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
@@ -113,11 +110,11 @@ public class SQLiteManager
                 return success;
             }
         }
-        System.out.println("Ho superato la fase di controllo dell'esistenza dell'utente");
+        
         String id = "1";
         String add
                 = "INSERT INTO USER (USERNAME,PASSWORD) "
-                + "VALUES (" + "\'" + user.Username + "\'" + "," + "\'" + user.Password + "\'" + ");"; //Da sistemare gli id
+                + "VALUES (" + "\'" + user.Username + "\'" + "," + "\'" + user.Password + "\'" + ");"; 
         statement.executeUpdate(add);
         System.out.println("Utente" + user.Username + " con successo");
 
@@ -125,14 +122,12 @@ public class SQLiteManager
 
         Commit();
 
-        //  Disconnect();
         return true;
     }
 
     public boolean Login(User user) throws ClassNotFoundException, SQLException, SQLException
     {
         boolean success = false;
-        //     Connect();
 
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
 
@@ -141,8 +136,7 @@ public class SQLiteManager
             int id = rs.getInt("id");
             String usr = rs.getString("username");
             String psd = rs.getString("password");
-            System.out.println("Ho trovato: " + usr + " ---- " + psd + "all'id:" + id);
-            System.out.println("Sto cercando: " + user.Username + " ---- " + user.Password);
+
             if (usr.equals(user.Username) && psd.equals(user.Password))
             {
                 success = true;
@@ -154,13 +148,12 @@ public class SQLiteManager
         rs.close();
 
         Commit();
-        //     Disconnect();
+
         return success;
     }
 
     public void AddMessage(Message message) throws SQLException, ClassNotFoundException
     {
-        //  Connect();
         ResultSet rs = statement.executeQuery("SELECT * FROM USER;");
         int id = 0;
         int toId = 0;
@@ -188,7 +181,6 @@ public class SQLiteManager
         Commit();
 
         System.out.println("Ho finito l'add message");
-        //   Disconnect();
     }
 
     public List<Message> GetMessages(String user, String toUser) throws SQLException, ClassNotFoundException
@@ -223,7 +215,7 @@ public class SQLiteManager
 
             if (toUser.equals("Group"))
             {
-                if (rs.getInt("touserid") == toUserId/* && rs.getInt("userid") == userId*/)
+                if (rs.getInt("touserid") == toUserId)
                 {
                     Message mes = new Message();
                     mes.Date = rs.getString("date");
@@ -236,7 +228,8 @@ public class SQLiteManager
                     System.out.println("Ho aggiunto un messaggio");
 
                 }
-            } else
+            } 
+            else
             {
                 System.out.println("ho avuto " + rs.getInt("touserid") + "cerco " + toUserId + " e ho avuto " + rs.getInt("userid") + " e cerco " + userId);
                 if (((rs.getInt("touserid") == toUserId && rs.getInt("userid") == userId)))
@@ -281,7 +274,6 @@ public class SQLiteManager
                 {
                     System.out.println("Ho aggiunto: " + rss.getString("username"));
                     messages.get(i).Username = rss.getString("username");
-                    System.out.println("PORCO DIOOOOO " + messages.get(i).Username);
                     System.out.println("Ho aggiunto un username");
                 }
                 //    j++;

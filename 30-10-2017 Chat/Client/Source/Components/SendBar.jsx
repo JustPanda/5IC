@@ -42,9 +42,9 @@ export default class SendBar extends React.Component
     render ()
     {
         return (
-            <div className="row sendBar" style={ { width: '100%', height: '7%', marginLeft:"0px"} }>
-                <input id="TextBoxSend" type="text" for="defaultFlex" className="c-text-field f-flex sendInput" data-grid="col-8" style={{marginLeft:"20px", marginRight:"20px", marginTop:"10px"}}/>
-                <button id="ButtonSend" data-grid="col-4" className="c-button f-primary sendButton" placeholder="Inserisci il messaggio"  onClick={ this.ButtonSendOnClick } style={{marginRight:"20px", marginTop:"5px", marginBottom:"5px"}}>Send</button>
+            <div className="row sendBar" style={ { width: '100%', height: '50px', marginLeft:"0px"} }>
+                <input id="TextBoxSend" type="text" for="defaultFlex" className="c-text-field f-flex sendInput" data-grid="col-8" style={{marginLeft:"20px", marginRight:"20px", marginTop:"7px"}}/>
+                <button id="ButtonSend" data-grid="col-4" className="c-button f-primary sendButton" placeholder="Inserisci il messaggio"  onClick={ this.ButtonSendOnClick } style={{marginRight:"20px", marginTop:"7px", marginBottom:"8px"}}>Send</button>
             </div>
         );
     }

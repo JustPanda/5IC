@@ -34,15 +34,6 @@ public class Server
     {
         Mixer mixer = new Mixer();
         mixer.Start();
-        /*  ServerSocket s = new ServerSocket(8080);
-        
-        Socket socket = s.accept();
-        PrintWriter p = new PrintWriter(socket.getOutputStream(), true);
-        BufferedReader r = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        p.println("DIO CAN");
-        System.out.println("Ho inviato");
-        r.readLine(); */
-
     }
 
 }
@@ -83,7 +74,7 @@ class Mixer
                     if (user.Action.equals("Registration"))
                     {
                         boolean success = sql.Register(user);
-                        if (!success) //se esiste nel databse
+                        if (!success) 
                         {
                             client.output.println("RegistrationFail\n");
                             System.out.println("Registration Failed");
@@ -136,10 +127,6 @@ class Mixer
         MessageGroup group = new MessageGroup(m);
         List<String> users = sql.GetUsersExceptOne(conn.user.Username);
         group.Users = users.toArray(new String[users.size()]);
-        for (int i = 0; i < m.length; i++)
-        {
-            System.out.println("ZIO KHEN " + m[i].Username);
-        }
 
         Gson gson = new GsonBuilder().create();
         String toBeOut = gson.toJson(group);
@@ -156,14 +143,9 @@ class Mixer
         for (int i = 0; i < connections.size(); i++)
         {
             ClientConnection c = connections.get(i);
-            System.out.println("Client connection esiste? " + !c.equals(null));
-            System.out.println("Message user " + message.Username);
-            System.out.println("Cc user " + c.user.Username);
-            //  if (!message.Username.equals(c.user.Username))
-            System.out.println("Ho " + message.ToUser + " e cerco Group," + " ho " + message.Username + "e cerco " + c.user.Username);
+
             if (message.ToUser.equals("Group") && !message.Username.equals(c.user.Username))
             {
-
                 System.out.println("Eseguo il sender");
                 c.executor.execute(new Sender(c, c.output, message));
             } else
@@ -186,18 +168,15 @@ class ClientConnection implements Runnable
     ExecutorService executor;
     BufferedReader input;
     PrintWriter output;
-    //  int id;
 
     public User user;
     public String toUser = "Group";
 
     public ClientConnection(Socket socket, Mixer mixer) throws IOException
     {
-        //this.id = index;
         this.mixer = mixer;
         this.socket = socket;
         this.user = new User();
-        //user.Username = "cesare";
     }
 
     @Override
@@ -250,9 +229,6 @@ class Receiver implements Runnable
                 Gson gson = new GsonBuilder().create();
                 message = gson.fromJson(s, Message.class);
 
-                /*  message.User = "manuelelucchi";
-                message.Date = cal.get(Calendar.HOUR) + ":" + cal.get(Calendar.MINUTE) + "," + cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.YEAR);
-                message.Text = "Testo"; */
                 if (message.Username != null)
                 {
                     System.out.println("Inizio UpdateMessage");
