@@ -21,7 +21,7 @@ app.on( 'ready', () => {
     height: 1000,
     show: true,
     titleBarStyle: 'hidden',
-    frame:false
+    frame:true
   } );
   mainWindow.loadURL( 'file://' + __dirname + '/Index.html' );
   mainWindow.on( 'closed', () => {
@@ -33,7 +33,7 @@ app.on( 'ready', () => {
     height: 500,
     show:true,
     titleBarStyle: 'hidden',
-    frame:false
+    frame:true
   } );
   loginWindow.loadURL( "file://" + __dirname + "/Login.html" );
   loginWindow.on( 'closed', () => {
@@ -45,16 +45,17 @@ app.on( 'ready', () => {
     height: 500,
     show: false,
     titleBarStyle: 'hidden',
-    frame:false
+    frame:true
   } );
   signupWindow.loadURL( "file://" + __dirname + "/Signup.html" );
   signupWindow.on( 'closed', () => {
     signupWindow = null;
   } );
 
+  /*
   mainWindow.setMenu(null);
   loginWindow.setMenu(null);
-  signupWindow.setMenu(null);
+  signupWindow.setMenu(null); */
 } );
 
 ipcMain.on( "main", function (event, arg) 

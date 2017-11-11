@@ -98,7 +98,7 @@ export default class SplitViewContent extends React.Component
         return (
             <div style={ { height: "100%" } }>
                 <TopAppBar name={ this.state.toUser }></TopAppBar>
-                <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '90%', backgroundImage: "url(https://www.walldevil.com/wallpapers/a26/background-pictures-cool-funny-large.jpg)", backgroundPosition: "center", backgroundAttachment:"fixed"  } }>
+                <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '86%', backgroundImage: "url(https://www.walldevil.com/wallpapers/a26/background-pictures-cool-funny-large.jpg)", backgroundPosition: "center", backgroundAttachment:"fixed"  } }>
                     { this.state.tags }
                 </section>
                 <SendBar method={ this.RefreshMessages }></SendBar>
