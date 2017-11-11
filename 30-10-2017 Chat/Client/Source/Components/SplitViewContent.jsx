@@ -26,7 +26,7 @@ export default class SplitViewContent extends React.Component
             if ( userObj.Action.includes( "ChangeToUser" ) )
             {
                 this.setState( { toUser: userObj.ToUser } );
-                console.log( "HO settato il toUser" + this.state.toUser );
+                console.log( "Ho settato il toUser" + this.state.toUser );
                 console.log( "Mi preparo a mandare al server change to user" )
                 var User = { Username: this.state.user, ToUser: this.state.toUser, Action: "ChangeToUser" }
                 console.log( JSON.stringify( User ) );
@@ -77,7 +77,6 @@ export default class SplitViewContent extends React.Component
             }
             else if ( msg.Username != this.state.user )
             {
-                console.log( msg.Username + " è l'username arrivato grffffffffff" )
                 tag = (
                     <div className="row" style={ { width: '100%' } }>
                         <MessageOther data-grid="col-4" text={ msg.Text } date={ msg.Date } user={ msg.Username }></MessageOther>
@@ -98,7 +97,7 @@ export default class SplitViewContent extends React.Component
         return (
             <div style={ { height: "100%" } }>
                 <TopAppBar name={ this.state.toUser }></TopAppBar>
-                <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '88%', backgroundImage: "url('./Media/Wallpaper.jpg')", backgroundPosition: "center", backgroundSize:"cover", backgroundRepeat:"no-repeat"  } }>
+                <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '92%', backgroundImage: "url('./Media/Wallpaper.jpg')", backgroundPosition: "center", backgroundSize:"cover", backgroundRepeat:"no-repeat"  } }>
                     { this.state.tags }
                 </section>
                 <SendBar method={ this.RefreshMessages }></SendBar>

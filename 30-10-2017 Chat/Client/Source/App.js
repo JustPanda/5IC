@@ -19,7 +19,7 @@ app.on( 'ready', () => {
   mainWindow = new BrowserWindow( {
     width: 1600,
     height: 1000,
-    show: true,
+    show: false,
     titleBarStyle: 'hidden',
     frame:true
   } );
@@ -33,7 +33,7 @@ app.on( 'ready', () => {
     height: 500,
     show:true,
     titleBarStyle: 'hidden',
-    frame:true
+    frame:false
   } );
   loginWindow.loadURL( "file://" + __dirname + "/Login.html" );
   loginWindow.on( 'closed', () => {
@@ -45,16 +45,16 @@ app.on( 'ready', () => {
     height: 500,
     show: false,
     titleBarStyle: 'hidden',
-    frame:true
+    frame:false
   } );
   signupWindow.loadURL( "file://" + __dirname + "/Signup.html" );
   signupWindow.on( 'closed', () => {
     signupWindow = null;
   } );
 
-  /*
+  
   mainWindow.setMenu(null);
-  loginWindow.setMenu(null);
+ /* loginWindow.setMenu(null);
   signupWindow.setMenu(null); */
 } );
 

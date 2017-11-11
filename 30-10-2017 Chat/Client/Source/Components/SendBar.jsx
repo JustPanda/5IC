@@ -25,16 +25,7 @@ export default class SendBar extends React.Component
         var d = new Date();
         var date = d.getHours() + ":" +d.getMinutes() + "," + d.getDate() + "/" + d.getMonth() +"/" + d.getFullYear();
         var Message ={Username:"", Text:text, Date:date};
-     /*   if ( this.state.a == true )
-        {
-            Message = text;
-        }
-        else
-        {
-            Message = text;            
-        } */
 
-    //    this.setState({a: !this.state.a})
         this.props.method( Message );
 
     }

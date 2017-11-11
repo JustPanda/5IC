@@ -6,15 +6,15 @@ import { ipcRenderer } from "electron"
 
 export default class SplitViewPane extends React.Component
 {
-    constructor ()
+    constructor()
     {
         super();
-        this.state = { users: [], user:null };
+        this.state = { users: [], user: null };
         ipcRenderer.on( "pane", function ( event, arg )
         {
-            if(arg.UsernamePerPane!=null && arg.UsernamePerPane!=undefined)
+            if ( arg.UsernamePerPane != null && arg.UsernamePerPane != undefined )
             {
-                this.setState({user:arg.UsernamePerPane})
+                this.setState( { user: arg.UsernamePerPane } )
             }
             else
             {
@@ -25,35 +25,32 @@ export default class SplitViewPane extends React.Component
                     usrs.push
                         (
                         <WinJS.SplitView.Command
-                            label={arg[i]}
+                            label={ arg[ i ] }
                             icon="home"
-                            onInvoked={ this.handleChangeContent.bind( this, arg[i] ) } />
+                            onInvoked={ this.handleChangeContent.bind( this, arg[ i ] ) } />
                         );
                 }
                 this.setState( { users: usrs } );
             }
-           
+
         }.bind( this ) );
     }
 
-    handleChangeContent ( a, name )
+    handleChangeContent( a, name )
     {
-        var User={ToUser:a, Action:"ChangeToUser"};
-        ipcRenderer.send("main", User);
+        var User = { ToUser: a, Action: "ChangeToUser" };
+        ipcRenderer.send( "main", User );
     }
-    render ()
+    render()
     {
         return (
             <div>
-              {/*  <div style={{background:"azure", height:"75px", alignContent:"center", justifyContent:"center", textAlign:"center"}}>
-                    {this.state.user}
-        </div> */}
-     {   <UserProfile username={this.state.user}></UserProfile> }
+                <UserProfile username={ this.state.user }></UserProfile>
                 <WinJS.SplitView.Command
                     label="Group"
                     icon="home"
                     onInvoked={ this.handleChangeContent.bind( null, "Group" ) } />
-                    { this.state.users }
+                { this.state.users }
             </div>
         );
     }

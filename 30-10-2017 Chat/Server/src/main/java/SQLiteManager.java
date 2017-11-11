@@ -23,7 +23,7 @@ public class SQLiteManager
     Statement statement;
     String dbName = "chat.sqlite";
 
-    public SQLiteManager() throws ClassNotFoundException, SQLException
+    public SQLiteManager() throws ClassNotFoundException, SQLException, Throwable
     {
         Connect();
         CreateTables();
@@ -45,7 +45,7 @@ public class SQLiteManager
         System.out.println("Closed database successfully");
     }
 
-    public void CreateTables() throws ClassNotFoundException, SQLException, SQLException
+    public void CreateTables() throws ClassNotFoundException, SQLException, Throwable
     {
 
         String user
@@ -94,7 +94,7 @@ public class SQLiteManager
 
     }
 
-    public boolean Register(User user) throws ClassNotFoundException, SQLException, SQLException
+    public boolean Register(User user) throws ClassNotFoundException, SQLException, Throwable
     {
 
         boolean success = false;
@@ -125,7 +125,7 @@ public class SQLiteManager
         return true;
     }
 
-    public boolean Login(User user) throws ClassNotFoundException, SQLException, SQLException
+    public boolean Login(User user) throws ClassNotFoundException, SQLException, Throwable
     {
         boolean success = false;
 
@@ -152,7 +152,7 @@ public class SQLiteManager
         return success;
     }
 
-    public void AddMessage(Message message) throws SQLException, ClassNotFoundException
+    public void AddMessage(Message message) throws SQLException, ClassNotFoundException, Throwable
     {
         ResultSet rs = statement.executeQuery("SELECT * FROM USER;");
         int id = 0;
@@ -183,7 +183,7 @@ public class SQLiteManager
         System.out.println("Ho finito l'add message");
     }
 
-    public List<Message> GetMessages(String user, String toUser) throws SQLException, ClassNotFoundException
+    public List<Message> GetMessages(String user, String toUser) throws SQLException, ClassNotFoundException, Throwable
     {
         List<Message> messages = new ArrayList<Message>();
         List<Integer> userIds = new ArrayList<Integer>();
@@ -286,7 +286,7 @@ public class SQLiteManager
         return messages;
     }
 
-    public List<String> GetUsersExceptOne(String user) throws SQLException
+    public List<String> GetUsersExceptOne(String user) throws SQLException, Throwable
     {
         List<String> users = new ArrayList<String>();
         ResultSet rs = statement.executeQuery("SELECT * FROM USER");
@@ -303,7 +303,7 @@ public class SQLiteManager
         return users;
     }
 
-    public void Commit() throws SQLException
+    public void Commit() throws SQLException, Throwable
     {
         connection.commit();
     }

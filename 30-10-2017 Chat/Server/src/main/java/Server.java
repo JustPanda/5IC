@@ -30,7 +30,7 @@ public class Server
     /**
      * @param args the command line arguments
      */
-    public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException
+    public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException, Throwable
     {
         Mixer mixer = new Mixer();
         mixer.Start();
@@ -45,7 +45,7 @@ class Mixer
     private ArrayList<Message> messages = new ArrayList<Message>();
     SQLiteManager sql;
 
-    public void Start() throws IOException, ClassNotFoundException, SQLException
+    public void Start() throws IOException, ClassNotFoundException, SQLException, Throwable
     {
         ServerSocket s = new ServerSocket(9090);
         ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
@@ -119,7 +119,7 @@ class Mixer
         s.close();
     }
 
-    public void SendPreviousMessages(ClientConnection conn) throws SQLException, ClassNotFoundException
+    public void SendPreviousMessages(ClientConnection conn) throws SQLException, ClassNotFoundException, Throwable
     {
         List<Message> l = sql.GetMessages(conn.user.Username, conn.toUser);
         Message[] m = l.toArray(new Message[l.size()]);
@@ -135,7 +135,7 @@ class Mixer
         conn.output.println(toBeOut);
     }
 
-    public void UpdateMessages(Message message) throws SQLException, ClassNotFoundException
+    public void UpdateMessages(Message message) throws SQLException, ClassNotFoundException, Throwable
     {
         this.messages.add(message);
         this.sql.AddMessage(message);
@@ -172,7 +172,7 @@ class ClientConnection implements Runnable
     public User user;
     public String toUser = "Group";
 
-    public ClientConnection(Socket socket, Mixer mixer) throws IOException
+    public ClientConnection(Socket socket, Mixer mixer) throws IOException, Throwable
     {
         this.mixer = mixer;
         this.socket = socket;
@@ -235,25 +235,19 @@ class Receiver implements Runnable
                     try
                     {
                         connection.mixer.UpdateMessages(message);
-                    } catch (SQLException ex)
+                    } catch (Throwable ex)
                     {
-                    } catch (ClassNotFoundException ex)
-                    {
-                    }
+                        ex.printStackTrace();
+                    } 
                 }
 
             }
 
-        } catch (IOException ex)
+        } 
+        catch (Throwable ex)
         {
             ex.printStackTrace();
-        } catch (SQLException ex)
-        {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex)
-        {
-            ex.printStackTrace();
-        }
+        } 
     }
 
 }
