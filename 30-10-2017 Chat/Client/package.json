@@ -1,11 +1,11 @@
 {
   "name": "chat",
   "version": "0.1.0",
-  "main": "./Source/Appjs",
+  "main": "./Source/App.js",
   "license": "MIT",
   "repository": "",
   "scripts": {
-    "start": "electron -r babel-register ./Source/App.js",
+    "start": "electron -r babel-register ./Source/App",
     "watch": "webpack -d --watch"
   },
   "dependencies": {

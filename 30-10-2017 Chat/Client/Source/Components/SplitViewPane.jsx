@@ -26,7 +26,7 @@ export default class SplitViewPane extends React.Component
                         (
                         <WinJS.SplitView.Command
                             label={ arg[ i ] }
-                            icon="home"
+                            icon="contact"
                             onInvoked={ this.handleChangeContent.bind( this, arg[ i ] ) } />
                         );
                 }
@@ -48,8 +48,9 @@ export default class SplitViewPane extends React.Component
                 <UserProfile username={ this.state.user }></UserProfile>
                 <WinJS.SplitView.Command
                     label="Group"
-                    icon="home"
+                    icon="contact"
                     onInvoked={ this.handleChangeContent.bind( null, "Group" ) } />
+                    <div style={{height:"1px", background:"gray", width:"90%", marginLeft:"5%", marginRight:"5%", marginTop:"10px", marginBottom:"10px"}}></div>
                 { this.state.users }
             </div>
         );

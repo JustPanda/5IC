@@ -4,6 +4,15 @@
 ### Classe: 5IC
 ### Istituto: ITIS C.Zuccante
 
+### Struttura Cartella
+* Cartella Client: contenente i sorgenti del Client
+* Cartella Server: contenente i sorgenti del Server
+* Protocollo.dmg: sorgente del progetto per l'automa a stati finiti del protocollo, fatto con FreshDiagrams
+* Protocollo.png: immagine finale dell'automa
+* Chat.mdj: sorgente del progetto per il diagramma di classi, fatto con Star UML
+* README.md: questo file 
+
+
 ### Strategie Client
 Il client è sviluppato in Electron, React.js, WinJS, Bootstrap e ES6, per le spiegazioni dei seguenti framework premere [qui](#spiegazioni-tecniche). 
 Il client riceve dal server una stringa Json, ne controlla il contenuto e in base a questo fa le seguenti azioni:
