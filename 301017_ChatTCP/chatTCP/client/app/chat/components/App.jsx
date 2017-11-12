@@ -9,7 +9,6 @@ import IconButton from 'material-ui/IconButton';
 import MenuIcon from 'material-ui-icons/Menu';
 import ExitToAppIcon from 'material-ui-icons/ExitToApp';
 import {ipcRenderer} from 'electron';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import createBrowserHistory from 'history/createBrowserHistory';
 import ResponsiveDrawer from './drawer/ResponsiveDrawer.jsx';
 import Chat from './chat/Chat.jsx';
@@ -39,30 +38,14 @@ class App extends React.Component
         this.exit=this.exit.bind(this);
         ipcRenderer.on('init', this.handleInit);
         ipcRenderer.on('message', this.handleMessage);
-        this.state.chats['Global']={chat: Chat, messages: [], index: 0};
+        this.state.chats['Global']={messages: [], index: 0};
     }
 
-    createChats(listChat, chats, updateMessages)
+    createChats(listChat, chats)
     {
-        var ActualChat, tmp;
-        tmp=listChat.map(
-            function(item, index)
-            {
-                if(!chats[item.username])
-                {
-                    chats[item.username]={chat: Chat, messages: [], index: 0};
-                }
-                ActualChat=chats[item.username].chat;
-                return (
-                    <Route key={index}
-                        path={'/'+item.username}
-                        render={() => <ActualChat messages={chats[item.username].messages} updateMessages={updateMessages} section={item.username} /> } />
-                );
-            }
+        listChat.map(
+
         );
-        ActualChat=chats['Global'].chat;
-        tmp.push(<Route key={-1} path='/' render={() => <ActualChat messages={chats['Global'].messages} updateMessages={updateMessages} section={'Global'} />} />);
-        return tmp;
     }
 
     handleDrawerToggle()
@@ -78,11 +61,10 @@ class App extends React.Component
     handleInit(event, data)
     {
         this.username=data;
-        for(let key in this.state.chats)
+        for(let chat in this.state.chats)
         {
-            let actualChat=this.state.chats[key];
-            actualChat.messages=[];
-            actualChat.index=0;
+            this.state.chats[chat].messages=[];
+            this.state.chats[chat].index=0;
         }
     }
 
@@ -94,34 +76,47 @@ class App extends React.Component
                 this.setState(
                     function(prevState)
                     {
+                        data.users.map(
+                            function(item, index)
+                            {
+                                if(!prevState.chats[item.username])
+                                {
+                                    prevState.chats[item.username]={messages: [], index: 0};
+                                }
+                            }
+                        );
                         return {
-                            listChat: data.users
+                            listChat: data.users,
+                            chats: prevState.chats
                         };
                     }
                 );
                 break;
             case "msg":
-                this.updateMessages(data.info, data.destination);
+                for(let message of data.messages)
+                {
+                    this.updateMessages(message, message.destination);
+                }
                 break;
         }
     }
 
     updateMessages(info, destination, toSend)
     {
+        var username=this.username;
         if(toSend)
         {
-            ipcRenderer.send('sendMessage', { destination: this.state.titleBar, text: info.text});
+            ipcRenderer.send('sendMessage', `{ "destination": "${this.state.titleBar}", "text": "${info.text}"}`);
         }
         this.setState(
             function(prevState)
             {
                 var destinationObj=prevState.chats[destination];
-                console.log(destination);
                 var d=new Date(), min=d.getMinutes();
-                if (min<10) {
+                if(min<10)
+                {
                     min='0'+min;
                 }
-                info.orientation=toSend?'right':'left';
                 info.date=d.getHours()+':'+min;
                 destinationObj.messages.push(<Message key={++destinationObj.index} info={info} />);
                 return {
@@ -140,35 +135,33 @@ class App extends React.Component
     {
         const { classes, theme } = this.props;
         return (
-            <Router history={history}>
-                <div className={classes.appFrame}>
-                    <AppBar className={classes.appBar} color='default'>
-                        <Toolbar>
-                            <IconButton
-                                className={classes.navIconHide}
-                                aria-label="open drawer"
-                                onClick={this.handleDrawerToggle}>
-                                <MenuIcon />
-                            </IconButton>
-                            <Typography type="title" noWrap>
-                                {this.state.titleBar}
-                            </Typography>
-                            <IconButton
-                                className={classes.exitButton}
-                                onClick={this.exit}>
-                                <ExitToAppIcon />
-                            </IconButton>
-                        </Toolbar>
-                    </AppBar>
-                    <ResponsiveDrawer open={this.state.open}
-                         handleDrawerToggle={this.handleDrawerToggle}
-                         listChat={this.state.listChat}
-                         changeChat={this.changeChat} />
-                    <main className={classes.content}>
-                        {this.createChats(this.state.listChat, this.state.chats, this.updateMessages)}
-                    </main>
-                </div>
-            </Router>
+            <div className={classes.appFrame}>
+                <AppBar className={classes.appBar} color='default'>
+                    <Toolbar>
+                        <IconButton
+                            className={classes.navIconHide}
+                            aria-label="open drawer"
+                            onClick={this.handleDrawerToggle}>
+                            <MenuIcon />
+                        </IconButton>
+                        <Typography type="title" noWrap>
+                            {this.state.titleBar}
+                        </Typography>
+                        <IconButton
+                            className={classes.exitButton}
+                            onClick={this.exit}>
+                            <ExitToAppIcon />
+                        </IconButton>
+                    </Toolbar>
+                </AppBar>
+                <ResponsiveDrawer open={this.state.open}
+                     handleDrawerToggle={this.handleDrawerToggle}
+                     listChat={this.state.listChat}
+                     changeChat={this.changeChat} />
+                <main className={classes.content}>
+                    <Chat ref='messages' messages={this.state.chats[this.state.titleBar].messages} updateMessages={this.updateMessages} section={this.state.titleBar} />
+                </main>
+            </div>
         );
     }
 }

@@ -8,7 +8,7 @@ const OUT_SIGNAL="out", LOGIN_SIGNAL='l', REGISTER_SIGNAL='r', CHAT_SIGNAL='c';
 let loginWindow, registrationWindow, chatWindow, errorWindow;
 let chatIconPath=path.join(__dirname, 'images/icon/Chat.png'),
     errorIconPath=path.join(__dirname, 'images/icon/Error.png');
-    client=new net.Socket();
+    client=net.createConnection({ port: PORT, host: IP});
 
 app.on('ready',
     function()
@@ -68,25 +68,25 @@ app.on('ready',
 
 app.on('window-all-closed', closeAll);
 
-client.connect(PORT, IP);
-
 client.on('connect', () => {client.write(LOGIN_SIGNAL+'\n');});
 
 client.on('data',
     function(data)
     {
-        console.log(data.toString().trim());
         data=JSON.parse(data);
         switch(data.section)
         {
             case LOGIN_SIGNAL:
-                loginWindow.webContents.send('message', data.message);
+                loginWindow.webContents.send('message', data.data);
                 break;
             case REGISTER_SIGNAL:
-                registrationWindow.webContents.send('message', data.message);
+                registrationWindow.webContents.send('message', data.data);
                 break;
             case CHAT_SIGNAL:
-                chatWindow.webContents.send('message', data.message);
+                for(let message of data.data)
+                {
+                    chatWindow.webContents.send('message', message);
+                }
                 break;
         }
     }
@@ -120,7 +120,7 @@ ipcMain.on('sendRegister',
 ipcMain.on('sendMessage',
     function(event, arg)
     {
-        client.write(JSON.stringify(arg)+'\n');
+        client.write(arg+'\n');
     }
 );
 

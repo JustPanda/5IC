@@ -8,75 +8,105 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-class Room
+class Room implements Signal
 {
 	private HashMap<String, PrintWriter> nameToSocket=new HashMap<>();
-	private JSONArray lu=new JSONArray();
+	private SQLiteJDBC database;
 
-	Room(JSONArray lu)
+	Room(SQLiteJDBC database)
 	{
-		this.lu=lu;
+		this.database=database;
 	}
 
-	void addUser(String username, PrintWriter out)
+	synchronized void addUser(String username, PrintWriter out)
 	{
 		nameToSocket.put(username, out);
 		broadcastListOfUsers(username);
 	}
 
-	void removedUser(String username)
+	synchronized void removedUser(String username)
 	{
 		nameToSocket.remove(username);
 		broadcastListOfUsers(username);
 	}
 
-	void sendListOfUsers(String username) throws SQLException
-	{
-		nameToSocket.get(username).println(luManaged(username));
-	}
-
-	void sendListOfMessages(String username, ResultSet rs) throws SQLException
+	synchronized void initRegister(String username) throws SQLException
 	{
 		PrintWriter outUser=nameToSocket.get(username);
+		ResultSet rs=database.getResultSetMessages(username);
+		JSONArray messages=new JSONArray(), listOfMessages=new JSONArray();
+		JSONObject listOfUsers=createListOfUserJSON(username, true), listOfMessagesObj=new JSONObject(), outJson=new JSONObject();
+		outJson.put("section", CHAT_SIGNAL);
+		outJson.put("data", messages);
 		while(rs.next())
 		{
-			System.out.println(username+"\n"+rs.getString("destination")+"\n"+createMessageJson(rs.getString("message"), username, rs.getString("destination"),false));
-//			outUser.println(createMessageJson(rs.getString("message"), username,false).toJSONString());
+			boolean isGlobal, orientation;
+			String fromTable=rs.getString("tablename"), destination=rs.getString("destination");
+			JSONObject message=new JSONObject();
+			isGlobal=fromTable.equals("Global");
+			if(isGlobal)
+			{
+				orientation=destination.equals(username);
+				message.put("name", destination);
+				message.put("destination", "Global");
+			}else{
+				orientation=rs.getBoolean("send");
+				message.put("destination", destination);
+			}
+			message.put("orientation", orientation?"right":"left");
+			message.put("text", rs.getString("message"));
+			listOfMessages.add(message);
 		}
+		listOfMessagesObj.put("key", "msg");
+		listOfMessagesObj.put("messages", listOfMessages);
+		messages.add(listOfUsers);
+		messages.add(listOfMessagesObj);
+		outUser.println(outJson);
 	}
 
-	void sendMessage(JSONObject msg, String fromUser, SQLiteJDBC database) throws SQLException
+	synchronized void sendMessage(JSONObject msg, String fromUser, SQLiteJDBC database) throws SQLException
 	{
 		boolean isGlobal;
-		String destination=(String) msg.get("destination"), destinationJSON, text=(String) msg.get("text");
-		JSONObject outJson;
+		String destination=(String) msg.get("destination"), text=(String) msg.get("text");
+		JSONArray message=new JSONArray();
+		JSONObject outJson, tmp=new JSONObject();
 		isGlobal=destination.equals("Global");
-		outJson=createMessageJson(text, fromUser, isGlobal?"Global":fromUser, isGlobal);
+		tmp.put("text", text);
+		tmp.put("orientation", "left");
+		message.add(tmp);
+		outJson=createMessageJSON(message);
 		if(isGlobal)
 		{
+			tmp.put("name", fromUser);
+			tmp.put("destination", "Global");
 			broadcastMessage(fromUser, outJson.toJSONString());
 		}else{
-			nameToSocket.get(destination).println(outJson.toJSONString());
+			tmp.put("destination", fromUser);
+			PrintWriter outUser=nameToSocket.get(destination);
+			if(outUser!=null)
+			{
+				outUser.println(outJson.toJSONString());
+			}
 		}
-		database.addMessage(text, destination, fromUser);
+		database.addMessage(text, destination, fromUser, isGlobal);
 	}
 
-	boolean isLogged(String username)
+	synchronized boolean isLogged(String username)
 	{
 		return nameToSocket.get(username)!=null;
 	}
 
-	private void broadcastListOfUsers(String toAvoid)
+	synchronized private void broadcastListOfUsers(String toAvoid)
 	{
 		nameToSocket.forEach((key, value) -> {
 			if(!key.equals(toAvoid))
 			{
-				value.println(luManaged(key));
+				value.println(createListOfUserJSON(key, false));
 			}
 		});
 	}
 
-	private void broadcastMessage(String toAvoid, String msg)
+	synchronized private void broadcastMessage(String toAvoid, String msg)
 	{
 		nameToSocket.forEach((key, value) -> {
 			if(!key.equals(toAvoid))
@@ -86,14 +116,37 @@ class Room
 		});
 	}
 
-	private String luManaged(String toAvoid)
+	JSONObject createLoginJSON(String toSend)
 	{
-		JSONObject jsonLu=new JSONObject(), tmp;
-		JSONArray luTmp=new JSONArray();
-		jsonLu.put("section", "c");
-		jsonLu.put("message", new JSONObject());
-		tmp=(JSONObject) jsonLu.get("message");
-		tmp.put("key", "lu");
+		JSONObject toReturn=new JSONObject();
+		toReturn.put("section", LOGIN_SIGNAL);
+		toReturn.put("data", toSend);
+		return toReturn;
+	}
+
+	JSONObject createRegisterJSON(String toSend)
+	{
+		JSONObject toReturn=new JSONObject();
+		toReturn.put("section", REGISTER_SIGNAL);
+		toReturn.put("data", toSend);
+		return toReturn;
+	}
+
+	private JSONObject createListOfUserJSON(String toAvoid, boolean partial)
+	{
+		JSONObject jsonLu, message=new JSONObject();
+		JSONArray luTmp=new JSONArray(), lu=database.getAllUsers();
+		if(partial)
+		{
+			jsonLu=message;
+		}else{
+			JSONArray tmp=new JSONArray();
+			jsonLu=new JSONObject();
+			jsonLu.put("section", CHAT_SIGNAL);
+			jsonLu.put("data", tmp);
+			tmp.add(message);
+		}
+		message.put("key", "lu");
 		lu.forEach((o) -> {
 			JSONObject tmpUser=(JSONObject) o;
 			if(!tmpUser.get("username").equals(toAvoid))
@@ -101,25 +154,19 @@ class Room
 				luTmp.add(tmpUser);
 			}
 		});
-		tmp.put("users", luTmp);
-		return jsonLu.toJSONString();
+		message.put("users", luTmp);
+		return jsonLu;
 	}
 
-	private JSONObject createMessageJson(String text, String fromUser, String destination, boolean isGlobal)
+	private JSONObject createMessageJSON(JSONArray messages)
 	{
-		JSONObject toReturn=new JSONObject(), message, info;
-		toReturn.put("section", "c");
-		toReturn.put("message", new JSONObject());
-		message=(JSONObject) toReturn.get("message");
+		JSONObject toReturn=new JSONObject(), message=new JSONObject();
+		JSONArray cnt=new JSONArray();
+		toReturn.put("section", CHAT_SIGNAL);
+		toReturn.put("data", cnt);
 		message.put("key", "msg");
-		message.put("destination", destination);
-		message.put("info", new JSONObject());
-		info=(JSONObject) message.get("info");
-		info.put("text", text);
-		if(isGlobal)
-		{
-			info.put("name", fromUser);
-		}
+		message.put("messages", messages);
+		cnt.add(message);
 		return toReturn;
 	}
 }

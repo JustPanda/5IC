@@ -32,6 +32,7 @@
     "react-hot-loader": "^3.1.1",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
+    "react-scroll": "^1.6.4",
     "style-loader": "^0.19.0",
     "webpack": "^3.8.1"
   }

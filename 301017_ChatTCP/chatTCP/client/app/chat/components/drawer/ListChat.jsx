@@ -26,15 +26,13 @@ class ListChat extends React.Component
     createUserChat(item, index)
     {
         return (
-            <Link key={index} to={'/'+item.username}>
-                <ListItem button className={this.props.classes.nested} onClick={this.changeChat.bind(this, item.username)}>
-                    <Avatar className={this.props.classes.avatar} style={{
-                        backgroundColor: item.online?'#00C853':'red'}}>
-                        {item.username[0]}
-                    </Avatar>
-                    <ListItemText inset primary={item.username} />
-                </ListItem>
-            </Link>
+            <ListItem key={index} button className={this.props.classes.nested} onClick={this.changeChat.bind(this, item.username)}>
+                <Avatar className={this.props.classes.avatar} style={{
+                    backgroundColor: item.online?'#00C853':'red'}}>
+                    {item.username[0]}
+                </Avatar>
+                <ListItemText inset primary={item.username} />
+            </ListItem>
         );
     }
 
@@ -53,14 +51,12 @@ class ListChat extends React.Component
         const {classes}=this.props;
         return (
             <List className={classes.root}>
-                <Link to='/Global'>
-                    <ListItem button onClick={this.changeChat.bind(this, "Global")}>
-                        <ListItemIcon>
-                            <GroupWork />
-                        </ListItemIcon>
-                        <ListItemText inset primary="Global" />
-                    </ListItem>
-                </Link>
+                <ListItem button onClick={this.changeChat.bind(this, "Global")}>
+                    <ListItemIcon>
+                        <GroupWork />
+                    </ListItemIcon>
+                    <ListItemText inset primary="Global" />
+                </ListItem>
                 <ListItem button onClick={this.handleNestedListToggle}>
                     <ListItemIcon>
                         <AccountCircleIcon />

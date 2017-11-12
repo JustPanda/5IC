@@ -39,6 +39,7 @@ class BottomSection extends React.Component
         {
             this.props.updateMessages({
                 text: this.state.actualText,
+                orientation: 'right'
             }, this.props.section, true);
             this.setState({actualText: ''});
         }
