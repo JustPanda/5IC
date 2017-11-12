@@ -18,9 +18,9 @@ class Login extends React.Component
             username: '',
             password: '',
             pass: false,
-            message: {
-                text: '',
-                open: false
+            popup: {
+                text: 'Password must be at least 7 characters long with a capital letter and a capital letter',
+                open: true
             }
         };
         this.handleUsername=this.handleUsername.bind(this);
@@ -29,7 +29,9 @@ class Login extends React.Component
         this.handleLogin=this.handleLogin.bind(this);
         this.handleRequestClose=this.handleRequestClose.bind(this);
         this.handleMessage=this.handleMessage.bind(this);
+        this.clean=this.clean.bind(this);
         ipcRenderer.on('message', this.handleMessage);
+        ipcRenderer.on('clean', this.clean)
     }
 
     handleUsername(event)
@@ -80,7 +82,7 @@ class Login extends React.Component
         }
         if(error)
         {
-            this.setState({message: error});
+            this.setState({popup: error});
         }
     }
 
@@ -93,7 +95,7 @@ class Login extends React.Component
     {
         if(reason!=='clickaway')
         {
-            this.setState({message: { open: false }});
+            this.setState({popup: { open: false }});
         }
     }
 
@@ -109,11 +111,19 @@ class Login extends React.Component
         }
         if(text)
         {
-            this.setState({message: {
+            this.setState({popup: {
                 text: text,
                 open: true
             }});
         }
+    }
+
+    clean()
+    {
+        this.setState({popup: {
+            text: 'Password must be at least 7 characters long with a capital letter and a capital letter',
+            open: true
+        }});
     }
 
     render()
@@ -147,13 +157,13 @@ class Login extends React.Component
                         vertical: 'bottom',
                         horizontal: 'left',
                     }}
-                    open={this.state.message.open}
+                    open={this.state.popup.open}
                     autoHideDuration={2500}
                     onRequestClose={this.handleRequestClose}
                     SnackbarContentProps={{
                         'aria-describedby': 'message-id',
                     }}
-                    message={<span id="message-id">{this.state.message.text}</span>}
+                    message={<span id="message-id">{this.state.popup.text}</span>}
                     action={[
                         <Button key="undo" color="accent" dense onClick={this.handleRequestClose}>
                             UNDO

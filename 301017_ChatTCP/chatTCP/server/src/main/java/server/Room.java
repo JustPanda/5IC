@@ -40,20 +40,25 @@ class Room implements Signal
 		outJson.put("data", messages);
 		while(rs.next())
 		{
-			boolean isGlobal, orientation;
+			boolean isGlobal;
 			String fromTable=rs.getString("tablename"), destination=rs.getString("destination");
 			JSONObject message=new JSONObject();
 			isGlobal=fromTable.equals("Global");
 			if(isGlobal)
 			{
-				orientation=destination.equals(username);
-				message.put("name", destination);
+				if(destination.equals(username))
+				{
+
+					message.put("orientation", "right");
+				}else{
+					message.put("name", destination);
+					message.put("orientation", "left");
+				}
 				message.put("destination", "Global");
 			}else{
-				orientation=rs.getBoolean("send");
+				message.put("orientation", rs.getBoolean("send")?"right":"left");
 				message.put("destination", destination);
 			}
-			message.put("orientation", orientation?"right":"left");
 			message.put("text", rs.getString("message"));
 			listOfMessages.add(message);
 		}
@@ -165,6 +170,7 @@ class Room implements Signal
 		toReturn.put("section", CHAT_SIGNAL);
 		toReturn.put("data", cnt);
 		message.put("key", "msg");
+		message.put("only", true);
 		message.put("messages", messages);
 		cnt.add(message);
 		return toReturn;

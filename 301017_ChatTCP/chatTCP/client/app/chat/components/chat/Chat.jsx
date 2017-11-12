@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
 import Message from './Message.jsx';
@@ -11,12 +12,29 @@ class Chat extends React.Component
         super(props);
     }
 
+    componentDidMount()
+    {
+        this.scrollToBottom();
+    }
+
+    componentDidUpdate()
+    {
+        this.scrollToBottom();
+    }
+
+    scrollToBottom()
+    {
+        const node=ReactDOM.findDOMNode(this.messagesCnt);
+        node.scrollTop = node.scrollHeight;
+    }
+
+
     render()
     {
         const {classes}=this.props;
         return (
             <div className={classes.chatCnt}>
-                <div className={classes.messagesCnt}>
+                <div className={classes.messagesCnt} ref={(el) => {this.messagesCnt=el}}>
                     {this.props.messages}
                 </div>
                 <BottomSection updateMessages={this.props.updateMessages} section={this.props.section} />

@@ -5,7 +5,10 @@ import classNames from 'classnames';
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import Button from 'material-ui/Button';
+import Snackbar from 'material-ui/Snackbar';
 import IconButton from 'material-ui/IconButton';
+import CloseIcon from 'material-ui-icons/Close';
 import MenuIcon from 'material-ui-icons/Menu';
 import ExitToAppIcon from 'material-ui-icons/ExitToApp';
 import {ipcRenderer} from 'electron';
@@ -26,26 +29,23 @@ class App extends React.Component
             titleBar: 'Global',
             listChat: [],
             chats: [],
+            popup: {
+                text: '',
+                open: false
+            },
             open: false,
         };
         this.username=null;
-        this.createChats=this.createChats.bind(this);
         this.handleDrawerToggle=this.handleDrawerToggle.bind(this);
         this.changeChat=this.changeChat.bind(this);
         this.handleInit=this.handleInit.bind(this);
         this.handleMessage=this.handleMessage.bind(this);
         this.updateMessages=this.updateMessages.bind(this);
+        this.handleRequestClose=this.handleRequestClose.bind(this);
         this.exit=this.exit.bind(this);
         ipcRenderer.on('init', this.handleInit);
         ipcRenderer.on('message', this.handleMessage);
         this.state.chats['Global']={messages: [], index: 0};
-    }
-
-    createChats(listChat, chats)
-    {
-        listChat.map(
-
-        );
     }
 
     handleDrawerToggle()
@@ -95,13 +95,13 @@ class App extends React.Component
             case "msg":
                 for(let message of data.messages)
                 {
-                    this.updateMessages(message, message.destination);
+                    this.updateMessages(message, message.destination, false, data.only);
                 }
                 break;
         }
     }
 
-    updateMessages(info, destination, toSend)
+    updateMessages(info, destination, toSend, only)
     {
         var username=this.username;
         if(toSend)
@@ -111,7 +111,9 @@ class App extends React.Component
         this.setState(
             function(prevState)
             {
-                var destinationObj=prevState.chats[destination];
+                var destinationObj=prevState.chats[destination], state={
+                    chats: prevState.chats
+                };
                 var d=new Date(), min=d.getMinutes();
                 if(min<10)
                 {
@@ -119,11 +121,24 @@ class App extends React.Component
                 }
                 info.date=d.getHours()+':'+min;
                 destinationObj.messages.push(<Message key={++destinationObj.index} info={info} />);
-                return {
-                    chats: prevState.chats
-                };
+                if(only)
+                {
+                    state.popup={
+                        text: `A new Message from `+destination,
+                        open: true
+                    };
+                }
+                return state;
             }
         );
+    }
+
+    handleRequestClose(event, reason)
+    {
+        if(reason!=='clickaway')
+        {
+            this.setState({popup: { open: false }});
+        }
     }
 
     exit()
@@ -161,6 +176,31 @@ class App extends React.Component
                 <main className={classes.content}>
                     <Chat ref='messages' messages={this.state.chats[this.state.titleBar].messages} updateMessages={this.updateMessages} section={this.state.titleBar} />
                 </main>
+                <Snackbar
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                    open={this.state.popup.open}
+                    autoHideDuration={2500}
+                    onRequestClose={this.handleRequestClose}
+                    SnackbarContentProps={{
+                        'aria-describedby': 'message-id',
+                    }}
+                    message={<span id="message-id">{this.state.popup.text}</span>}
+                    action={[
+                        <Button key="undo" color="accent" dense onClick={this.handleRequestClose}>
+                            UNDO
+                        </Button>,
+                        <IconButton
+                            key="close"
+                            aria-label="Close"
+                            color="inherit"
+                            className={classes.close}
+                            onClick={this.handleRequestClose} >
+                            <CloseIcon />
+                        </IconButton>
+                    ]} />
             </div>
         );
     }

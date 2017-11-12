@@ -130,6 +130,7 @@ ipcMain.on('login',
         loginWindow.show();
         chatWindow.hide();
         registrationWindow.hide();
+        loginWindow.webContents.send('clean');
         changeSection(LOGIN_SIGNAL);
     }
 );
@@ -139,6 +140,7 @@ ipcMain.on('registration',
     {
         loginWindow.hide();
         registrationWindow.show();
+        registrationWindow.webContents.send('clean');
         changeSection(REGISTER_SIGNAL);
     }
 );

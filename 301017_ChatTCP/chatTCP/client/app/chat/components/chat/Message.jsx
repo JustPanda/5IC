@@ -32,9 +32,7 @@ class Message extends React.Component
                             }
                         })(info.name)
                     }
-                    <Typography type="body2" gutterBottom style={{
-                        position: 'relative'
-                    }}>
+                    <Typography type="body2" gutterBottom>
                         {info.text}
                     </Typography>
                     <Typography type="caption" gutterBottom align="right">
