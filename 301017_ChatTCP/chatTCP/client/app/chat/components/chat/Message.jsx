@@ -32,7 +32,7 @@ class Message extends React.Component
                             }
                         })(info.name)
                     }
-                    <Typography type="body2" gutterBottom>
+                    <Typography type="body2" gutterBottom style={{ wordWrap: 'break-word'}}>
                         {info.text}
                     </Typography>
                     <Typography type="caption" gutterBottom align="right">
@@ -55,7 +55,9 @@ const style={
         marginTop: '3%',
     },
     message: {
-        width: '40%'
+        width: '40%',
+        paddingLeft: '0.5%',
+        paddingRight: '0.5%'
     },
 };
 
