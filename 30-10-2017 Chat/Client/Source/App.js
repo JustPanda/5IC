@@ -21,7 +21,7 @@ app.on( 'ready', () => {
   mainWindow = new BrowserWindow( {
     width: 1600,
     height: 1000,
-    show: true,
+    show: false,
     titleBarStyle: 'hidden',
     frame:true
   } );
@@ -55,7 +55,7 @@ app.on( 'ready', () => {
   } );
 
   
- // mainWindow.setMenu(null);
+  mainWindow.setMenu(null);
  /* loginWindow.setMenu(null);
   signupWindow.setMenu(null); */
 } );
@@ -100,7 +100,7 @@ ipcMain.on( "login", function (event, data)
   console.log("Al login mi è arrivato un messaggio: " + data)
   if(data===null|data===undefined)
   {
-     mainWindow.show();
+     mainWindow.hide();
     loginWindow.show();
     signupWindow.hide();
   }
