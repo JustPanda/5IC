@@ -1,0 +1,41 @@
+.messageOther {
+    background:rgba(00,56,91, 0.8 );    /*#0078d7;*/
+    padding: 20px;
+    max-width: 60%;
+   /* height: 50px;  */
+   /* display: flex; */
+    float: left;
+  /*  flex-direction: column; */
+    justify-content: center;
+   /* margin: 50px; */
+    width: auto;
+}
+
+.messageUser {
+    background: rgba(00,50,126,0.8); /*00 5a 9e */
+  /*  height: 50px; */
+    padding: 20px;
+    max-width: 60%;
+ /*   display: flex; */
+    float: right;
+  /*  flex-direction: column; */
+    justify-content: center; 
+  /*  margin: 50px; */
+    width: auto;
+}
+
+.messageDate {
+    align-self: right;
+    vertical-align: bottom;
+    color: white;
+    padding-bottom: 10px;
+}
+
+.messageText {
+    align-self: center;
+    color: white;
+    /*top: 50%;  */
+    padding: 20px;
+    font-size: 20;
+    /* transform: translateY(-100%); */
+}

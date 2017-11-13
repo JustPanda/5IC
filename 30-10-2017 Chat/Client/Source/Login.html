@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Home</title>
+  <title>Login</title>
   <link rel="stylesheet" href="./Styles/Style.css">
   <link rel="stylesheet" href="./Styles/Message.css">
   <link rel="stylesheet" href="./Styles/SendBar.css">
@@ -21,17 +21,16 @@
   <script src="./Bootstrap/js/bootstrap.min.js"></script>
   <script src="./Bootstrap/js/npm.js"></script>
   <script async="async" src="WinJS/js/mwf.min.js"></script>
-
   <script>
     // install babel hooks in the renderer process
     require( 'babel-register' );
-    require( './HomeRenderer.js' );
+    require( './LoginRenderer.js' );
   </script>
 </head>
 
 <body>
     <div id="electron-titlebar" class="drag">
-        <div style="width: 100%; height: 100%; text-align: center; line-height: 30px; background: rgb(50,50,50); color:white ">Chat</div>        
+        <div style="width: 100%; height: 100%; text-align: center; line-height: 30px; background: rgb(50,50,50); color:white ">Login</div>        
     </div>
   <div id="Content" style="height:100%"></div>
 </body>

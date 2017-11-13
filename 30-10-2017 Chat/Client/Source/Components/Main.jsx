@@ -1,18 +1,17 @@
 'use babel';
 import React from 'react';
 import WinJS from 'react-winjs';
-import TopAppBar from "./TopAppBar"
-import BottomAppBar from "./BottomAppBar"
+import SplitView from "./SplitView.jsx";
+import Login from "./Login.jsx"
 
 export default class Main extends React.Component
 {
-  render()
+  render ()
   {
     return (
-      <div>
-        <TopAppBar></TopAppBar>
-        <BottomAppBar></BottomAppBar>
-      </div>        
-    ) ;
+      <div style={ { height: '100%' } }>
+        { <SplitView></SplitView> }
+      </div>
+    );
   }
 }

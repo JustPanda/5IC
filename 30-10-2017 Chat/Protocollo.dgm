@@ -1,0 +1,32 @@
+﻿<XtraSerializer version="17.1.6.0">
+  <Items>
+    <Item1 ItemKind="DiagramRoot" PageSize="100,848" SelectedStencils="BasicShapes, BasicFlowchartShapes, SoftwareIcons, SDLDiagramShapes, ArrowShapes, DecorativeShapes">
+      <Children>
+        <Item1 Position="354,24" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="Che azione è?" ItemKind="DiagramShape" />
+        <Item2 Position="544,144" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="E' riuscita?" ItemKind="DiagramShape" />
+        <Item3 Position="134,144" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="E' riuscita?" ItemKind="DiagramShape" />
+        <Item4 Position="204,254" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="Fa la registrazione" ItemKind="DiagramShape" />
+        <Item5 Position="444,254" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="Fa il login" ItemKind="DiagramShape" />
+        <Item6 FontSize="14" BeginItemPointIndex="1" EndItemPointIndex="0" Points="594,61.5" Content="Login" ItemKind="DiagramConnector" BeginItem="0" EndItem="1" BeginPoint="590,77.5" EndPoint="730,160" />
+        <Item7 FontSize="14" BeginItemPointIndex="3" EndItemPointIndex="0" Points="184,61.5" Content="Registrazione" ItemKind="DiagramConnector" BeginItem="0" EndItem="2" BeginPoint="490,77.5" EndPoint="320,160" />
+        <Item8 FontSize="14" BeginItemPointIndex="1" EndItemPointIndex="0" Points="254,181.5" Content="Si" ItemKind="DiagramConnector" BeginItem="2" EndItem="3" BeginPoint="370,197.5" EndPoint="390,270" />
+        <Item9 FontSize="14" BeginItemPointIndex="1" EndItemPointIndex="0" Points="661,181.5 661,237 494,237" Content="Si" ItemKind="DiagramConnector" BeginItem="1" EndItem="4" BeginPoint="780,197.5" EndPoint="630,270" />
+        <Item10 FontSize="14" BeginItemPointIndex="3" EndItemPointIndex="-1" Points="117,181.5 117,34" Content="No, attende altre azioni" ItemKind="DiagramConnector" BeginItem="2" BeginPoint="270,197.5" EndPoint="344,34" />
+        <Item11 FontSize="14" BeginItemPointIndex="3" EndItemPointIndex="2" Points="404,181.5" Content="No, attende altre azioni" ItemKind="DiagramConnector" BeginItem="1" EndItem="0" BeginPoint="680,197.5" EndPoint="540,115" />
+        <Item12 FontSize="14" BeginItemPointIndex="1" EndItemPointIndex="3" Points="(Empty)" ItemKind="DiagramConnector" BeginItem="3" EndItem="4" BeginPoint="440,307.5" EndPoint="580,307.5" />
+        <Item13 Position="374,404" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="Che altra azione è?" ItemKind="DiagramShape" />
+        <Item14 Position="684,534" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="Invia messaggi agli altri" ItemKind="DiagramShape" />
+        <Item15 Position="104,544" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="E' riuscita?" ItemKind="DiagramShape" />
+        <Item16 Position="654,624" Size="100,75" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="Salva su SQL" ItemKind="DiagramShape" />
+        <Item17 FontSize="14" BeginItemPointIndex="3" EndItemPointIndex="0" Points="154,441.5" Content="Cambia utente di destinazione messaggio" ItemKind="DiagramConnector" BeginItem="12" EndItem="14" BeginPoint="510,457.5" EndPoint="290,560" />
+        <Item18 FontSize="14" BeginItemPointIndex="1" EndItemPointIndex="0" Points="734,441.5" Content="Messaggio" ItemKind="DiagramConnector" BeginItem="12" EndItem="13" BeginPoint="610,457.5" EndPoint="870,550" />
+        <Item19 FontSize="14" BeginItemPointIndex="2" EndItemPointIndex="0" Points="734,624" ItemKind="DiagramConnector" BeginItem="13" EndItem="15" BeginPoint="870,625" EndPoint="840,640" />
+        <Item20 Position="174,694" Size="100,130" FontSize="14" Angle="0" Shape="BasicShapes.Rectangle" Content="Invia i messaggi precedenti della chat selezionata" ItemKind="DiagramShape" />
+        <Item21 FontSize="14" BeginItemPointIndex="1" EndItemPointIndex="0" Points="224,581.5" Content="Si" ItemKind="DiagramConnector" BeginItem="14" EndItem="19" BeginPoint="340,597.5" EndPoint="360,710" />
+        <Item22 FontSize="14" BeginItemPointIndex="3" EndItemPointIndex="-1" Points="24,581.5 24,414" Content="No, attende altre azioni" ItemKind="DiagramConnector" BeginItem="14" BeginPoint="240,597.5" EndPoint="364,414" />
+        <Item23 FontSize="14" BeginItemPointIndex="2" EndItemPointIndex="0" Points="494,387 424,387" ItemKind="DiagramConnector" BeginItem="4" EndItem="12" BeginPoint="630,345" EndPoint="560,420" />
+        <Item24 FontSize="14" BeginItemPointIndex="2" EndItemPointIndex="2" Points="704,716 424,716" Content="Attende altre azioni" ItemKind="DiagramConnector" BeginItem="15" EndItem="12" BeginPoint="840,715" EndPoint="560,495" />
+      </Children>
+    </Item1>
+  </Items>
+</XtraSerializer>

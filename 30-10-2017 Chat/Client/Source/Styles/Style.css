@@ -6,4 +6,26 @@
 html{
     font-family: "Segoe UI Light","Segoe WPC","Segoe UI", Helvetica, Arial, "Arial Unicode MS", Sans-Serif;
     font-weight: lighter;
+    color:"white";
+/*    scrollbar-base-color: black;
+    scrollbar-base-color: black;
+    scrollbar-arrow-color: black;
+    scrollbar-track-color: black;
+    
+    scrollbar-shadow-color: black;
+    scrollbar-lightshadow-color: black; 
+    scrollbar-darkshadow-color: black;
+    
+    scrollbar-highlight-color: black;
+    scrollbar-3dlight-color: black; */
+}
+
+::-webkit-scrollbar {     
+    background:  black;
+    width: .8em;
+}
+
+::-webkit-scrollbar-thumb:window-inactive,
+::-webkit-scrollbar-thumb {
+    background:  rgb(80,80,80);
 }
