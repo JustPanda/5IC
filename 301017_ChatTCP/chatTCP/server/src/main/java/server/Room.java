@@ -11,9 +11,9 @@ import java.sql.SQLException;
 class Room implements Signal
 {
 	private HashMap<String, PrintWriter> nameToSocket=new HashMap<>();
-	private SQLiteJDBC database;
+	private Database database;
 
-	Room(SQLiteJDBC database)
+	Room(Database database)
 	{
 		this.database=database;
 	}
@@ -69,7 +69,7 @@ class Room implements Signal
 		outUser.println(outJson);
 	}
 
-	synchronized void sendMessage(JSONObject msg, String fromUser, SQLiteJDBC database) throws SQLException
+	synchronized void sendMessage(JSONObject msg, String fromUser) throws SQLException
 	{
 		boolean isGlobal;
 		String destination=(String) msg.get("destination"), text=(String) msg.get("text");

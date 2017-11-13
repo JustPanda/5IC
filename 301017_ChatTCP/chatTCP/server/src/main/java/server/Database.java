@@ -6,14 +6,14 @@ import org.json.simple.JSONObject;
 import java.sql.*;
 import java.util.HashMap;
 
-public class SQLiteJDBC
+class Database
 {
 	private Connection register=null, messages=null;
 	private Statement stmtRegister=null, stmtMessages=null;
 	private HashMap<String, JSONObject> users=new HashMap<>();
 	private JSONArray listOfUsers=new JSONArray();
 
-	SQLiteJDBC()
+	Database()
 	{
 		try{
 			Class.forName("org.sqlite.JDBC");

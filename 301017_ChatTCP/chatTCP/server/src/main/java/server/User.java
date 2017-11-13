@@ -17,11 +17,11 @@ class User implements Runnable, Signal
 	private Socket client;
 	private BufferedReader in;
 	private PrintWriter out;
-	private SQLiteJDBC database;
+	private Database database;
 	private Room room;
 	private HashMap<String, Function<Void, Boolean>> phases=new HashMap<>();
 
-	User(Socket client, SQLiteJDBC database, Room room)
+	User(Socket client, Database database, Room room)
 	{
 		this.client=client;
 		this.database=database;
@@ -96,7 +96,7 @@ class User implements Runnable, Signal
 				while(!(data=in.readLine()).equals(OUT_SIGNAL))
 				{
 					JSONObject msg=(JSONObject) parser.parse(data);
-					room.sendMessage(msg, username, database);
+					room.sendMessage(msg, username);
 				}
 				exitUser();
 			}catch(ParseException|SQLException e){
