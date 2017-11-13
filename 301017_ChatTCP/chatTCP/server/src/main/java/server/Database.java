@@ -23,10 +23,10 @@ class Database
 			this.stmtMessages=messages.createStatement();
 			register.setAutoCommit(false);
 			messages.setAutoCommit(false);
-//			stmtRegister.executeUpdate("create table register(id integer primary key autoincrement,username text not null,password text not null)");
-//			stmtMessages.executeUpdate("CREATE TABLE Global(id INTEGER PRIMARY KEY AUTOINCREMENT,message TEXT NOT NULL,destination TEXT NOT NULL,tablename TEXT NOT NULL,send BIT NOT NULL)");
-//			register.commit();
-//			messages.commit();
+			stmtRegister.executeUpdate("create table register(id integer primary key autoincrement,username text not null,password text not null)");
+			stmtMessages.executeUpdate("CREATE TABLE Global(id INTEGER PRIMARY KEY AUTOINCREMENT,message TEXT NOT NULL,destination TEXT NOT NULL,tablename TEXT NOT NULL,send BIT NOT NULL)");
+			register.commit();
+			messages.commit();
 			initRegister();
 		}catch(ClassNotFoundException|SQLException e){
 			e.printStackTrace();

@@ -32,7 +32,7 @@ class Message extends React.Component
                             }
                         })(info.name)
                     }
-                    <Typography type="body2" gutterBottom style={{ wordWrap: 'break-word'}}>
+                    <Typography className={classes.text} type="body2" gutterBottom>
                         {info.text}
                     </Typography>
                     <Typography type="caption" gutterBottom align="right">
@@ -59,6 +59,9 @@ const style={
         paddingLeft: '0.5%',
         paddingRight: '0.5%'
     },
+    text: {
+        wordWrap: 'break-word'
+    }
 };
 
 export default withStyles(style)(Message);
