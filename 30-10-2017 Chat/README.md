@@ -34,3 +34,9 @@ Il server fa partire un oggetto Mixer che contiene tutte le connessioni, l'ogget
 * React.js è un framework JavaScript che crea un DOM virtuale e permette di dividere in diversi Tag customizzati il codice html. Tutto poi viene transcompilato in JavaScript ahead of time e in runtime viene appeso all'Index.html
 * ES6 è la versione 6 di Javascript, che non può essere eseguita direttamente, per questo viene tradotta in Javascript ES5
 * WinJS e Bootstrap sono framework CSS
+
+### PROTOCOLLO
+![Alt text](./Protocollo.png)
+
+### UML CHAT
+![Alt text](./Chat.png)
