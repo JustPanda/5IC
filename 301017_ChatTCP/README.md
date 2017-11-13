@@ -36,7 +36,7 @@ Sezione che viene mostrata quando il socket si chiude per errore, per esempio qu
 Il client è stato scritto con il linguaggio di programmazione chiamato java ed il software maven.<br />
 Il server è composto da:
 
-![alt text](./documentations/class_diagram/server/Chat.jpg)
+![alt text](./documentations/class_diagram/server/Server.jpg)
 
 * Main <br />
 Classe che avvia il server, istanza gli oggetti basici e accetta le richieste di ogni client
