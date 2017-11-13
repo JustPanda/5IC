@@ -2,7 +2,7 @@
 import React from 'react';
 import WinJS from 'react-winjs';
 import {ipcRenderer} from "electron"
-import ContentDialog from "./ContentDialog"
+import ContentDialog from "./ContentDialog.jsx"
 
 export default class Signup extends React.Component
 {

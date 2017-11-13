@@ -1,7 +1,7 @@
 'use babel';
 import React from 'react';
 import WinJS from 'react-winjs';
-import UserProfile from "./UserProfile";
+import UserProfile from "./UserProfile.jsx";
 import { ipcRenderer } from "electron"
 
 export default class SplitViewPane extends React.Component

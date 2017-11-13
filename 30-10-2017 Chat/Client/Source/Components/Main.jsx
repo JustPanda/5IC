@@ -1,8 +1,8 @@
 'use babel';
 import React from 'react';
 import WinJS from 'react-winjs';
-import SplitView from "./SplitView";
-import Login from "./Login"
+import SplitView from "./SplitView.jsx";
+import Login from "./Login.jsx"
 
 export default class Main extends React.Component
 {

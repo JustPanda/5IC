@@ -2,9 +2,9 @@
 import React from 'react';
 import WinJS from 'react-winjs';
 
-import TopAppBar from "./TopAppBar"
-import MessageUser from "./MessageUser"
-import MessageOther from "./MessageOther";
+import TopAppBar from "./TopAppBar.jsx"
+import MessageUser from "./MessageUser.jsx"
+import MessageOther from "./MessageOther.jsx";
 
 export default class SendBar extends React.Component
 {

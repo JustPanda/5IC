@@ -13,6 +13,13 @@ export default class Login extends React.Component
         this.ButtonSendOnClick = this.ButtonSendOnClick.bind( this );
         ipcRenderer.on( "logincomponent", function ( event, data )
         {
+            console.log("mi è arrivato (logincomponent): "+ data)
+            if(data.includes("ErroreConnessione"))
+            {
+                console.log("Errore Server");
+                this.setState({errorText:"Errore di connessione al Server"});
+                this.HandleShow();
+            }
             if ( data.includes( "LoginFail" ) )
             {
                 console.log( "Errore nel login" );

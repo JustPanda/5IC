@@ -1,12 +1,13 @@
 'use babel';
 import React from 'react';
+import ReactDOM from "react-dom"
 import WinJS from 'react-winjs';
-import Client from "../Client";
+import Client from "../Client.js";
 
-import TopAppBar from "./TopAppBar"
-import SendBar from "./SendBar"
-import MessageUser from "./MessageUser"
-import MessageOther from "./MessageOther"
+import TopAppBar from "./TopAppBar.jsx"
+import SendBar from "./SendBar.jsx"
+import MessageUser from "./MessageUser.jsx"
+import MessageOther from "./MessageOther.jsx"
 import { ipcRenderer } from "electron"
 
 export default class SplitViewContent extends React.Component
@@ -47,6 +48,22 @@ export default class SplitViewContent extends React.Component
         }.bind( this ) );
 
     }
+    componentDidMount()
+    {
+        this.ScrollToBottom()
+    }
+
+    componentDidUpdate()
+    {
+        this.ScrollToBottom()
+    }
+
+    ScrollToBottom()
+    {
+        const node = ReactDOM.findDOMNode(this.messagesCnt);
+        node.scrollTop = node.scrollHeight;
+    }
+
     RefreshMessages( message )
     {
         this.setState( function ( prevstate )
@@ -97,7 +114,7 @@ export default class SplitViewContent extends React.Component
         return (
             <div style={ { height: "100%" } }>
                 <TopAppBar name={ this.state.toUser }></TopAppBar>
-                <section id="ChatSection" className="scrollBar" style={ { width: '100%', height: '92%', backgroundImage: "url('./Media/Wallpaper.jpg')", backgroundPosition: "center", backgroundSize:"cover", backgroundRepeat:"no-repeat"  } }>
+                <section id="ChatSection" ref={(el) => {this.messagesCnt=el}} className="scrollBar" style={ { width: '100%', height: '92%', backgroundImage: "url('./Media/Wallpaper.jpg')", backgroundPosition: "center", backgroundSize:"cover", backgroundRepeat:"no-repeat"  } }>
                     { this.state.tags }
                 </section>
                 <SendBar method={ this.RefreshMessages }></SendBar>

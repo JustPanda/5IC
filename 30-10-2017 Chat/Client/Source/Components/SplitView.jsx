@@ -2,8 +2,8 @@
 import React from 'react';
 import WinJS from 'react-winjs';
 import WJS from 'winjs'
-import SplitViewPane from "./SplitViewPane";
-import SplitViewContent from "./SplitViewContent";
+import SplitViewPane from "./SplitViewPane.jsx";
+import SplitViewContent from "./SplitViewContent.jsx";
 
 export default class SplitView extends React.Component
 {

@@ -7,14 +7,13 @@ const BUILD_DIR = path.resolve( __dirname, 'Dist' );
 
 var config = {
     entry: {
-        chat: APP_DIR + "/App.js",
-       /* login: APP_DIR + "/login/index.jsx",
-        registration: APP_DIR + "/registration/index.jsx",
-        error: APP_DIR + "/error/index.jsx" */
+        chat: APP_DIR + "/HomeRenderer.js",
+        login: APP_DIR + "/LoginRenderer.js",
+        registration: APP_DIR + "/SignupRenderer.js"
     },
     output: {
         path: BUILD_DIR,
-        filename: "Build.js"
+        filename: "[name].entry.js"
     },
     module: {
         loaders: [
@@ -24,13 +23,18 @@ var config = {
                 loader: 'babel-loader'
             },
             {
+                test: /\.js$/,
+                include: APP_DIR,
+                loader: 'babel-loader'
+            },
+            {
                 test: /\.css$/,
                 loader: "style-loader!css-loader"
-            }/*,
+            },
             {
                 test: /\.(png|jpg)$/,
                 loader: 'file-loader?name=/img/[name].[ext]'
-            } */
+            }
         ]
     },
     target: 'electron-renderer'

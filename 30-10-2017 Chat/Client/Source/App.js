@@ -1,9 +1,11 @@
-import {
+const {app, BrowserWindow, ipcMain} = require("electron");
+
+/*import {
   app,
   BrowserWindow,
   ipcMain
 } from 'electron';
-import Client from './Client';
+import Client from './Client.jsx'; */
 
 let mainWindow = null;
 let loginWindow = null;
@@ -19,7 +21,7 @@ app.on( 'ready', () => {
   mainWindow = new BrowserWindow( {
     width: 1600,
     height: 1000,
-    show: false,
+    show: true,
     titleBarStyle: 'hidden',
     frame:true
   } );
@@ -53,7 +55,7 @@ app.on( 'ready', () => {
   } );
 
   
-  mainWindow.setMenu(null);
+ // mainWindow.setMenu(null);
  /* loginWindow.setMenu(null);
   signupWindow.setMenu(null); */
 } );
@@ -69,7 +71,12 @@ ipcMain.on( "main", function (event, arg)
   else
   {
     console.log("mi è arrivato un parametro nel main")
-    if(Array.isArray(arg))
+    if(arg==="ErroreConnessione")
+    {
+      console.log("Invio al login errore connessione")
+      loginWindow.webContents.send("logincomponent", "ErroreConnessione");
+    }
+    else if(Array.isArray(arg))
     {
       mainWindow.webContents.send("pane", arg);
       console.log("Ho inviato a pane: " + arg);
@@ -88,16 +95,19 @@ ipcMain.on( "main", function (event, arg)
  
 } );
 
-ipcMain.on( "login", function (event, data) {
+ipcMain.on( "login", function (event, data) 
+{
+  console.log("Al login mi è arrivato un messaggio: " + data)
   if(data===null|data===undefined)
   {
-     mainWindow.hide();
+     mainWindow.show();
     loginWindow.show();
     signupWindow.hide();
   }
   else
   {
     loginWindow.webContents.send("logincomponent", data);
+    console.log("Ho inviato a login component ")
   }
  
 } );

@@ -8,7 +8,7 @@ export default class Client
         this.Refresh = method;
         this.client = new net.connect( 
         {
-            port: 9090
+            port: 9090, host:"127.0.0.1"
         }, function ()
         {
             console.log( "connected to server" );
@@ -65,6 +65,7 @@ export default class Client
         this.client.on( "error", function ()
         {
             console.log("Errore nel client")
+            ipcRenderer.send("main", "ErroreConnessione");
         } )
     }
 
