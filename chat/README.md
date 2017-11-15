@@ -1,0 +1,1 @@
+il progetto centra gli obbiettivi minimi, provo a fare di piu aggiungendo la grafica ma funziona in parte, ricorntro 2 problemi: non mi va il clear quando cambio utente con cui messaggiare, non aggiunge i messaggi in istantanea, ma li riceve e da nullPointerException quando deve aggiungerlo, ma il resto funziona. Uso gli Executors, JavaFX per la grafica.
