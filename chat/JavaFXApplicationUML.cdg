@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="JavaFXApplication2">
+  <ClassDiagramComponents>
+    <Class name="Client" package="javafxapplication2" visibility="public" xPosition="398.0" yPosition="58.0">
+      <Fields>
+        <Field name="s" type="Socket" visibility="package" isStatic="true"/>
+        <Field name="out" type="PrintWriter" visibility="package" isStatic="true"/>
+        <Field name="input" type="BufferedReader" visibility="package" isStatic="true"/>
+        <Field name="lp" type="ObservableList&lt;String&gt;" visibility="package" isStatic="true"/>
+        <Field name="na" type="String" visibility="package" isStatic="true"/>
+        <Field name="messaggiR" type="ArrayList&lt;String&gt;" visibility="package" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public"/>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="void" visibility="public">
+          <Argument type="Stage" name="stage"/>
+        </Method>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Server" package="javafxapplication2" visibility="public" xPosition="39.0" yPosition="58.0">
+      <Fields>
+        <Field name="NTHREDS" type="int" visibility="private" isStatic="true" isFinal="true"/>
+        <Field name="clientList" type="ArrayList&lt;PrintWriter&gt;" visibility="package" isStatic="true"/>
+        <Field name="nameList" type="ArrayList&lt;String&gt;" visibility="package" isStatic="true"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MyThread" package="javafxapplication2" visibility="public" xPosition="24.0" yPosition="355.0">
+      <Fields>
+        <Field name="d" type="database" visibility="package"/>
+        <Field name="dati" type="String[]" visibility="package"/>
+        <Field name="socket" type="Socket" visibility="private"/>
+        <Field name="clientNumber" type="int" visibility="private"/>
+        <Field name="out" type="PrintWriter" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Socket" name="socket"/>
+          <Argument type="int" name="clientNumber"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="run" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="database" package="javafxapplication2" visibility="public" xPosition="326.0" yPosition="355.0">
+      <Fields>
+        <Field name="user" type="ArrayList&lt;String&gt;" visibility="package"/>
+        <Field name="password" type="ArrayList&lt;String&gt;" visibility="package"/>
+        <Field name="m" type="ArrayList&lt;String&gt;" visibility="package"/>
+        <Field name="stato" type="Statement" visibility="package"/>
+        <Field name="conn" type="Connection" visibility="package"/>
+        <Field name="fare" type="String" visibility="package"/>
+        <Field name="tabella" type="String" visibility="package"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="registrati" returnType="void" visibility="public">
+          <Argument type="String[]" name="registrazione"/>
+          <Argument type="PrintWriter" name="out"/>
+          <Argument type="BufferedReader" name="in"/>
+        </Method>
+        <Method name="accedi" returnType="int" visibility="public">
+          <Argument type="String[]" name="registrazione"/>
+          <Argument type="PrintWriter" name="out"/>
+          <Argument type="BufferedReader" name="in"/>
+        </Method>
+        <Method name="mandaLista" returnType="void" visibility="public">
+          <Argument type="PrintWriter" name="out"/>
+          <Argument type="BufferedReader" name="in"/>
+        </Method>
+        <Method name="messaggia" returnType="void" visibility="package">
+          <Argument type="Socket" name="s"/>
+          <Argument type="PrintWriter" name="out"/>
+          <Argument type="BufferedReader" name="in"/>
+        </Method>
+        <Method name="scrivi" returnType="void" visibility="package">
+          <Argument type="Socket" name="socket"/>
+          <Argument type="PrintWriter" name="out"/>
+          <Argument type="BufferedReader" name="in"/>
+          <Argument type="String" name="gne"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="LoginFXMLController" package="javafxapplication2" visibility="public" xPosition="822.0" yPosition="355.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="accediClick" returnType="void" visibility="public">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="registerClick" returnType="void" visibility="package">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="inviaMessaggio" returnType="void" visibility="private">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="popolaLista" returnType="void" visibility="public"/>
+        <Method name="reload" returnType="void" visibility="package">
+          <Argument type="ActionEvent" name="event"/>
+        </Method>
+        <Method name="onmouseclicked" returnType="void" visibility="package">
+          <Argument type="MouseEvent" name="event"/>
+        </Method>
+        <Method name="scrivi" returnType="void" visibility="public">
+          <Argument type="String" name="s"/>
+        </Method>
+        <Method name="aggiungiMessaggio" returnType="void" visibility="public">
+          <Argument type="String" name="messaggio"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Lettore" package="javafxapplication2" visibility="public" xPosition="808.0" yPosition="58.0">
+      <Fields>
+        <Field name="s" type="Socket" visibility="package"/>
+        <Field name="l" type="ObservableList&lt;String&gt;" visibility="package"/>
+        <Field name="controller" type="LoginFXMLController" visibility="package"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="Socket" name="s"/>
+          <Argument type="LoginFXMLController" name="controller"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="run" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="controller" source="javafxapplication2.Lettore" target="javafxapplication2.LoginFXMLController" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+    <HasRelation name="d" source="javafxapplication2.MyThread" target="javafxapplication2.database" type="Aggregation" sourceCardinality="1..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
