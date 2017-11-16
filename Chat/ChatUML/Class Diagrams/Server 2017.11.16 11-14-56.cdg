@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="Server">
+  <ClassDiagramComponents>
+    <Class name="Clients" package="server" visibility="public" xPosition="83.0" yPosition="54.0">
+      <Fields>
+        <Field name="sInput" type="ObjectInputStream" visibility="private"/>
+        <Field name="sOutput" type="ObjectOutputStream" visibility="private"/>
+        <Field name="socket" type="Socket" visibility="private"/>
+        <Field name="server" type="String" visibility="private"/>
+        <Field name="port" type="int" visibility="private"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="String" name="server"/>
+          <Argument type="int" name="port"/>
+          <Argument type="String" name="username"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="start" returnType="boolean" visibility="public"/>
+        <Method name="display" returnType="String" visibility="private">
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="sendMessage" returnType="Message" visibility="package">
+          <Argument type="Message" name="msg"/>
+        </Method>
+        <Method name="disconnect" returnType="void" visibility="private"/>
+        <Method name="main" returnType="String[]" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="PrepareStatement" package="server" visibility="public" xPosition="616.0" yPosition="39.0">
+      <Fields/>
+      <Constructors/>
+      <Methods/>
+    </Class>
+    <Class name="Server" package="server" visibility="public" xPosition="443.0" yPosition="169.0">
+      <Fields>
+        <Field name="Unique" type="int" visibility="public" isStatic="true"/>
+        <Field name="connections" type="ArrayList&lt;Clients&gt;" visibility="public" isStatic="true"/>
+        <Field name="map" type="HashMap&lt;String, PrintWriter&gt;" visibility="public" isStatic="true"/>
+        <Field name="port" type="int" visibility="public" isStatic="true"/>
+        <Field name="in" type="BufferedReader" visibility="package" isStatic="true"/>
+        <Field name="out" type="PrintWriter" visibility="package" isStatic="true"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="int" name="port"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="Login" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="confirm"/>
+        </Method>
+        <Method name="Register" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="email"/>
+          <Argument type="String" name="password"/>
+          <Argument type="String" name="confirm"/>
+        </Method>
+        <Method name="Display" returnType="String" visibility="public" isStatic="true">
+          <Argument type="String" name="msg"/>
+        </Method>
+        <Method name="main" returnType="String[]" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <HasRelation name="Create" source="server.Server" target="server.Clients" type="Aggregation" sourceCardinality="0..1" targetCardinality="1..1"/>
+  </ClassDiagramRelations>
+</ClassDiagram>

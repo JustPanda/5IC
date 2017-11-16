@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../WinJS/css/ui-dark.min.css">
+    <script src="../WinJS/js/base.js"></script>
+    <script src="../WinJS/js/ui.js"></script>
+    <script>
+        require('../renderer.js')
+    </script>
+</head>
+
+<body class="win-type-body">
+    <div id="app">
+        <div id="UpAppBar" data-win-control="WinJS.UI.AppBar" data-win-options="{placement: 'top'}">
+            <button data-win-control="WinJS.UI.AppBarCommand" data-win-options="{id:'moderator',
+                                type:'toggle',
+                                label:'Content',
+                                icon:'help',
+                                section:'primary',
+                                tooltip:'Toggle'}"></button>
+        </div>
+        <div id="prova">
+            <div id="ChatSpace"></div>
+        </div>
+
+        <div id="test">
+            <div id="TextMessage">
+                <input type="text" class="win-textbox" id="Message" value="" />
+                <button class="win-button" id="Send">Send</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
