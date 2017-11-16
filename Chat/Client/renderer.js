@@ -1,6 +1,6 @@
 var WinJS = require('winjs');
 var net = require('net');
-var network = require('./src/NeuralNetwork/TextClassification');
+//var network = require('./src/NeuralNetwork/TextClassification');
 
 (function() {
 
