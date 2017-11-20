@@ -1,0 +1,15 @@
+digraph automa {
+    rankdir=LR;
+    size="8,5"
+
+    node [shape=doublecircle] "START" -> "END" [label="exit"]
+    node [shape=circle];
+    "START"->"login"[label="login"];
+    "START"->"Registration"[label="register"];
+    "login"->"login"[label="               /Server connection failed/\n/Invalid credentials/\n/Account already in use/"];
+    "login"->"chat"[label="valid credentials"];
+    "chat"->"chat"[label="/Selecting chat/\n/Sending messages/\n/Receiving messages/"];
+    "chat"->"START"[label="/logout/\n/delete account/"];
+    "Registration"->"Registration"[label="/Server connection failed/\n/Account alrady exists/\n"];
+    "Registration"->"chat"[label="valid credentials"];
+}
