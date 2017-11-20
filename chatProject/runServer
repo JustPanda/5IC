@@ -1,0 +1,4 @@
+#!/bin/bash
+clear
+
+java -cp '.:sqlite-jdbc-3.20.0.jar' chat.server.Server

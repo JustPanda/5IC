@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.client.RegistrationController">
+   <children>
+      <Label layoutX="53.0" layoutY="61.0" prefHeight="84.0" prefWidth="494.0" text="We're always happy to have new people join us! Please fill out all the fields correctly." textAlignment="CENTER" wrapText="true">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#ff0e0e" />
+                  <Stop color="#0eff73" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="confirmUsernameField" layoutX="392.0" layoutY="164.0" onKeyReleased="#controlConfirmUsernameField" promptText="Confirm username" />
+      <JFXPasswordField fx:id="passwordField" layoutX="53.0" layoutY="256.0" onKeyReleased="#controlPasswordField" promptText="Password" />
+      <JFXPasswordField fx:id="confirmPasswordField" layoutX="392.0" layoutY="256.0" onKeyReleased="#controlConfirmPasswordField" promptText="Confirm password" />
+      <JFXButton fx:id="backButton" layoutX="14.0" layoutY="14.0" onAction="#handleBackButton" style="-fx-background-color: #000704;" text="Back" textFill="WHITE" />
+      <JFXButton layoutX="265.0" layoutY="335.0" onAction="#handleConfirmButton" style="-fx-background-color: #07d26d;" text="Confirm" textFill="WHITE" />
+      <Label fx:id="passwordTooltip" layoutX="197.0" layoutY="261.0" text="?">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip fx:id="tooltip" hideOnEscape="false" prefWidth="400.0" text="Password must be at least 6 character long and must contains at least 1 upper case character, 1 lower case and 1 number" wrapText="true" />
+         </tooltip>
+      </Label>
+      <Label fx:id="confirmPasswordTooltip" layoutX="536.0" layoutY="261.0" text="?">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip prefWidth="400.0" text="Passwords do not match or it's not accepted" wrapText="true" />
+         </tooltip>
+      </Label>
+      <JFXTextField fx:id="usernameField" layoutX="53.0" layoutY="164.0" promptText="Username" />
+      <Label fx:id="confirmUsernameTooltip" layoutX="536.0" layoutY="167.0" text="?">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="usernames do not match" />
+         </tooltip>
+      </Label>
+      <JFXSpinner fx:id="loading" layoutX="275.0" layoutY="206.0" visible="false" />
+      <Label fx:id="errorLabel" layoutX="194.0" layoutY="206.0" onMouseClicked="#closeErrorLabel" prefHeight="50.0" prefWidth="212.0" style="-fx-background-color: #ccbfbf; -fx-background-radius: 40px;" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font></Label>
+   </children>
+</AnchorPane>

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+clear
+
+javac -cp '.:jfoenix.jar' chat/client/*Controller.java
+
+javac -cp '.:jfoenix.jar' chat/client/Client.java
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-border-radius: 10 10 10 10; -fx-background-radius: 10 10 10 10;" xmlns="http://javafx.com/javafx/9" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.client.StartController">
+   <children>
+      <Label layoutX="82.0" layoutY="76.0" text="Welcome to the chat!" textOverrun="CLIP">
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="BLACK" />
+                  <Stop color="#08e878" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+         <font>
+            <Font name="System Bold Italic" size="36.0" />
+         </font>
+      </Label>
+      <Label layoutX="63.0" layoutY="163.0" prefHeight="74.0" prefWidth="491.0" text="Log in if you already have an account with us, otherwise register and start enjoying our chat platform" textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="1.0" endY="1.0">
+               <stops>
+                  <Stop color="#10fc57" />
+                  <Stop color="#e50909" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <JFXButton fx:id="loginButton" layoutX="146.0" layoutY="303.0" onAction="#handleButtons" style="-fx-background-color: #000704;" text="Log in" textFill="WHITE" />
+      <JFXButton fx:id="registrationButton" layoutX="384.0" layoutY="303.0" onAction="#handleButtons" style="-fx-background-color: #07d26d;" text="Register" textFill="WHITE" />
+   </children>
+</AnchorPane>
