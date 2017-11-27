@@ -100,7 +100,6 @@ public class Connection extends Thread{
                         continue;
                     }
                     if(entrata.equals("nessuna") && ordB==false && help==false && !(nessuna)==false){
-                        System.out.println("cazzo");
                         out.println("Ordinazione effettuata da parte di? ");
                         entrata=in.readLine();
                         System.out.println("Il cliente "+entrata+" ha effettuato la seguente ordinazione: "+ordine(ordinazione));
@@ -114,7 +113,6 @@ public class Connection extends Thread{
                     }
                     if(entrata.equals("no") && ordB==false && help==false){
                         ordB=true;
-                        System.out.println("merda");
                         out.println("Ordinazione effettuata da parte di? ");
                         entrata=in.readLine();
                         System.out.println("Il cliente "+entrata+" ha effettuato la seguente ordinazione: "+ordine(ordinazione));
@@ -151,7 +149,6 @@ public class Connection extends Thread{
                     }
                     
                     if(entrata.equals("no") && ordB==true  && nessuna==true){
-                        System.out.println("in culo");
                         out.println("Ordinazione effettuata da parte di? ");
                         entrata=in.readLine();
                         System.out.println("Il cliente "+entrata+" ha effettuato la seguente ordinazione: "+ordine(ordinazione));
