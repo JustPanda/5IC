@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Safe</string>
+    <string name="welcome">Welcome</string>
+    <string name="victory">Congratulations!\nYou won!!</string>
+    <string name="restart">Restart</string>
+    <string name="exit">Exit</string>
+    <string name="shortHint">Hint: </string>
+    <string name="longHint">You really don\'t manage to do it.... try </string>
+</resources>
