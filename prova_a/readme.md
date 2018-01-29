@@ -1,0 +1,1 @@
+piccolo progetto realizzato attraverso l'utilizzo di "android studio". Il progetto non aveva particolari richieste. L'obiettivo principale consisteva nel realizzare graficamente una semplice calcolatrice con il rispettivo "code behind" che permette all'utente di interagire con la grafica. 
