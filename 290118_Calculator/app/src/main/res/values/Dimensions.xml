@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name='textSize'>30sp</dimen>
     <dimen name='buttonSize'>105dp</dimen>
     <dimen name='buttonFontSize'>26sp</dimen>
     <dimen name='navbarFontSize'>18sp</dimen>
