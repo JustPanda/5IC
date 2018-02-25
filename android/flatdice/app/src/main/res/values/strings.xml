@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FlatDice</string>
+    <string name="welcome">Welcome!\n</string>
+    <string name="instructions">Swipe in any direction\nto roll a dice!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
