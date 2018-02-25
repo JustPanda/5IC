@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">FlatDice</string>
+    <string name="face_one">1</string>
+    <string name="face_two">2</string>
+    <string name="face_three">3</string>
+    <string name="face_four">4</string>
+    <string name="face_five">5</string>
+    <string name="face_six">6</string>
+</resources>
