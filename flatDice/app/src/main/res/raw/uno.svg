@@ -1,0 +1,6 @@
+<svg>
+
+	<!--UNO-->
+	<rect x="40" y="40" rx="20" ry="20" width="200" height="200" style="margin-top:-100px;margin-left:-100px;fill:rgb(255,255,255);stroke-width:3;stroke:rgb(0,0,0)" />
+	<circle cx="140" cy="140" r="20" strock="black" strock-width="3" fill="black" />
+</svg>
