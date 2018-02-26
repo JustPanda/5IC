@@ -5,7 +5,7 @@ import android.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import kotlinx.android.synthetic.main.dice_face.*
 
 class DiceFace : Fragment()
 {
@@ -14,14 +14,14 @@ class DiceFace : Fragment()
         return inflater!!.inflate(R.layout.dice_face, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?)
+    {
         super.onViewCreated(view, savedInstanceState)
-        val image: ImageView = view!!.findViewById(R.id.image) as ImageView
-        val path: Int = arguments["number"] as Int
-//        image.setImageResource(path)
+        image.setImageResource(arguments["number"] as Int)
     }
 
-    companion object {
+    companion object
+    {
 
         fun newInstance(number: Int): DiceFace
         {
