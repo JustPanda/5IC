@@ -6,11 +6,12 @@
     android:background="#b700">
     >
 
-    <TextView
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
-        android:layout_height="0pt"
-        android:layout_weight="2"
-        android:id="@+id/n"
-        android:text="3"
-        android:layout_gravity="center" />
+        android:layout_height="wrap_content"
+        android:contentDescription="myapp"
+        android:paddingBottom="20dp"
+        android:paddingTop="30dp"
+        android:src="@drawable/three" />
 </LinearLayout>

@@ -65,12 +65,10 @@ public class MainActivity extends AppCompatActivity {
                     {
                         if (y2 > y1)
                         {          // Left to Right swipe action
-                            Toast.makeText(this, "in alto", Toast.LENGTH_SHORT).show();
                             changeFragment("inSu");
                         }
                         else
                         {                  // Right to left swipe action
-                            Toast.makeText(this, "in basso", Toast.LENGTH_SHORT).show();
                             changeFragment("inGiu");
                         }
                     }

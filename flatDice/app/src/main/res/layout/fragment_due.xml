@@ -6,12 +6,13 @@
     android:background="#AE00">
 
 
-    <TextView
-        android:id="@+id/n"
+    <ImageView
+        android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="2"
-        android:text="2" />
+        android:contentDescription="myapp"
+        android:paddingBottom="20dp"
+        android:paddingTop="30dp"
+        android:src="@drawable/two" />
 </LinearLayout>
 

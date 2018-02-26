@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ImageView     xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:id="@+id/uno">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#A99">
 
-</ImageView>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="myapp"
+        android:paddingBottom="20dp"
+        android:paddingTop="30dp"
+        android:src="@drawable/one" />
+</LinearLayout>
+
