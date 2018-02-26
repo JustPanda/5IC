@@ -94,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
             FragmentTransaction ft = fm.beginTransaction();
             // (enter, exit)
-            ft.setCustomAnimations(R.animator.slide_linear_left, R.animator.slide_linear_right);
+            ft.setCustomAnimations(R.animator.slide_linear_left2, R.animator.slide_linear_right2);
             // ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
             ft.replace(R.id.fragment, nextFragment);
             ft.commit();
