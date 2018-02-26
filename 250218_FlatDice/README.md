@@ -1,6 +1,6 @@
 # FlatDice
 
-Questo progetto consiste in un'applicazione android che offre ad un utente di terze parti di simulare il tiro di un dado grazie ad uno swipe.
+Questo progetto consiste in un'applicazione android che offre ad un utente di terze parti la possibilità di simulare il tiro di un dado grazie ad uno swipe.
 
 ### Spiegazione del progetto
 
